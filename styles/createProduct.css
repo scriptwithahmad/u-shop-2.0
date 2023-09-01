@@ -1,0 +1,113 @@
+:root {
+  --white: #ffffff;
+  --bg-input: #f4f7fb;
+  --standard-radius: 8px;
+  --standard-padding: 6px;
+  --input-color: #2b3445;
+  --border-color: #a7cbfe;
+  --heading-color: #7d879c;
+  --border-input: 1px solid #c1cdd7;
+  --input-shadow: 0 0 0 0.2rem rgba(78, 151, 253, 0.25);
+  --outer-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.createProductOuter {
+  padding: 20px;
+  max-width: 1250px;
+  margin: 20px auto;
+  background-color: var(--white);
+  box-shadow: var(--outer-shadow);
+  border-radius: var(--standard-padding);
+
+  & h1 {
+    font-size: 25px;
+    color: #00457ebd;
+    font-weight: bold;
+    position: relative;
+  }
+  & h1::before {
+    position: absolute;
+    content: "";
+    top: 140%;
+    height: 1px;
+    width: 100%;
+    background-color: #00457e31;
+  }
+}
+
+.createProductOuter .createProductMain {
+  gap: 20px;
+  display: grid;
+  margin-top: 40px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.createProductInner {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.createProductInner label {
+  font-size: 15px;
+  color: var(--heading-color);
+  margin-bottom: 6px;
+}
+
+.createProductInner input {
+  outline: none;
+  font-size: 12px;
+  border: var(--border-input);
+  padding: var(--standard-padding);
+  border-radius: var(--standard-radius);
+  background-color: var(--bg-input);
+  color: var(--input-color);
+}
+
+.createProductInner #imgInput {
+  max-width: 32%;
+  padding: 4px;
+}
+
+.createProductInner .diffInput {
+  font-size: 12px;
+  padding: var(--standard-padding);
+}
+
+.remainDiv {
+  padding: 4px;
+  outline: none;
+  color: #333;
+  font-size: 14px;
+  background: var(--bg-input);
+  border: var(--border-input);
+  border-radius: var(--standard-radius);
+}
+
+.remainDiv:focus,
+.createProductInner input:focus {
+  box-shadow: var(--input-shadow);
+}
+
+.flex {
+  gap: 20px;
+  display: flex;
+  margin-top: 18px;
+  flex-direction: column;
+}
+
+.createBtn {
+  opacity: 0.9;
+  color: white;
+  font-size: 14px;
+  padding: 8px 18px;
+  width: fit-content;
+  transition: 0.3s linear;
+  background-color: #00457e;
+  border-radius: var(--standard-padding);
+}
+
+.createBtn:hover {
+  opacity: 1;
+}

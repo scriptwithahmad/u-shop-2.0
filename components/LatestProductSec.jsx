@@ -1,8 +1,16 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link  from "next/link";
 
-const LatestProductSec = () => {
+const LatestProductSec = ({ props }) => {
+  // console.log(props.products);
+
+  // filter data based on Category
+  const watchesProducts = props.products?.filter((product) => product.category === "Watches");
+  // console.log(watchesProducts)
+
+
   var settings = {
     infinite: true,
     speed: 500,
@@ -44,186 +52,26 @@ const LatestProductSec = () => {
       </div>
 
       <Slider className="main-cards" {...settings}>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
+        {watchesProducts?.map((v) => {
+          return (
+            <div key={v.id} className="slide-card">
+              <div className="card">
+                <div className="imgDiv">
+                  <img src={v.avatar} alt="" />
+                </div>
+                <div className="card-info">
+                  <Link href={`/product/${v.slug}`}>
+                    <h3>{v.name}</h3>
+                  </Link>
+                  <p>Rs. {v.price} </p>
+                  {/* <span className="cutPrice">Rs. 2,499</span> */}
+                  {/* <span>54% OFF</span> */}
+                  <span>{v.category} </span>
+                </div>
+              </div>
             </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/zero-terra-fit-smart-watch-pakistan-priceoye-hnbz2-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </Slider>
     </>
   );

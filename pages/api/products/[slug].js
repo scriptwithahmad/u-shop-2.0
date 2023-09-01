@@ -40,7 +40,7 @@ export default async function handler(req, res) {
           });
         }
       } catch (error) {
-        res.status(error);
+        res.status(error?.message);
       }
 
     default:

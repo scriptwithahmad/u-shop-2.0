@@ -6,6 +6,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "enter product name"]
     },
+    slug: {
+        type: String,
+    },
     description:{
         type: String,
         required: [true, "enter product description"]
@@ -14,27 +17,22 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "enter product price"]
     },
-    images: [
-        {
-            public_id:{
-                type: String
-            },
-            url:{
-                type: String
-            },
-        }
-    ],
+    avatar:{
+        type: String,
+    },
+    images: {
+        type: Array,
+    },
     category: {
         type: String,
         required: [true, "please enter product category"],
         enum: {
             values: [
-                "Enectronics",
+                "Watches",
                 "Cameras",
-                "Laptops",
-                "Accessories",
-                "Headphones",
-                "Sports",
+                "Tablets",
+                "Mobiles",
+                "Earbuds",
             ],
             message: "category not found"
         }
@@ -44,7 +42,7 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please enter product seller"],
     },
     stock: {
-        type: Number,
+        type: String,
         required: [true, "Please enter product stock"],
     },
     ratings: {

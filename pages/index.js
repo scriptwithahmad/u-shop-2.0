@@ -13,10 +13,11 @@ import InstallmentBanner from "@/components/installmentBanner";
 import LatestTablets from "@/components/LatestTablets";
 import Steps from "@/components/Steps";
 import Footer from "@/components/Footer";
+import { data } from "autoprefixer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ data }) {
   return (
     <>
       <Head>
@@ -27,15 +28,24 @@ export default function Home() {
       </Head>
       <NavBar />
       <Header />
-      <LatestProduct />
+      <LatestProduct props={data} />
       <BestSeller />
-      <LatestProductSec />
+      <LatestProductSec props={data} />
       <InstallmentBanner />
-      <LatestMobiles />
+      <LatestMobiles props={data} />
       <ShopByPrice />
-      <LatestTablets />
+      <LatestTablets props={data} />
       <Steps />
       <Footer />
     </>
   );
+}
+
+
+
+export async function getServerSideProps() {
+  const response = await fetch("http://localhost:3000/api/get-all-product");
+  const data = await response.json();
+
+  return { props: { data } };
 }

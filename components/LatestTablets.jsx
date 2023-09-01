@@ -1,8 +1,14 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
-const LatestTablets = () => {
+const LatestTablets = ({ props }) => {
+  const filteredData = props.products.filter(
+    (product) => product.category === "Tablets"
+  );
+  console.log(filteredData);
+
   var settings = {
     infinite: true,
     speed: 500,
@@ -38,192 +44,33 @@ const LatestTablets = () => {
   return (
     <>
       <div className="productHeader">
-        <h2>Latest Mobiles</h2>
+        <h2>Latest Tablets</h2>
         <span>View All</span>
       </div>
-
-      <Slider className="main-cards" {...settings}>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/samsung-galaxy-tab-s8-x700-pakistan-priceoye-ay60g-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>Samsung Galaxy Tab S8 (X700) </h3>
-              <p>Rs. 176,499</p>
-              <span className="cutPrice">Rs. 184,999</span>
-              <span>5% OFF</span>
-            </div>
-          </div>
-        </div>
-      </Slider>
+      {filteredData.length === 0 ? (
+        <p className="defaultPara">No products have been uploaded yet.</p>
+      ) : (
+        <Slider className="main-cards" {...settings}>
+          {filteredData?.map((v) => {
+            return (
+              <div key={v.id} className="slide-card">
+                <div className="card">
+                  <div className="imgDiv">
+                    <img src={v.avatar} alt="" />
+                  </div>
+                  <div className="card-info">
+                    <Link href={`/product/${v.slug}`}>
+                      <h3>{v.name}</h3>
+                    </Link>
+                    <p>Rs. {v.price} </p>
+                    <span>{v.category} </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </Slider>
+      )}
     </>
   );
 };

@@ -10,7 +10,7 @@
   font-family: "Poppins";
 }
 body {
-  background: #f1f3f6;
+  background: #fcfdff;
 }
 /* HEADER START */
 
@@ -93,8 +93,8 @@ body {
 
 .navModal {
   z-index: 100;
-  min-width: 30%;
-  width: 240px;
+  min-width: 27%;
+  /* width: 240px; */
   height: 100vh;
   position: absolute;
   top: 0;
@@ -106,6 +106,14 @@ body {
   .modal-head {
     background-color: #48afff;
     padding: 2.5rem 2rem;
+    position: relative;
+
+    & i {
+      position: absolute;
+      top: 30%;
+      left: 80%;
+      transform: translate(-50%, -50%);
+    }
 
     & h1 {
       color: white;
@@ -120,8 +128,58 @@ body {
       color: #0091ff;
       border-radius: 5px;
       margin: 15px 0;
+      transition: 0.3s;
+    }
+    & button:hover {
+      border: 1px solid #eee;
+      background-color: transparent;
+      color: #eee;
+      transform: scale(1.02);
     }
   }
+
+  .byPriceInNav {
+    margin: 4% 0;
+
+    & button {
+      padding: 4px 10px;
+      font-size: 14px;
+      width: fit-content;
+    }
+  }
+}
+
+.categoriesInNavBar h2 {
+  padding: 20px 0px 0px 30px;
+}
+
+.cateList {
+  font-size: 13px;
+  display: none;
+}
+.category label {
+  width: 160%;
+  padding: 6px 0;
+  border-bottom: 1px solid #daddda;
+}
+.category input {
+  visibility: hidden;
+}
+.cateList ul li {
+  width: 160%;
+  line-height: 1.8;
+}
+.cateList ul li a {
+  color: #666;
+}
+.cateList ul li:hover {
+  background-color: #eee;
+}
+.category {
+  margin-top: 10px;
+}
+.category input:checked ~ .cateList {
+  display: block;
 }
 
 .overlay {
@@ -132,7 +190,7 @@ body {
   left: 0%;
   top: 0;
   z-index: 1;
-  background-color: gray;
+  background-color: #262626;
   transition: 0.2s linear;
   mix-blend-mode: multiply;
 }
@@ -238,8 +296,13 @@ body {
 .productHeader {
   display: flex;
   align-items: center;
+  font-weight: 600;
+  max-width: 1200px;
+  margin: auto;
+  font-size: 1.5rem;
+  color: #034780;
   justify-content: space-between;
-  padding: 0 7%;
+  padding: 10px 0;
 
   & h2 {
     font-size: 1.2rem;
@@ -251,13 +314,13 @@ body {
 }
 
 .main-cards {
-  padding: 1% 6%;
-  max-width: 98%;
+  max-width: 1200px;
+  margin: auto;
 
   .card {
     padding: 0 12px;
     cursor: pointer;
-    margin: 15px 8px;
+    margin: 10px 5px;
     border-radius: 11px;
     background: #ffffff;
     transition: 0.3s linear;
@@ -267,10 +330,14 @@ body {
       padding: 18px 8px;
 
       & h3 {
+        -webkit-line-clamp: 1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
         color: #404040;
         white-space: pre-line;
         height: max-content;
-        margin-bottom: 0;
+        margin-bottom: 18px;
         overflow: hidden;
       }
 
@@ -278,7 +345,6 @@ body {
         font-weight: 600;
         font-size: 18px;
         color: #07121b;
-        margin-bottom: 6px;
       }
 
       .cutPrice {
@@ -288,7 +354,7 @@ body {
         color: rgba(7, 18, 27, 0.4);
       }
       & span {
-        font-size: 13px;
+        font-size: 14px;
         color: rgba(7, 18, 27, 0.4);
       }
 
@@ -327,8 +393,8 @@ body {
 
 .main-cards .slide-card .card:hover {
   transform: scale(1.02);
-  /* box-shadow: 0 0px 0px 1px #1499ff6e; */
 }
+
 @media screen and (max-width: 425px) {
   .productHeader {
     padding: 0 4%;
@@ -341,7 +407,7 @@ body {
     }
   }
   .main-cards {
-    padding: 1% 2%;
+    padding: 0 2%;
   }
 }
 /* ----------------- LATEST CATEGORY 01 ENDS ----------------------- */
@@ -350,10 +416,13 @@ body {
 .bSellerInfo {
   text-align: center;
   color: #404040;
+  padding: 20px 0;
 
   & h2 {
-    font-weight: 500;
-    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 1.4rem;
+    color: #034780;
   }
   & p {
     font-size: 0.9rem;
@@ -448,7 +517,9 @@ body {
   display: grid;
   gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  padding: 2% 8%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 0;
 
   .myBtn {
     flex-grow: 1;
@@ -463,8 +534,6 @@ body {
     transition: 0.3s ease-in;
   }
 }
-
-
 
 .myBtn::after {
   position: absolute;
@@ -512,15 +581,16 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .shopByBrandBtn{
+  .shopByBrandBtn {
     padding: 4% 6%;
   }
 }
 
 .globalTitle {
-  padding: 0 8%;
-  margin-top: 15px;
+  max-width: 1200px;
+  margin: auto;
   font-weight: 500;
+  padding:  10px 0;
   font-size: 20px;
 }
 .InstallmentBanner {
@@ -626,7 +696,6 @@ body {
       width: 18rem;
     }
   }
-
 }
 @media screen and (max-width: 768px) {
   .footer {
@@ -637,7 +706,14 @@ body {
 @media screen and (max-width: 425px) {
   .footer {
     display: grid;
-    grid-template-columns: 1fr ;
+    grid-template-columns: 1fr;
   }
 }
 /* ----------------- FOOTER ENDS ----------------------- */
+
+.defaultPara{
+  font-size: 14px;
+  color: #666;
+  max-width: 1200px;
+  margin: auto;
+}

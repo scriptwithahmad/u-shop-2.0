@@ -1,13 +1,18 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
-const LatestProduct = () => {
+const LatestProduct = ({ props }) => {
+  // console.log(props.products);
+  
+  const filteredData = props.products.filter((product) => product.category === "Earbuds")
+
   var settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 2,
     responsive: [
       {
         breakpoint: 1024,
@@ -44,186 +49,26 @@ const LatestProduct = () => {
       </div>
 
       <Slider className="main-cards" {...settings}>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
+        {filteredData?.map((v) => {
+          return (
+            <div key={v.id} className="slide-card">
+              <div className="card">
+                <div className="imgDiv">
+                  <img src={v.avatar} alt="" />
+                </div>
+                <div className="card-info">
+                  <Link href={`/product/${v.slug}`}>
+                    <h3>{v.name}</h3>
+                  </Link>
+                  <p>Rs. {v.price} </p>
+                  {/* <span className="cutPrice">Rs. 2,499</span> */}
+                  {/* <span>54% OFF</span> */}
+                  <span>{v.category} </span>
+                </div>
+              </div>
             </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div className="slide-card">
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-          <div className="card">
-            <div className="imgDiv">
-              <img
-                src="https://images.priceoye.pk/m10-tws-wireless-bluetooth-earbuds-pakistan-priceoye-7c1rn-270x270.webp"
-                alt=""
-              />
-            </div>
-            <div className="card-info">
-              <h3>M10 TWS Wireless Bluetooth Earbuds</h3>
-              <p>Rs. 1,149</p>
-              <span className="cutPrice">Rs. 2,499</span>
-              <span>54% OFF</span>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </Slider>
     </>
   );
