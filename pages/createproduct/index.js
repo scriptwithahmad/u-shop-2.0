@@ -78,7 +78,7 @@ const CreateProduct = () => {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
       const avatarUrl = await uploadAvatarToCloudinary();
-      const res = await axios.post("/api/products", {
+      const res = await axios.post("https://e-commerce-frontend-zeta.vercel.app/api/products", {
         ...formData,
         avatar: avatarUrl, // Separate avatar field
         images: imageUrls, // Array of additional images
