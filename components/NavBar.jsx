@@ -14,7 +14,7 @@ const Header = () => {
       overlay.style.filter = "grayscale(100%)";
     });
     hideBtn.addEventListener("click", () => {
-      nav.style.left = "-70%";
+      nav.style.left = "-80%";
       overlay.style.left = "0%";
       overlay.style.width = "0%";
     });

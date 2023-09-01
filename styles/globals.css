@@ -93,12 +93,11 @@ body {
 
 .navModal {
   z-index: 100;
-  min-width: 27%;
-  /* width: 240px; */
+  width: 370px;
   height: 100vh;
   position: absolute;
   top: 0;
-  left: -70%;
+  left: -80%;
   background: #ffffff;
   transition: 1s ease-in-out;
   /* display: none; */
@@ -139,7 +138,7 @@ body {
   }
 
   .byPriceInNav {
-    margin: 4% 0;
+    padding: 30px;
 
     & button {
       padding: 4px 10px;
