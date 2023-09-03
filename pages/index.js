@@ -1,7 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import NavBar from "@/components/NavBar";
 import Header from "@/components/Header";
 import LatestProduct from "@/components/LatestProduct";
@@ -44,7 +42,7 @@ export default function Home({ data }) {
 
 
 export async function getServerSideProps() {
-  const response = await fetch("https://e-commerce-frontend-zeta.vercel.app/api/get-all-product");
+  const response = await fetch("https://e-commerce-frontend-zeta.vercel.app//api/get-all-product");
   const data = await response.json();
 
   return { props: { data } };

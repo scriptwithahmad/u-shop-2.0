@@ -14,12 +14,39 @@ export default async function handler(req, res) {
           success: true,
           singleProduct,
         });
-        console.log(singleProduct)
+        console.log(singleProduct);
       } catch (error) {
         console.log(error);
       }
       break;
+    case "PUT": // Add a new "PUT" case for updating the product
+      try {
+        const updatedProduct = await productModel.findOneAndUpdate(
+          { slug: req.query.slug },
+          req.body, // Assuming your request body contains the updated product data
+          { new: true }
+        );
 
+        if (!updatedProduct) {
+          return res.status(404).json({
+            success: false,
+            message: "Product Not Found!",
+          });
+        }
+
+        return res.status(200).json({
+          success: true,
+          message: "Product Updated Successfully!",
+          updatedProduct,
+        });
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: false,
+          message: "Internal Server Error",
+        });
+      }
+      break;
     case "DELETE":
       try {
         const singleProduct = await productModel.findOne({
