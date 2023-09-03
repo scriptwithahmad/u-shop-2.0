@@ -39,8 +39,8 @@ const DashTeam = ({ data }) => {
   };
 
   const handleSearch = () => {
-    const filteredData = data.products.filter(
-      (v) => v.name.toLowerCase().includes(query.toLowerCase())
+    const filteredData = data.products.filter((v) =>
+      v.name.toLowerCase().includes(query.toLowerCase())
     );
     setFData(filteredData);
   };
@@ -118,7 +118,9 @@ const DashTeam = ({ data }) => {
 export default DashTeam;
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/get-all-product");
+  const res = await fetch(
+    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+  );
   const data = await res.json();
 
   return { props: { data } };

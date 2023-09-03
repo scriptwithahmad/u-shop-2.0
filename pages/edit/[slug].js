@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 
-
 const SingleProduct = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -80,7 +79,9 @@ const SingleProduct = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`/api/products/${slug}`);
+      const res = await fetch(
+        `https://e-commerce-frontend-zeta.vercel.app//api/products/${slug}`
+      );
       const data = await res.json();
       setFormData(data?.singleProduct);
     };
@@ -93,14 +94,17 @@ const SingleProduct = () => {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
       const avatarUrl = await uploadAvatarToCloudinary();
-      const res = await axios.put(`/api/products/${slug}`, {
-        ...formData,
-        avatar: avatarUrl,
-        images: imageUrls,
-      });
+      const res = await axios.put(
+        `https://e-commerce-frontend-zeta.vercel.app//api/products/${slug}`,
+        {
+          ...formData,
+          avatar: avatarUrl,
+          images: imageUrls,
+        }
+      );
       toast.success("Product Updated Successfully!");
       router.push("/dashboard");
-    //   setTempImage("");
+      //   setTempImage("");
     } catch (error) {
       toast.error(error.message);
     } finally {
