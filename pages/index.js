@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import NavBar from "@/components/NavBar";
 import Header from "@/components/Header";
 import LatestProduct from "@/components/LatestProduct";
 import BestSeller from "@/components/BestSeller";
@@ -10,7 +9,6 @@ import ShopByPrice from "@/components/ShopByPrice";
 import InstallmentBanner from "@/components/installmentBanner";
 import LatestTablets from "@/components/LatestTablets";
 import Steps from "@/components/Steps";
-import Footer from "@/components/Footer";
 import { data } from "autoprefixer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,7 +22,6 @@ export default function Home({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar />
       <Header />
       <LatestProduct props={data} />
       <BestSeller />
@@ -34,15 +31,14 @@ export default function Home({ data }) {
       <ShopByPrice />
       <LatestTablets props={data} />
       <Steps />
-      <Footer />
     </>
   );
 }
 
-
-
 export async function getServerSideProps() {
-  const response = await fetch("https://e-commerce-frontend-zeta.vercel.app//api/get-all-product");
+  const response = await fetch(
+    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+  );
   const data = await response.json();
 
   return { props: { data } };

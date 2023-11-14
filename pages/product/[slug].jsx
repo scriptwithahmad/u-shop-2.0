@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SingleProduct = ({ data }) => {
-  // console.log(data.singleProduct);
   const [value, setValue] = useState(1);
   const [text, setText] = useState(true);
-
   const [showBorder, setShowBorder] = useState(false);
   const [totalPrice, setTotalPrice] = useState(data.singleProduct.price);
+  const router = useRouter();
+  const [activeImage, setActiveImage] = useState(data.singleProduct.avatar);
+
+  const changeMainImage = (imageUrl) => {
+    setActiveImage(imageUrl);
+  };
 
   const updateTotalPrice = () => {
     const newTotalPrice = data.singleProduct.price * value;
@@ -15,28 +21,39 @@ const SingleProduct = ({ data }) => {
 
   useEffect(() => {
     updateTotalPrice();
-  }, [value]); // Update the total price whenever the quantity changes
+  }, [value]);
 
   const toggleBorder = () => {
     setShowBorder(!showBorder);
   };
+
   const toggleText = () => {
     setText(!text);
   };
 
-  const [textLimit, setTextLimit] = useState(data.singleProduct.description.slice(0, 200))
-
+  const [textLimit, setTextLimit] = useState(
+    data.singleProduct.description.slice(0, 200)
+  );
 
   return (
     <>
       <div className="product-main">
         <div className="product-col-left">
           <div className="productImg">
-            <img src={data.singleProduct.avatar} alt="product Image here" />
+            <img src={activeImage} alt="product Image here" />
+            {/* <img src={data.singleProduct.avatar} alt="product Image here" /> */}
           </div>
           <div className="product-col-inner">
             {data.singleProduct.images.map((v, i) => {
-              return <img key={i} src={v} alt="product Images" />;
+              return (
+                <img
+                  key={i}
+                  src={v}
+                  alt="product Images"
+                  onClick={() => changeMainImage(v)}
+                  className={v === activeImage ? "active" : ""}
+                />
+              );
             })}
           </div>
         </div>
@@ -48,9 +65,6 @@ const SingleProduct = ({ data }) => {
             <p className="desc">
               {data.singleProduct.description.slice(0, 200) + "..."}
             </p>
-            <button onClick={toggleText}>
-              {text ? "Read More" : "Read Less"}
-            </button>
             <div className="contentMain">
               <div className="quantitiyDiv">
                 <button
@@ -59,7 +73,7 @@ const SingleProduct = ({ data }) => {
                   onClick={() => {
                     if (value > 0) {
                       setValue(value - 1);
-                      updateTotalPrice(); // Update total price when quantity decreases
+                      updateTotalPrice();
                     }
                   }}
                 >
@@ -72,7 +86,7 @@ const SingleProduct = ({ data }) => {
                   onClick={() => {
                     if (value < 9) {
                       setValue(value + 1);
-                      updateTotalPrice(); // Update total price when quantity increases
+                      updateTotalPrice();
                     }
                   }}
                 >
@@ -115,7 +129,9 @@ export default SingleProduct;
 
 export async function getServerSideProps({ params }) {
   const slug = params.slug;
-  const res = await fetch(`https://e-commerce-frontend-zeta.vercel.app/api/products/${slug}`);
+  const res = await fetch(
+    `https://e-commerce-frontend-zeta.vercel.app/api/products/${slug}`
+  );
   const data = await res.json();
 
   return { props: { data } };

@@ -90,7 +90,7 @@
   box-shadow: var(--input-shadow);
 }
 
-.flex {
+.myFlex {
   gap: 20px;
   display: flex;
   margin-top: 18px;

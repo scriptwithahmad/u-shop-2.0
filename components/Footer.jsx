@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      <footer className="footer">
+      <footer className="footer mt-6">
         <div className="footer-col-1">
           <img src="https://static.priceoye.pk/images/logo.svg" alt="" />
           <ul>

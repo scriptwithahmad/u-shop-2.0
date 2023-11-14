@@ -26,8 +26,9 @@ const DashTeam = ({ data }) => {
           toast.success("Product Deleted Successfully!", {
             duration: 2000,
           })
-        ) {
-          router.push("/dashboard");
+          ) {
+          router.push("/dashboard"); 
+          window.location.reload()
         } else {
           toast.error("Something went Wrong");
         }

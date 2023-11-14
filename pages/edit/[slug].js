@@ -80,7 +80,8 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `https://e-commerce-frontend-zeta.vercel.app//api/products/${slug}`
+        `/api/products/${slug}`
+        // `https://e-commerce-frontend-zeta.vercel.app/api/products/${slug}`
       );
       const data = await res.json();
       setFormData(data?.singleProduct);
@@ -94,8 +95,8 @@ const SingleProduct = () => {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
       const avatarUrl = await uploadAvatarToCloudinary();
-      const res = await axios.put(
-        `https://e-commerce-frontend-zeta.vercel.app//api/products/${slug}`,
+      const res = await axios.put(`/api/products/${slug}`,
+        // `https://e-commerce-frontend-zeta.vercel.app//api/products/${slug}`,
         {
           ...formData,
           avatar: avatarUrl,

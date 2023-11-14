@@ -71,18 +71,22 @@ const CreateProduct = () => {
       return "";
     }
   };
-  
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
       const avatarUrl = await uploadAvatarToCloudinary();
-      const res = await axios.post("https://e-commerce-frontend-zeta.vercel.app/api/products", {
-        ...formData,
-        avatar: avatarUrl, // Separate avatar field
-        images: imageUrls, // Array of additional images
-      });
+      const res = await axios.post(
+        "/api/products",
+        // "https://e-commerce-frontend-zeta.vercel.app/api/products",
+        {
+          ...formData,
+          avatar: avatarUrl, // Separate avatar field
+          images: imageUrls, // Array of additional images
+        }
+      );
       toast.success("Product Added Successfully!");
       setFormData({
         name: "",
@@ -97,12 +101,14 @@ const CreateProduct = () => {
       });
       setTempImage("");
     } catch (error) {
-      toast.error(error);
+      // Display a user-friendly error message
+      toast.error(
+        "Something went wrong while adding the product. Please try again later."
+      );
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <div>
@@ -192,7 +198,7 @@ const CreateProduct = () => {
               />
             </div>
           </div>
-          <div className="flex">
+          <div className="myFlex">
             {/* 7. Description ------------*/}
             <div className="createProductInner">
               <label htmlFor="desc">Product Description</label>
