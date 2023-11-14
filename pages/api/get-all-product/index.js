@@ -6,20 +6,28 @@ export default async function handler(req, res) {
 
   try {
     var match = {};
-    var limit = req.query.limit || 12;
-    var page = req.query.page || 1;
-    var skip = (page - 1) * limit;
+    var ProductData = {};
 
-    const products = await productModel.find().limit(limit).skip(skip);
-    const count = await productModel
-      .find(match)
-      .limit(limit)
-      .skip(skip)
-      .count();
+    if (req.query.name) {
+      match.name = new RegExp(req.query.name, "i");
+    } else if (req.query.category) {
+      match.category = new RegExp(req.query.category, "i");
+    } else if (req.query.seller) {
+      match.seller = new RegExp(req.query.seller, "i");
+    }
+
+    ProductData = await productModel
+      .find(match, {
+        description: 0,
+        images: 0,
+        ratings: 0,
+        avatar: 0,
+      })
+      .sort({ createdAt: -1 });
+
     res.status(200).json({
       success: true,
-      count,
-      products,
+      ProductData,
     });
   } catch (error) {
     console.log(error);

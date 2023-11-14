@@ -1,22 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 
 const DashTeam = ({ data }) => {
-  console.log(data.products);
-
-  const [query, setQuery] = useState("");
   const [fData, setFData] = useState(data.products);
+  const [filterByName, setFilterByName] = useState({
+    name: "",
+  });
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value);
+    setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
   };
 
   const router = useRouter();
   const delPost = async (slug) => {
-    console.log(slug);
     try {
       if (window.confirm("Do you wnat to Delete this Product") === true) {
         const res = await fetch(`/api/products/${slug}`, {
@@ -26,9 +26,9 @@ const DashTeam = ({ data }) => {
           toast.success("Product Deleted Successfully!", {
             duration: 2000,
           })
-          ) {
-          router.push("/dashboard"); 
-          window.location.reload()
+        ) {
+          router.push("/dashboard");
+          window.location.reload();
         } else {
           toast.error("Something went Wrong");
         }
@@ -39,18 +39,20 @@ const DashTeam = ({ data }) => {
     }
   };
 
-  const handleSearch = () => {
-    const filteredData = data.products.filter((v) =>
-      v.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFData(filteredData);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
+  const fetchProductData = async () => {
+    try {
+      const { data } = await axios.get("/api/get-all-product", {
+        params: { name: filterByName.name },
+      });
+      setFData(data.products);
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    fetchProductData();
+  }, [filterByName.name]);
 
   return (
     <div>
@@ -61,20 +63,26 @@ const DashTeam = ({ data }) => {
             <h1 className="mainTitle">
               Edify <span>Team</span>
             </h1>
-            <div className="innerInput">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetchProductData();
+              }}
+              className="innerInput"
+            >
               <input
-                type="text"
-                placeholder="Search..."
-                value={query}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
+                 type="search"
+                 name="name"
+                 placeholder="Search..."
+                 value={filterByName.name}
+                 onChange={handleInputChange}
               />
-              <button onClick={handleSearch}>Search</button>
-            </div>
+              <button type="submit">Search</button>
+            </form>
           </div>
 
           <div className="dasboard-Main">
-            {data.products.map((v) => {
+            {fData?.map((v) => {
               return (
                 <div key={v._id} className="das-col">
                   <div className="das-sub-col">
