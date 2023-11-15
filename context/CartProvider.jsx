@@ -26,14 +26,40 @@ const CartProvider = ({ children }) => {
     }
   };
 
-//   const removeFromCart = (existedCartItem) => {
-//     const isItemInCart = cartItems.find(
-//       (cartItem) => cartItem._id === existedCartItem._id
-//     );
-//   };
+  const removeFromCart = (existedCartItem) => {
+    const isItemInCart = cartItems.find(
+      (cartItem) => cartItem._id === existedCartItem._id
+    );
+
+    if (isItemInCart.quantity === 1) {
+      setCartItems(
+        cartItems.filter((cartItem) => cartItem._id !== existedCartItem._id)
+      );
+    } else {
+      setCartItems(
+        cartItems.map((cartItem) => 
+          cartItem._id === existedCartItem._id
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem
+        )
+      );
+    }
+  };
+
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+  },[cartItems])
+
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+    >
       {children};
     </CartContext.Provider>
   );

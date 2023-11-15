@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CartContext } from "@/context/CartProvider";
 import { useState, useEffect, useContext } from "react";
 
@@ -23,7 +22,7 @@ const SingleProduct = ({ data }) => {
    
   // Cart Functionality -----------
 
-  const {addToCart } = useContext(CartContext)  
+  const {addToCart, removeFromCart, clearCart } = useContext(CartContext)  
 
 
 
@@ -102,6 +101,8 @@ const SingleProduct = ({ data }) => {
               </div>
             </div>
             <button className="cartBtn" onClick={() => addToCart(data.singleProduct)}>Add to Cart</button>
+            <button className="cartBtn" onClick={() => {removeFromCart(data.singleProduct)}}>Remove From Cart</button>
+            <button className="cartBtn" onClick={() => {clearCart()}}>Clear Cart</button>
           </div>
         </div>
       </div>
