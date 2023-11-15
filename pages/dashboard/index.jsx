@@ -57,7 +57,7 @@ const DashTeam = ({ data }) => {
   return (
     <div>
       <Toaster />
-      <div class="backCover">
+      <div className="backCover">
         <div className="dash-wrapper">
           <div className="filterBox">
             <h1 className="mainTitle">
@@ -104,14 +104,14 @@ const DashTeam = ({ data }) => {
                   </div>
                   <div className="action">
                     <Link href={`product/${v.slug}`}>
-                      <i class="fa-solid fa-eye"></i>
+                      <i className="fa-solid fa-eye"></i>
                     </Link>
                     <Link href={`/edit/${v.slug}`}>
-                      <i class="fa-solid fa-pen-to-square"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                     </Link>
                     <i
                       onClick={() => delPost(v.slug)}
-                      class="fa-solid fa-trash"
+                      className="fa-solid fa-trash"
                     ></i>
                   </div>
                 </div>

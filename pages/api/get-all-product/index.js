@@ -21,7 +21,6 @@ export default async function handler(req, res) {
         description: 0,
         images: 0,
         ratings: 0,
-        avatar: 0,
       })
       .sort({ createdAt: -1 });
 

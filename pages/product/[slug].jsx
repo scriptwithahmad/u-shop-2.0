@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { CartContext } from "@/context/CartProvider";
+import { useState, useEffect, useContext } from "react";
 
 const SingleProduct = ({ data }) => {
   const [value, setValue] = useState(1);
-  const [text, setText] = useState(true);
-  const [showBorder, setShowBorder] = useState(false);
   const [totalPrice, setTotalPrice] = useState(data.singleProduct.price);
-  const router = useRouter();
   const [activeImage, setActiveImage] = useState(data.singleProduct.avatar);
 
   const changeMainImage = (imageUrl) => {
@@ -23,17 +20,13 @@ const SingleProduct = ({ data }) => {
     updateTotalPrice();
   }, [value]);
 
-  const toggleBorder = () => {
-    setShowBorder(!showBorder);
-  };
+   
+  // Cart Functionality -----------
 
-  const toggleText = () => {
-    setText(!text);
-  };
+  const {addToCart } = useContext(CartContext)  
 
-  const [textLimit, setTextLimit] = useState(
-    data.singleProduct.description.slice(0, 200)
-  );
+
+
 
   return (
     <>
@@ -41,7 +34,6 @@ const SingleProduct = ({ data }) => {
         <div className="product-col-left">
           <div className="productImg">
             <img src={activeImage} alt="product Image here" />
-            {/* <img src={data.singleProduct.avatar} alt="product Image here" /> */}
           </div>
           <div className="product-col-inner">
             {data.singleProduct.images.map((v, i) => {
@@ -109,17 +101,9 @@ const SingleProduct = ({ data }) => {
                 </div>
               </div>
             </div>
-            <button className="cartBtn">Add to Cart</button>
+            <button className="cartBtn" onClick={() => addToCart(data.singleProduct)}>Add to Cart</button>
           </div>
         </div>
-      </div>
-      <div className="productDetails">
-        <h1>Product Details</h1>
-        {textLimit.length === 200 ? (
-          <p className="fullDesc">{data.singleProduct.description}</p>
-        ) : (
-          <p>Nothing in this section.</p>
-        )}
       </div>
     </>
   );

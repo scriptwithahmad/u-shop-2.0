@@ -13,7 +13,7 @@ const Search = ({ setShowSearch }) => {
           <i
             title="close the Searchbar"
             onClick={() => setShowSearch(false)}
-            class="fa-solid fa-xmark"
+            className="fa-solid fa-xmark"
           ></i>
         </div>
         <div className="w-[30vw] m-auto py-4">

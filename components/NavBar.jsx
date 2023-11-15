@@ -32,13 +32,15 @@ const Navbar = () => {
           <div className={`bar ${isOpen ? "open" : ""}`} />
           <div className={`bar ${isOpen ? "open" : ""}`} />
           <div className={`bar ${isOpen ? "open" : ""}`} />
-          <i  onClick={() => setShowSearch(true)} class="absolute top-[40%] left-[76%] fa-solid fa-magnifying-glass"></i>
-          <i class="absolute top-[40%] left-[79%] fa-regular fa-heart"></i>
+          <i
+            onClick={() => setShowSearch(true)}
+            className="absolute top-[40%] left-[76%] fa-solid fa-magnifying-glass"
+          ></i>
+          <i className="absolute top-[40%] left-[79%] fa-regular fa-heart"></i>
           <i
             onClick={() => setShowCart(true)}
-            class="absolute top-[40%] left-[82%] fa-solid fa-cart-shopping"
+            className="absolute top-[40%] left-[82%] fa-solid fa-cart-shopping"
           ></i>
-          <button className="apllyBtn">Apply Now</button>
         </div>
         <div className={`slider ${isOpen ? "open" : ""}`} />
       </nav>

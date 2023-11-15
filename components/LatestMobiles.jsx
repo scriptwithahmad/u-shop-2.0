@@ -3,10 +3,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 
+
 const LatestMobiles = ({ props }) => {
-  const filteredData = props.products.filter(
-    (product) => product.category === "Mobiles"
-  );
+  const AllProductsData = props.ProductData;
 
   var settings = {
     infinite: true,
@@ -48,11 +47,11 @@ const LatestMobiles = ({ props }) => {
         <span>View All</span>
       </div>
 
-      {filteredData.length === 0 ? (
+      {AllProductsData?.length === 0 ? (
         <p>No products have been uploaded yet.</p>
       ) : (
         <Slider className="main-cards" {...settings}>
-          {filteredData?.map((v) => {
+          {AllProductsData?.map((v) => {
             return (
               <div key={v.id} className="slide-card">
                 <div className="card">
@@ -63,8 +62,8 @@ const LatestMobiles = ({ props }) => {
                     <Link href={`/product/${v.slug}`}>
                       <h3>{v.name}</h3>
                     </Link>
-                    <p>Rs. {v.price} </p>
-                    <span>{v.category} </span>
+                    <p>Rs. {v.price}</p>
+                    <span>{v.category}</span>
                   </div>
                 </div>
               </div>
@@ -77,4 +76,3 @@ const LatestMobiles = ({ props }) => {
 };
 
 export default LatestMobiles;
-

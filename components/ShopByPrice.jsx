@@ -19,64 +19,64 @@ const ShopByPrice = () => {
         <div className="shopByBrandBtn">
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/samsung.svg "
-              alt=""
             />
             <p>Samsung</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/oppo.svg"
-              alt=""
             />
             <p>Oppo</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/xiaomi.svg"
-              alt=""
             />
             <p>Xiaomi</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="	https://static.priceoye.pk/images/brands/svg/vivo.svg"
-              alt=""
             />
             <p>Vivo</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/tecno.svg"
-              alt=""
             />
             <p>Tecno</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/realme.svg"
-              alt=""
             />
             <p>Realme</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="	https://static.priceoye.pk/images/brands/svg/itel.svg"
-              alt=""
             />
             <p>Itel</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/apple.svg"
-              alt=""
             />
             <p>Apple</p>
           </div>
           <div className="brandDiv">
             <img
+              alt="Image Here"
               src="https://static.priceoye.pk/images/brands/svg/nokia.svg"
-              alt=""
             />
             <p>Nokia</p>
           </div>

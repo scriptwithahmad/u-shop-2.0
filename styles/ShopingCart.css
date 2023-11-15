@@ -17,12 +17,8 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 14px;
 
-  & h1 {
-    color: #0091ff;
-    font-weight: 500;
-    letter-spacing: 1px;
-  }
 }
+
 
 .cart-items {
   margin: 20px 0;
@@ -53,6 +49,7 @@
 
 .scroll{
   overflow: hidden;
+  border: solid;
 }
 
 @keyframes move {

@@ -61,7 +61,7 @@ const ShoppingCart = () => {
                     <p className="text-[#000000d7] text-sm">Color: Light Green</p>
                   </div>
                   <div>
-                    <i class="text-green-600 text-sm fa-solid fa-check"></i>
+                    <i className="text-green-600 text-sm fa-solid fa-check"></i>
                     <span className="ml-3 text-sm">{v.quantity}</span>
                   </div>
                 </div>
