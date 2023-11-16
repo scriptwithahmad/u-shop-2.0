@@ -20,8 +20,8 @@ export default function Home({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Header />
-       <BestSeller />
+      <Header />
+      {/*  <BestSeller />
       <LatestProductSec props={data} />
       <InstallmentBanner /> */}
       <LatestMobiles props={data} />

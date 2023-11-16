@@ -24,73 +24,6 @@ body {
   }
 }
 
-/* .myNav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px;
-  background: #48afff;
-
-  .logo {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-
-    & img {
-      height: 27px;
-    }
-
-    & i {
-      color: white;
-      cursor: pointer;
-      font-size: 1.8rem;
-      transition: 0.3s ease-in-out;
-    }
-    & i:hover {
-      color: #0091ff;
-    }
-  }
-
-  .inputDiv {
-    position: relative;
-
-    & input {
-      padding: 12px;
-      width: 380px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    & i {
-      font-size: 18px;
-      color: #1498ff;
-      position: absolute;
-      top: 50%;
-      left: 94%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  & .nav-btns {
-    & button {
-      font-size: 14px;
-      border: 1px solid #fff;
-      padding: 6px 24px;
-      color: #fff;
-      border-radius: 5px;
-      margin-left: 6px;
-    }
-
-    & .login-btn {
-      background-color: #fff;
-      color: #1498ff;
-    }
-  }
-}
-.myNav {
-  position: relative;
-} */
-
 .navModal {
   z-index: 100;
   width: 370px;
@@ -1008,7 +941,7 @@ body {
 }
 /* Search Bar  */
 /* category page  */
-.cateImg{
+.cateImg {
   width: 100%;
   height: 100%;
   padding: 8px;

@@ -21,8 +21,7 @@ const SingleProduct = ({ data }) => {
 
    
   // Cart Functionality -----------
-
-  const {addToCart, removeFromCart, clearCart } = useContext(CartContext)  
+  const {addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)  
 
 
 
@@ -103,6 +102,7 @@ const SingleProduct = ({ data }) => {
             <button className="cartBtn" onClick={() => addToCart(data.singleProduct)}>Add to Cart</button>
             <button className="cartBtn" onClick={() => {removeFromCart(data.singleProduct)}}>Remove From Cart</button>
             <button className="cartBtn" onClick={() => {clearCart()}}>Clear Cart</button>
+            <h1 className="text-lg font-bold">Total: ${getCartTotal()}</h1>
           </div>
         </div>
       </div>
