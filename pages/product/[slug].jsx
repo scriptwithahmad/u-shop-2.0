@@ -19,11 +19,16 @@ const SingleProduct = ({ data }) => {
     updateTotalPrice();
   }, [value]);
 
-   
   // Cart Functionality -----------
-  const {addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)  
+  const {
+    cartItems,
+    addToCart,
+    clearCart,
+    decreaseItemQuantity,
+    RemoveSpecificItemFromCart,
+  } = useContext(CartContext);
 
-
+  console.log(cartItems)
 
 
   return (
@@ -86,7 +91,7 @@ const SingleProduct = ({ data }) => {
               <div className="priceInfoCard">
                 <div className="card">
                   <h2>Actual Price</h2>
-                  <span>29,999</span>
+                  <span> {data.singleProduct.price} </span>
                 </div>
                 <div className="card">
                   <h2>Discount Price</h2>
@@ -99,10 +104,30 @@ const SingleProduct = ({ data }) => {
                 </div>
               </div>
             </div>
-            <button className="cartBtn" onClick={() => addToCart(data.singleProduct)}>Add to Cart</button>
-            <button className="cartBtn" onClick={() => {removeFromCart(data.singleProduct)}}>Remove From Cart</button>
-            <button className="cartBtn" onClick={() => {clearCart()}}>Clear Cart</button>
-            <h1 className="text-lg font-bold">Total: ${getCartTotal()}</h1>
+            <button
+              className="cartBtn"
+              onClick={() => addToCart(data.singleProduct)}
+            >
+              Add to Cart
+            </button>
+            <button
+              className="cartBtn"
+              onClick={() => {
+                decreaseItemQuantity(data.singleProduct);
+              }}
+            >
+              Remove From Cart
+            </button>
+            <button
+              className="cartBtn"
+              onClick={() => {
+                clearCart();
+              }}
+            >
+              Clear Cart
+            </button>
+            <button className="cartBtn" onClick={() => RemoveSpecificItemFromCart(data.singleProduct._id)}>Remove</button>
+            {/* <h1 className="text-lg font-bold">Total: ${getCartTotal()}</h1> */}
           </div>
         </div>
       </div>
