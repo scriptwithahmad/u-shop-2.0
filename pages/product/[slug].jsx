@@ -28,8 +28,8 @@ const SingleProduct = ({ data }) => {
     RemoveSpecificItemFromCart,
   } = useContext(CartContext);
 
-  console.log(cartItems)
-
+  // console.log(cartItems)
+ 
 
   return (
     <>

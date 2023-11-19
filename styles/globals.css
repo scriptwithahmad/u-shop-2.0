@@ -830,24 +830,24 @@ body {
 .cartMain {
   max-width: 1100px;
   margin: auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 .cartInner {
   display: flex;
-  gap: 20px;
+  gap: 10px;
 }
 .leftSide {
-  width: 60%;
+  width: 65%;
 }
 
 .cartSubInner {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding-bottom: 20px;
 }
 .cartSubInner .cartImgDiv {
-  width: 230px;
-  height: 230px;
+  width: 200px;
+  height: 200px;
   background-color: #f7f7f7;
   border-radius: 6px;
 
@@ -860,19 +860,20 @@ body {
 }
 
 .leftSide .infoMain {
+  height: 180px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 200px;
 }
 
 .rightSide {
-  width: 40%;
+  width: 35%;
 }
 
 .rightSide .OrderDivMain {
   background-color: #f7f7f7;
   padding: 20px;
+  border-radius: 8px;
 
   .orderFlex {
     display: flex;

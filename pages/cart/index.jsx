@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "@/context/CartProvider";
 
 const products = [
   {
@@ -30,39 +31,91 @@ const products = [
 ];
 const ShoppingCart = () => {
   const router = useRouter();
-  const [newItems, setNewItems] = useState(null)
-  const { newItem } = router.query;
-  const parsedItems = newItem ? [JSON.parse(decodeURIComponent(newItem))] : [];
-  console.log(parsedItems)
+  const [value, setValue] = useState(1);
 
-  useEffect(() => {
-    const storeItems = localStorage.getItem('newItems')
-    if(storeItems){
-      setNewItems(JSON.parse(storeItems))
-    }
-  },[])
+  const {
+    cartItems,
+    addToCart,
+    clearCart,
+    decreaseItemQuantity,
+    RemoveSpecificItemFromCart,
+  } = useContext(CartContext);
+  console.log(cartItems);
+
+  // Calculate total price
+  const totalPrice = cartItems.reduce((total, item) => {
+    const itemPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, ""));
+    return total + itemPrice * item.quantity;
+  }, 0);
 
   return (
-    <div className="cartMain">
+    <div className="cartMain border rounded-lg p-4">
       <h2 className="text-blue-600 py-8 text-3xl font-bold">Shopping Cart</h2>
       <div className="cartInner">
         <div className="leftSide">
-          {parsedItems.map((v,i) => {
+          {cartItems.map((v, i) => {
             return (
-              <div key={i} className="cartSubInner">
-                <div className="cartImgDiv">
+              <div
+                key={i}
+                className="cartSubInner border mb-3 rounded-lg bg-[#f7f7f7]"
+              >
+                <div className="cartImgDiv border-r border-r-gray-200">
                   <img className="p-8" src={v.avatar} alt="img here" />
                 </div>
-                <div className="infoMain">
+                <div className="infoMain w-[350px]">
                   <div className="info">
-                    <h2 className="text-blue-900 text-base mb-2">{v.name}</h2>
+                    <h2 className="text-indigo-900 font-semibold text-lg mb-2">
+                      {v.name}
+                    </h2>
                     <h3 className="text-[#0000008e] text-xs mb-2">{v.color}</h3>
-                    <p className="text-[#000000d7] text-sm mb-1">RS. {v.price}</p>
-                    <p className="text-[#000000d7] text-sm">Color: Light Green</p>
+                    <p className="text-[#000000d7] text-sm mb-1">
+                      Only/- RS. {v.price}
+                    </p>
+                    <p className="text-[#000000d7] text-sm">{v.category}</p>
                   </div>
-                  <div>
-                    <i className="text-green-600 text-sm fa-solid fa-check"></i>
-                    <span className="ml-3 text-sm">{v.quantity}</span>
+                  <div className="flex flex-col ">
+                    <span className="text-xs text-gray-600">
+                      Available Stock
+                    </span>
+                    <span className="text-sm text-gray-900">{v.stock}</span>
+                  </div>
+                </div>
+                <div>
+                  <button
+                    className="px-2 rounded text-red-600 text-sm hover:text-red-700"
+                    onClick={() => RemoveSpecificItemFromCart(v._id)}
+                  >
+                    Remove
+                  </button>
+                  <div className="contentMain">
+                    <div className="mt-4">
+                      <button
+                        className="bg-gray-200 px-2 rounded-sm border disabled:border-red-300 disabled:bg-red-100 disabled:cursor-not-allowed"
+                        disabled={value === 1}
+                        onClick={() => {
+                          if (value > 1) {
+                            setValue(value - 1);
+                          }
+                        }}
+                      >
+                        -
+                      </button>
+                      <span className="bg-gray-200 border border-gray-300 px-2">
+                        {" "}
+                        {value}{" "}
+                      </span>
+                      <button
+                        className="bg-gray-200 px-2 rounded-sm border disabled:border-red-300 disabled:bg-red-100 disabled:cursor-not-allowed"
+                        disabled={value === 9}
+                        onClick={() => {
+                          if (value < 9) {
+                            setValue(value + 1);
+                          }
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -87,8 +140,8 @@ const ShoppingCart = () => {
               <p className="text-sm text-[#000000b0]">RS. 8.32</p>
             </div>
             <div className="orderFlex mb-4 pb-4 border-b-[1px]">
-              <h1 className="text-sm text-[#000000b0]">Order Total</h1>
-              <p className="text-sm text-[#000000b0]">RS. 112.32</p>
+              <h1 className="text-sm text-[#000000b0]">Order Sub Total</h1>
+              <p className="text-sm text-[#000000b0]">{`RS. ${totalPrice.toFixed(1)}`}</p>
             </div>
           </div>
         </div>

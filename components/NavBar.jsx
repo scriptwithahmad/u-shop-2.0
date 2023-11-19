@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
-import ShopingCart from "./ShopingCart";
 import Search from "./Search";
+import { CartContext } from "@/context/CartProvider";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -11,7 +11,8 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const [showCart, setShowCart] = useState(false);
+  const { cartItems } = useContext(CartContext);
+  const NoOfCartItems = cartItems.length;
 
   return (
     <>
@@ -37,14 +38,16 @@ const Navbar = () => {
             className="absolute top-[40%] left-[76%] fa-solid fa-magnifying-glass"
           ></i>
           <i className="absolute top-[40%] left-[79%] fa-regular fa-heart"></i>
-          <i
-            onClick={() => setShowCart(true)}
-            className="absolute top-[40%] left-[82%] fa-solid fa-cart-shopping"
-          ></i>
+          <Link href={"/cart"}>
+            <i className="absolute top-[40%] left-[82%] fa-solid fa-cart-shopping">
+              <span className="bg-sky-300 text-slate-950 absolute -top-2 left-2 text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                {NoOfCartItems}
+              </span>
+            </i>
+          </Link>
         </div>
         <div className={`slider ${isOpen ? "open" : ""}`} />
       </nav>
-      {showCart && <ShopingCart setShowCart={setShowCart} />}
       {showSearch && <Search setShowSearch={setShowSearch} />}
     </>
   );
