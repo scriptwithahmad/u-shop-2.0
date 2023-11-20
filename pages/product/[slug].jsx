@@ -28,9 +28,6 @@ const SingleProduct = ({ data }) => {
     RemoveSpecificItemFromCart,
   } = useContext(CartContext);
 
-  // console.log(cartItems)
- 
-
   return (
     <>
       <div className="product-main">
@@ -126,7 +123,12 @@ const SingleProduct = ({ data }) => {
             >
               Clear Cart
             </button>
-            <button className="cartBtn" onClick={() => RemoveSpecificItemFromCart(data.singleProduct._id)}>Remove</button>
+            <button
+              className="cartBtn"
+              onClick={() => RemoveSpecificItemFromCart(data.singleProduct._id)}
+            >
+              Remove
+            </button>
             {/* <h1 className="text-lg font-bold">Total: ${getCartTotal()}</h1> */}
           </div>
         </div>
