@@ -6,7 +6,8 @@ import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
 const DashTeam = ({ data }) => {
-  const [fData, setFData] = useState(data.products);
+  const [fData, setFData] = useState(data.ProductData);
+  console.log(fData);
   const [filterByName, setFilterByName] = useState({
     name: "",
   });
@@ -44,7 +45,7 @@ const DashTeam = ({ data }) => {
       const { data } = await axios.get("/api/get-all-product", {
         params: { name: filterByName.name },
       });
-      setFData(data.products);
+      setFData(data.ProductData);
     } catch (error) {
       console.log(error);
     }
@@ -71,11 +72,11 @@ const DashTeam = ({ data }) => {
               className="innerInput"
             >
               <input
-                 type="search"
-                 name="name"
-                 placeholder="Search..."
-                 value={filterByName.name}
-                 onChange={handleInputChange}
+                type="search"
+                name="name"
+                placeholder="Search..."
+                value={filterByName.name}
+                onChange={handleInputChange}
               />
               <button type="submit">Search</button>
             </form>

@@ -13,14 +13,13 @@ const SingleProduct = () => {
     category: "",
     seller: "",
     stock: "",
-    avatar: "", // Separate field for the avatar
-    images: [], // Initialize as an empty array for additional images
+    avatar: "",
+    images: [],
   });
 
   const router = useRouter();
 
   const slug = router.query.slug;
-
   const formDataChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -201,9 +200,9 @@ const SingleProduct = () => {
               />
             </div>
           </div>
-          <div className="flex">
+          <div className="flex flex-col">
             {/* 7. Description ------------*/}
-            <div className="createProductInner">
+            <div className="createProductInner my-2">
               <label htmlFor="desc">Product Description</label>
               <textarea
                 value={formData.description}
@@ -217,7 +216,7 @@ const SingleProduct = () => {
               ></textarea>
             </div>
             {/* Product Hero Image ------------*/}
-            <div className="createProductInner">
+            <div className="createProductInner my-2">
               <label htmlFor="avatarInput">Product Fetured Image</label>
               <input
                 style={{ color: "#7d879c" }}
@@ -231,7 +230,7 @@ const SingleProduct = () => {
             </div>
 
             {/* Arry of Images to Show */}
-            <div className="createProductInner">
+            <div className="createProductInner my-2">
               <label htmlFor="arryOfImages">Select Multiple Images</label>
               <input
                 style={{ color: "#7d879c" }}
