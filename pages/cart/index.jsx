@@ -24,12 +24,12 @@ const ShoppingCart = () => {
   }, 0);
 
   return (
-    <div className="cartMain border rounded-lg p-4">
+    <div className="max-w-[1200px] 2xl:m-auto 2xl:mt-5 md:m-5 border rounded-lg p-4 globalShadow">
       <h2 className="text-blue-600 py-2 mb-4 pb-4 text-3xl font-bold border-b border-gray-200">
         Shopping Cart
       </h2>
-      <div className="cartInner">
-        <div className="leftSide">
+      <div className="flex gap-3 lg:flex-row md:flex-row flex-col items-center justify-center lg:items-start md:items-start">
+        <div className="lg:w-[65%] md:w-[50%]">
           {cartLength == 0 ? (
             <div className="my-2">
               <h1 className="text-slate-950 text-lg my-3">
@@ -48,40 +48,42 @@ const ShoppingCart = () => {
                 return (
                   <div
                     key={i}
-                    className="cartSubInner border mb-3 rounded-lg bg-[#f7f7f7]"
+                    className="flex p-4 lg:flex-row items-center lg:gap-5 border mb-3 rounded-lg bg-[#f7f7f7] flex-col gap-0"
                   >
-                    <div className="cartImgDiv border-r border-r-gray-200">
-                      <img className="p-8" src={v.avatar} alt="img here" />
+                    <div className="w-[200px] h-[150px] lg:w-[180px] lg:h-[180px] bg-[#f7f7f7] rounded-md lg:border-r lg:border-r-gray-200">
+                      <img
+                        className="lg:p-8 md:p-2 mix-blend-multiply h-full w-full object-contain lg:object-cover"
+                        src={v.avatar}
+                        alt="img here"
+                      />
                     </div>
-                    <div className="infoMain w-[350px]">
-                      <div className="info">
-                        <h2 className="text-indigo-900 font-semibold text-lg mb-2">
+                    <div className="lg:h-[180px] flex flex-col justify-between lg:py-2 lg:w-[300px] 2xl:w-[400px]">
+                      <div className="">
+                        <h2 className="text-indigo-900 font-semibold md:text-lg lg:text-lg mb-2 mt-3">
                           {v.name}
                         </h2>
-                        <h3 className="text-[#0000008e] text-xs mb-2">
-                          {v.color}
-                        </h3>
-                        <p className="text-[#000000d7] text-sm mb-1">
-                          Only/- RS. {v.price}
+                        <p className="text-[#000000d7] text-sm md:text-xs mb-1 md:mb-2">
+                          <span className=" text-gray-600 md:text-xs">
+                            Only/- RS.
+                          </span>{" "}
+                          {v.price}
                         </p>
-                        <p className="text-[#000000d7] text-sm">{v.category}</p>
+                        <p className="text-[#000000c1] text-sm md:text-xs">
+                          {v.category}
+                        </p>
                       </div>
-                      <div className="flex flex-col ">
+                      <div className="flex flex-col md:my-2">
                         <span className="text-xs text-gray-600">
                           Available Stock
                         </span>
-                        <span className="text-sm text-gray-900">{v.stock}</span>
+                        <span className="lg:text-sm md:text-xs text-gray-800">
+                          {v.stock}
+                        </span>
                       </div>
                     </div>
-                    <div>
-                      <button
-                        className="px-2 rounded text-red-600 text-sm hover:text-red-700"
-                        onClick={() => RemoveSpecificItemFromCart(v._id)}
-                      >
-                        Remove
-                      </button>
-                      <div className="contentMain">
-                        <div className="mt-4">
+                    <div className="md:flex md:w-full lg:w-fit lg:h-[180px] lg:justify-end md:items-center md:justify-between lg:flex-col">
+                      <div className="contentMain md:mb-2">
+                        <div className="mt-4 md:mt-1">
                           <button
                             className="bg-gray-200 px-2 rounded-sm border disabled:border-red-300 disabled:bg-red-100 disabled:cursor-not-allowed"
                             onClick={() => {
@@ -101,6 +103,12 @@ const ShoppingCart = () => {
                           </button>
                         </div>
                       </div>
+                      <button
+                        className="lg:px-2 rounded text-red-600 text-sm hover:text-red-700"
+                        onClick={() => RemoveSpecificItemFromCart(v._id)}
+                      >
+                        Remove
+                      </button>
                     </div>
                   </div>
                 );
@@ -117,8 +125,8 @@ const ShoppingCart = () => {
             Clear Cart
           </button>
         </div>
-        <div className="rightSide">
-          <div className="OrderDivMain">
+        <div className="md:w-[50%] lg:w-[35%] w-full">
+          <div className="OrderDivMain border">
             <h1 className="text-blue-600 text-xl mb-8 font-bold">
               Order Summary
             </h1>
