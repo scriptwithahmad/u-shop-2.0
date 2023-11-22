@@ -186,7 +186,7 @@ body {
 #slickBtnNext {
   position: absolute;
   top: 48%;
-  right: 4%;
+  right: 2%;
   transform: translate(-50%, -50%);
   padding: 10px 5px;
   font-size: 22px;
@@ -199,7 +199,7 @@ body {
 #slickBtnPrev {
   position: absolute;
   top: 45%;
-  left: 4%;
+  left: 2%;
   padding: 10px 5px;
   font-size: 22px;
   color: #444;
@@ -236,6 +236,7 @@ body {
 
 @media screen and (max-width: 1024px) {
   #slickBtnNext {
+    border: solid;
     right: 1%;
     color: gray;
   }

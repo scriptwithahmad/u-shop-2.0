@@ -32,15 +32,16 @@ const SingleProduct = ({ data }) => {
   } = useContext(CartContext);
 
   // REVIEWS SYSTEMS HERE
-  const [hover, setHover] = useState(null);
-  const [rating, setRating] = useState(null);
   const [reviewData, setReviewData] = useState({
     costomerName: "",
     NoOfreviews: "",
     comment: "",
     createdAt: "",
   });
-  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews]);
+  const [hover, setHover] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews])
+  console.log(newReviews)
 
   // input handler
   const inputHandler = (e) => {
@@ -50,19 +51,20 @@ const SingleProduct = ({ data }) => {
 
   // Reviews on Sumbit
   const submitReview = async (e) => {
-    console.log(e)
     e.preventDefault();
 
-    try {
-      const res = await axios.put(
-        `/api/products/${data.singleProduct.slug}?reviews=POST`,
-        reviewData
-      );
+    alert("hey")
+    // try {
+    //   alert("hey")
+    //   const res = await axios.put(
+    //     `/api/products/${data.singleProduct.slug}?reviews=POST`,
+    //     reviewData
+    //   );
 
-      setNewReviews([...newReviews, reviewData]);
-    } catch (error) {
-      console.log(error);
-    }
+    //   setNewReviews(...newReviews, reviewData);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -261,9 +263,10 @@ const SingleProduct = ({ data }) => {
         </div>
 
         <div className="my-2">
-          <button className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white">
+          <button type="submit" className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white">
             Submit Review
           </button>
+          <button type="reset">reset</button>
         </div>
       </form>
     </>
