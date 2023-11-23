@@ -20,32 +20,59 @@ export default async function handler(req, res) {
       }
       break;
     case "PUT": // Add a new "PUT" case for updating the product
-      try {
+      if (req.query.reviews) {
+        let reviews = req.query.reviews;
+        switch (reviews) {
+          case "POST":
+            let updatedProduct = await productModel.findOneAndUpdate(
+              { slug: req.query.slug },
+              { $push: { reviews: req.body } },
+              { new: true }
+            );
+
+            res.status(200).json({
+              success: true,
+              message: updatedProduct,
+            });
+            break;
+          case "GET":
+            let productGet = await productModel.findOne({
+              slug: req.query.slug,
+            });
+            res.status(200).json({
+              success: true,
+              message: productGet,
+            });
+            break;
+          case "DELETE":
+            let newProduct = await productModel.findOneAndUpdate(
+              { slug: req.query.slug },
+              { $pull: { reviews: { _id: req.body._id } } },
+              { new: true }
+            );
+            res.status(200).json({
+              success: true,
+              message: newProduct,
+            });
+            break;
+          default:
+            res.send("Invalid Product");
+            break;
+        }
+      } else {
         const updatedProduct = await productModel.findOneAndUpdate(
           { slug: req.query.slug },
           req.body, // Assuming your request body contains the updated product data
           { new: true }
         );
 
-        if (!updatedProduct) {
-          return res.status(404).json({
-            success: false,
-            message: "Product Not Found!",
-          });
-        }
-
-        return res.status(200).json({
+        res.status(200).json({
           success: true,
           message: "Product Updated Successfully!",
           updatedProduct,
         });
-      } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-          success: false,
-          message: "Internal Server Error",
-        });
       }
+
       break;
     case "DELETE":
       try {
