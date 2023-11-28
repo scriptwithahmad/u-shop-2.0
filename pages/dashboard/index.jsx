@@ -88,9 +88,10 @@ const DashTeam = ({ data }) => {
                 <div key={v._id} className="das-col">
                   <div className="das-sub-col">
                     <div className="dasImgMain">
-                      <Image
+                      <img
                         src={v.avatar}
                         alt="Image Alt"
+                        href={null}
                         width={200}
                         height={200}
                         className="das-img"

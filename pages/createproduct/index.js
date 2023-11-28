@@ -6,14 +6,14 @@ const CreateProduct = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    brand: "",
+    sale: "",
     description: "",
     price: "",
     category: "",
     seller: "",
     stock: "",
-    avatar: "", // Separate field for the avatar
-    images: [], // Initialize as an empty array for additional images
+    avatar: "",
+    images: [],
   });
 
   const formDataChangeHandler = (e) => {
@@ -78,33 +78,26 @@ const CreateProduct = () => {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
       const avatarUrl = await uploadAvatarToCloudinary();
-      const res = await axios.post(
-        "/api/products",
-        // "https://e-commerce-frontend-zeta.vercel.app/api/products",
-        {
-          ...formData,
-          avatar: avatarUrl, // Separate avatar field
-          images: imageUrls, // Array of additional images
-        }
-      );
+      const res = await axios.post("/api/products", {
+        ...formData,
+        avatar: avatarUrl,
+        images: imageUrls,
+      });
       toast.success("Product Added Successfully!");
       setFormData({
         name: "",
-        brand: "",
+        sale: "",
         description: "",
         price: "",
         category: "",
         seller: "",
         stock: "",
-        avatar: "", // Reset the avatar field
-        images: [], // Reset the additional images field
+        avatar: "",
+        images: [],
       });
       setTempImage("");
     } catch (error) {
-      // Display a user-friendly error message
-      toast.error(
-        "Something went wrong while adding the product. Please try again later."
-      );
+      toast.error(error.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -119,7 +112,7 @@ const CreateProduct = () => {
           <div className="createProductMain">
             {/* 1. Name ------------*/}
             <div className="createProductInner">
-              <label htmlFor="name">Product Name: </label>
+              <label htmlFor="name">Product Name </label>
               <input
                 value={formData.name}
                 onChange={formDataChangeHandler}
@@ -129,21 +122,21 @@ const CreateProduct = () => {
                 placeholder="Product Name"
               />
             </div>
-            {/* 2. Brand ------------*/}
+            {/* 2. Sale ------------*/}
             <div className="createProductInner">
-              <label htmlFor="brand">Product Brand: </label>
+              <label htmlFor="brand">Product Sale </label>
               <input
-                value={formData.brand}
+                value={formData.sale}
                 onChange={formDataChangeHandler}
                 type="text"
-                name="brand"
-                id="brand"
-                placeholder="Product Brand "
+                name="sale"
+                id="sale"
+                placeholder="Product Sale"
               />
             </div>
             {/* 3. Price ------------*/}
             <div className="createProductInner">
-              <label htmlFor="price">Product Price: </label>
+              <label htmlFor="price">Product Price </label>
               <input
                 value={formData.price}
                 onChange={formDataChangeHandler}
@@ -166,12 +159,10 @@ const CreateProduct = () => {
                 <option selected value="select Category">
                   Select Category
                 </option>
-                <option value="Watches">Watches</option>
-                <option value="Cameras">Cameras</option>
-                <option value="Tablets">Tablets</option>
-                <option value="Mobiles">Mobiles</option>
-                <option value="Earbuds">Earbuds</option>
-                {/* <option value="Sports">Sports</option> */}
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Kids">Kids</option>
+                <option value="Sports">Sports</option>
               </select>
             </div>
             {/* 5. Seller ------------*/}
@@ -188,7 +179,7 @@ const CreateProduct = () => {
             </div>
             {/* 6. Stock ------------*/}
             <div className="createProductInner">
-              <label htmlFor="stock">Product Stock:</label>
+              <label htmlFor="stock">Product Stock</label>
               <input
                 value={formData.stock}
                 onChange={formDataChangeHandler}

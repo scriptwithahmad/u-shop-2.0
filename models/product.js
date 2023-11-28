@@ -3,18 +3,22 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "enter product name"],
+    required: [true, "Enter Product Name"],
   },
   slug: {
     type: String,
   },
   description: {
     type: String,
-    required: [true, "enter product description"],
+    required: [true, "Enter Product Description"],
   },
   price: {
     type: String,
-    required: [true, "enter product price"],
+    required: [true, "Enter Product Price"],
+  },
+  sale: {
+    type: String,
+    required: [true, "Enter Sale Avalibilty!"],
   },
   avatar: {
     type: String,
@@ -26,8 +30,8 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "please enter product category"],
     enum: {
-      values: ["Watches", "Cameras", "Tablets", "Mobiles", "Earbuds"],
-      message: "category not found",
+      values: ["Men", "Women", "Kids", "Sports"],
+      message: "Category Not Found",
     },
   },
   seller: {
@@ -36,7 +40,7 @@ const productSchema = new mongoose.Schema({
   },
   stock: {
     type: String,
-    required: [true, "Please enter product stock"],
+    required: [true, "Please Enter Product Stock"],
   },
   ratings: {
     type: Number,

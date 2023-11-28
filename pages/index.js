@@ -8,6 +8,8 @@ import ShopByPrice from "@/components/ShopByPrice";
 import InstallmentBanner from "@/components/installmentBanner";
 import Steps from "@/components/Steps";
 import { data } from "autoprefixer";
+import Product from "@/models/product";
+import ProductList from "@/components/ProductList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +23,7 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      {/*  <BestSeller />
-      <LatestProductSec props={data} />
-      <InstallmentBanner /> */}
-      <LatestMobiles props={data} />
-      {/* <ShopByPrice />
-      <Steps /> */}
+      <ProductList props={data} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import StarRatings from "react-star-ratings";
+import { Rating } from "primereact/rating";
 import { useState, useEffect } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import axios from "axios";
@@ -35,13 +35,17 @@ const SingleProduct = ({ data }) => {
     createdAt: "",
   });
   const [hover, setHover] = useState(null);
-  const [rating, setRating] = useState(null);
-  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews])
+  const [rating, setRating] = useState(0);
+  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews]);
 
   // input handler
   const inputHandler = (e) => {
     const { value, name } = e.target;
     setReviewData({ ...reviewData, [name]: value });
+  };
+
+  const onStarClick = (selectedRating) => {
+    setRating(selectedRating);
   };
 
   // Reviews on Sumbit
@@ -52,15 +56,15 @@ const SingleProduct = ({ data }) => {
       setLoading(true);
       const res = await axios.put(
         `/api/products/${data.singleProduct.slug}?reviews=POST`,
-        reviewData
+        { ...reviewData, NoOfreviews: rating }
       );
       const updatedReview = res.data;
 
       setNewReviews([...newReviews, updatedReview]);
 
-      toast.success("Review Added Successfully!")
+      toast.success("Review Added Successfully!");
       setTimeout(() => {
-        window.location.reload()
+        window.location.reload();
       }, 2000);
 
       setReviewData({
@@ -69,8 +73,9 @@ const SingleProduct = ({ data }) => {
         comment: "",
         createdAt: "",
       });
+      setRating(0);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(error);
     } finally {
       setLoading(false);
@@ -115,7 +120,6 @@ const SingleProduct = ({ data }) => {
       },
     ],
   };
-
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -209,7 +213,6 @@ const SingleProduct = ({ data }) => {
                   <h2>Discount Price</h2>
                   <span>Not Available</span>
                 </div>
-                {/* Display the updated total price */}
                 <div className="card card3">
                   <h2>Total Price</h2>
                   <span>{totalPrice}</span>
@@ -220,45 +223,39 @@ const SingleProduct = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex gap-3 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
-
+      <div className="flex gap-3 bg-gray-50 rounded-lg max-w-[1200px] m-auto">
         <div className="px-8 py-24 w-1/2">
           <h1 className="mb-4 text-xl font-semibold text-sky-700">Reviews</h1>
           <Slider className="Slider" {...settings}>
-            {
-              newReviews.map((v, i) => {
-                return (
-                  <blockquote key={i} className="rounded-lg bg-white border p-6 shadow-sm sm:p-8">
-                    <div class="flex items-center gap-4">
-                      <img
-                        alt="Man"
-                        src="https://static.priceoye.pk/images/user-icon.svg"
-                        class="h-12 w-12 rounded-full object-cover border"
-                      />
+            {newReviews.map((v, i) => {
+              return (
+                <blockquote
+                  key={i}
+                  className="rounded-lg bg-white border p-6 shadow-sm sm:p-8"
+                >
+                  <div class="flex items-center gap-4">
+                    <img
+                      alt="Man"
+                      src="https://static.priceoye.pk/images/user-icon.svg"
+                      class="h-12 w-12 rounded-full object-cover border"
+                    />
 
-                      <div>
-                        <p class="mt-0.5 text-sm mb-1 font-medium text-gray-900">
-                          {v.costomerName}
-                        </p>
-                        <div class="flex text-xs gap-0.5 text-sky-600">
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star-half"></i>
-                        </div>
-
-                        {/* <span>{v.NoOfreviews}</span> */}
+                    <div>
+                      <p class="mt-0.5 text-sm mb-1 font-medium text-gray-900">
+                        {v.costomerName}
+                      </p>
+                      <div class="flex text-xs gap-0.5 text-sky-600">
+                      <Rating value={v.NoOfreviews} readOnly cancel={false} />
                       </div>
-                    </div>
 
-                    <p class="mt-4 text-xs text-gray-700">
-                      {v.comment}
-                    </p>
-                  </blockquote>
-                )
-              })
-            }
+                      {/* <span>{v.NoOfreviews}</span> */}
+                    </div>
+                  </div>
+
+                  <p class="mt-4 text-xs text-gray-700">{v.comment}</p>
+                </blockquote>
+              );
+            })}
           </Slider>
         </div>
         {/* REVIEW FORM HERE  */}
@@ -284,22 +281,24 @@ const SingleProduct = ({ data }) => {
 
           {/* Ratings ---------------- */}
           <div className="my-3">
-            <p className=" text-gray-700 font-medium text-sm mb-2">
-              Your Ratings
-            </p>
             {/* NoOfreviews -----------*/}
-            <div className="">
-              {/* <label htmlFor="NoOfReviews">No Of Reviews</label> */}
+            <div className="flex flex-col">
+              <label
+                htmlFor="NoOfReviews"
+                className="text-gray-700 font-medium text-sm mb-2"
+              >
+                Your Ratings
+              </label>
               <input
                 type="number"
                 name="NoOfreviews"
                 onChange={inputHandler}
-                value={reviewData.NoOfreviews}
+                value={rating}
                 placeholder="Stars Ratings"
                 min="1"
                 id="NoOfReviews"
                 max="5"
-              // className="hidden"
+                className="hidden"
               />
             </div>
             <div>
@@ -307,7 +306,7 @@ const SingleProduct = ({ data }) => {
                 const currentRating = index + 1;
 
                 return (
-                  <label>
+                  <label key={index}>
                     <FaStar
                       className="fa-regular fa-star cursor-pointer"
                       size={20}
@@ -318,13 +317,13 @@ const SingleProduct = ({ data }) => {
                       }
                       onMouseEnter={() => setHover(currentRating)}
                       onMouseLeave={() => setHover(null)}
+                      onClick={() => onStarClick(currentRating)} // Call onStarClick when a star is clicked
                     />
                     <input
                       type="radio"
                       className="hidden"
                       name="NoOfreviews"
-                      onClick={() => setRating(currentRating)}
-                      value={reviewData.NoOfreviews}
+                      value={currentRating} // Pass the current rating value
                     />
                   </label>
                 );
@@ -333,7 +332,12 @@ const SingleProduct = ({ data }) => {
           </div>
           {/* Comment -------------*/}
           <div className="reviewtextarea reviewsInput">
-            {/* <label htmlFor="comment">Comment</label> */}
+            <label
+              className="text-gray-700 font-medium text-sm mb-2"
+              htmlFor="comment"
+            >
+              Your Comment
+            </label>
             <textarea
               rows="3"
               cols="30"
@@ -347,15 +351,15 @@ const SingleProduct = ({ data }) => {
           </div>
 
           <div className="my-2">
-            <button type="submit" className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white">
+            <button
+              type="submit"
+              className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white"
+            >
               {loading ? "Loading..." : "Submit Review"}
             </button>
           </div>
         </form>
       </div>
-
-
-
     </>
   );
 };
