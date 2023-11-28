@@ -1,5 +1,12 @@
-import { CartContext } from "@/context/CartProvider";
-import { useState, useEffect, useContext } from "react";
+import StarRatings from "react-star-ratings";
+import { useState, useEffect } from "react";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const SingleProduct = ({ data }) => {
   const [loading, setLoading] = useState(false);
@@ -20,14 +27,119 @@ const SingleProduct = ({ data }) => {
     updateTotalPrice();
   }, [value]);
 
-  // Cart Functionality -----------
-  const {
-    cartItems,
-    addToCart,
-    clearCart,
-    decreaseItemQuantity,
-    RemoveSpecificItemFromCart,
-  } = useContext(CartContext);
+  // REVIEWS SYSTEMS HERE
+  const [reviewData, setReviewData] = useState({
+    costomerName: "",
+    NoOfreviews: "",
+    comment: "",
+    createdAt: "",
+  });
+  const [hover, setHover] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews])
+
+  // input handler
+  const inputHandler = (e) => {
+    const { value, name } = e.target;
+    setReviewData({ ...reviewData, [name]: value });
+  };
+
+  // Reviews on Sumbit
+  const submitReview = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/api/products/${data.singleProduct.slug}?reviews=POST`,
+        reviewData
+      );
+      const updatedReview = res.data;
+
+      setNewReviews([...newReviews, updatedReview]);
+
+      toast.success("Review Added Successfully!")
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000);
+
+      setReviewData({
+        costomerName: "",
+        NoOfreviews: "",
+        comment: "",
+        createdAt: "",
+      });
+    } catch (error) {
+      console.log(error)
+      toast.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // SLIDER -----------------
+  var settings = {
+    infinite: true,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 3000,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    nextArrow: true,
+    prevArrow: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          nextArrow: false,
+          prevArrow: false,
+        },
+      },
+    ],
+  };
+
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <i
+        id="slickBtnNext"
+        style={{ ...style }}
+        onClick={onClick}
+        className="fa-solid fa-arrow-right-long"
+      ></i>
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <i
+        id="slickBtnPrev"
+        style={{ ...style }}
+        onClick={onClick}
+        className="fa-solid fa-arrow-left-long"
+      ></i>
+    );
+  }
 
   return (
     <>
@@ -104,37 +216,8 @@ const SingleProduct = ({ data }) => {
                 </div>
               </div>
             </div>
-            <button
-              className="cartBtn"
-              onClick={() => addToCart(data.singleProduct)}
-            >
-              Add to Cart
-            </button>
-            <button
-              className="cartBtn"
-              onClick={() => {
-                decreaseItemQuantity(data.singleProduct);
-              }}
-            >
-              Remove From Cart
-            </button>
-            <button
-              className="cartBtn"
-              onClick={() => {
-                clearCart();
-              }}
-            >
-              Clear Cart
-            </button>
-            <button
-              className="cartBtn"
-              onClick={() => RemoveSpecificItemFromCart(data.singleProduct._id)}
-            >
-              Remove
-            </button>
-            {/* <h1 className="text-lg font-bold">Total: ${getCartTotal()}</h1> */}
           </div>
-        </form>
+        </div>
       </div>
 
       <div className="flex gap-3 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
