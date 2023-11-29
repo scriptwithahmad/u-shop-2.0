@@ -245,7 +245,7 @@ const SingleProduct = ({ data }) => {
                         {v.costomerName}
                       </p>
                       <div class="flex text-xs gap-0.5 text-sky-600">
-                      <Rating value={v.NoOfreviews} readOnly cancel={false} />
+                        <Rating value={v.NoOfreviews} readOnly cancel={false} />
                       </div>
 
                       {/* <span>{v.NoOfreviews}</span> */}

@@ -99,7 +99,10 @@ const DashTeam = ({ data }) => {
                     </div>
                     <div className="das-info">
                       <h1 className="title"> {v.name} </h1>
-                      <p style={{ display: "inline-block" }} className="cate">
+                      <p
+                        style={{ display: "inline-block" }}
+                        className="border bg-blue-50 border-blue-400 px-3 text-sm rounded-lg text-blue-500"
+                      >
                         {v.category}
                       </p>
                     </div>
