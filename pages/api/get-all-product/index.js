@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     ProductData = await productModel
       .find(match, {
         description: 0,
-        images: 0,
+        reviews: 0,
         ratings: 0,
       })
       .sort({ createdAt: -1 });

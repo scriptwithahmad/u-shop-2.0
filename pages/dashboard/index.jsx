@@ -7,7 +7,6 @@ import axios from "axios";
 
 const DashTeam = ({ data }) => {
   const [fData, setFData] = useState(data.ProductData);
-  console.log(fData);
   const [filterByName, setFilterByName] = useState({
     name: "",
   });
@@ -58,11 +57,11 @@ const DashTeam = ({ data }) => {
   return (
     <div>
       <Toaster />
-      <div className="backCover">
+      <div className="backCover max-h-full">
         <div className="dash-wrapper">
           <div className="filterBox">
             <h1 className="mainTitle">
-              Edify <span>Team</span>
+              Our <span>Products</span>
             </h1>
             <form
               onSubmit={(e) => {
@@ -83,18 +82,18 @@ const DashTeam = ({ data }) => {
           </div>
 
           <div className="dasboard-Main">
-            {fData?.map((v) => {
+            {fData?.map((v, i) => {
               return (
-                <div key={v._id} className="das-col">
+                <div key={i} className="das-col">
                   <div className="das-sub-col">
-                    <div className="dasImgMain">
+                    <div className="h-[130px] w-[150px]">
                       <img
-                        src={v.avatar}
+                        src={v.avatar || v.images[i]}
                         alt="Image Alt"
                         href={null}
                         width={200}
                         height={200}
-                        className="das-img"
+                        className=" h-full w-full p-2 border border-[#eee] object-cover rounded-lg"
                       />
                     </div>
                     <div className="das-info">
@@ -133,7 +132,8 @@ export default DashTeam;
 
 export async function getServerSideProps() {
   const res = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    "http://localhost:3000/api/get-all-product"
   );
   const data = await res.json();
 

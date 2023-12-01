@@ -1,64 +1,86 @@
-import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useState } from "react";
 
+// ASIDE LINKS ADDED
 var navLinks = [
-  { href: "/portal", lable: "Dashboard", icon: "bx bxs-dashboard" },
-  { href: "/portal/competitions", lable: "Competitions", icon: "bx bx-trophy" },
-  { href: "/portal/register-list", lable: "Enquiries", icon: "bx bx-notepad" },
+  { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-simple" },
+  { href: "/dashboard/products", lable: "Product", icon: "fa-solid fa-box" },
   {
-    href: "/portal/participants",
-    lable: "Participants",
-    icon: "bx bxs-user-detail",
+    href: "/dashboard/customer",
+    lable: "Customer",
+    icon: "fa-solid fa-circle-user",
   },
-  { href: "/portal/teams-list", lable: "Teams", icon: "bx bx-group" },
 ];
 
 const Aside = () => {
   const router = useRouter();
+  const [toggle, setToggle] = useState(true);
+
   return (
-    <aside className={`bg-white space-y-8 hover:bg-gray-50`}>
-      <div className="flex flex-col h-full border-[1px] border-gray-100">
-        <div className="h-20 flex items-center px-8">
-          <Link href="/" className="flex-none">
-            <img src="/images/logo.png" width={55} className="mx-auto" />
-          </Link>
-        </div>
-        <div className="flex-1 flex flex-col h-full">
-          <ul className="px-4 text-sm font-medium flex-1">
+    <aside
+      style={{
+        width: toggle ? "200px" : "48px",
+        transition: ".6s",
+      }}
+      className={`lg:w-[200px] md:w-12 mt-4 overflow-hidden flex flex-col justify-between ${
+        toggle ? "pr-4" : "pr-0"
+      }`}
+    >
+      <div className="flex flex-col relative">
+        <div className="flex flex-1 flex-col justify-between h-full my-4">
+          <ul className="text-sm">
             {navLinks.map((v, i) => {
               return (
-                <li key={i}>
-                  <Link
-                    href={v.href}
-                    className={`relative flex items-center gap-x-2 text-gray-600 p-2 mb-3 rounded-lg hover:bg-gray-200 group cursor-pointer ${
-                      router.pathname === v.href
-                        ? "bg-[#7078d330] group cursor-pointer"
-                        : ""
-                    }`}
-                  >
-                    <i
-                      className={`${v.icon} text-lg ${
+                <>
+                  <li key={i}>
+                    <Link
+                      href={v.href}
+                      className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full lg:hover:bg-[#3e1e970b] hover:bg-[#3e1e970b] group cursor-pointer ${
                         router.pathname === v.href
-                          ? "text-[#004bad]"
-                          : "text-gray-500"
-                      }`}
-                    ></i>
-                    <div
-                      className={` ${
-                        router.pathname === v.href
-                          ? "text-[#004bad]"
-                          : "text-gray-500"
+                          ? "group cursor-pointer lg:bg-[#F6F5FD] md:bg-transparent"
+                          : ""
                       }`}
                     >
-                      {v.lable}
-                    </div>
-                  </Link>
-                </li>
+                      <i
+                        className={`${v.icon} text-base ${
+                          router.pathname === v.href
+                            ? "text-[#3E1E97]"
+                            : "text-gray-500"
+                        }`}
+                      ></i>
+                      <div
+                        style={{
+                          opacity: toggle ? "1" : "0",
+                          transition: ".5s",
+                        }}
+                        className={`ml-3 ${
+                          router.pathname === v.href
+                            ? "text-[#3E1E97] font-medium"
+                            : "text-gray-600"
+                        }`}
+                      >
+                        {v.lable}
+                      </div>
+                    </Link>
+                  </li>
+                </>
               );
             })}
           </ul>
         </div>
+      </div>
+      <div className="pl-2 mb-3">
+        <span onClick={() => setToggle(!toggle)}>
+          <i
+            style={{
+              transition: ".5s",
+            }}
+            className={`asideAnimate px-2 bg-gray-50 text-gray-600 active:bg-gray-300 cursor-pointer text-lg p-1 rounded-lg ${
+              toggle ? "fa-solid fa-angle-left" : "fa-solid fa-angle-right"
+            }`}
+          ></i>
+        </span>
       </div>
     </aside>
   );

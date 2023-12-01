@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 
 const ProductList = ({ props }) => {
   const AllProductsData = props.ProductData;
+  console.log(AllProductsData);
   const { addToCart } = useContext(CartContext);
 
   return (
@@ -26,7 +27,9 @@ const ProductList = ({ props }) => {
                     onClick={() => addToCart(v)}
                     className="fa-solid fa-cart-plus text-slate-600 bg-gray-200 p-2 rounded cursor-pointer hover:bg-gray-300"
                   ></i>
-                  <i className="fa-solid fa-eye text-slate-600 bg-gray-200 p-2 rounded cursor-pointer hover:bg-gray-300"></i>
+                  <Link href={`/product/${v.slug}`}>
+                    <i className="fa-solid fa-eye text-slate-600 bg-gray-200 p-2 rounded cursor-pointer hover:bg-gray-300"></i>
+                  </Link>
                 </div>
                 {/* Sale */}
                 <div className=" absolute top-2 left-0">
@@ -41,7 +44,7 @@ const ProductList = ({ props }) => {
                 </div>
                 <div className="h-[270px] px-4 pt-4 bg-transparent w-full overflow-hidden rounded-md bg-gray-200">
                   <img
-                    src={v.avatar}
+                    src={v.avatar || v.images[i]}
                     alt="image here"
                     className="h-full w-full group-hover:rotate-3 group-hover:scale-105 transition-all duration-300 rounded-lg object-cover object-center"
                   />

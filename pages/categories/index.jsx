@@ -83,17 +83,17 @@ export default function Categories(props) {
                   return (
                     <div
                       key={i}
-                      className="relative group border rounded-lg overflow-hidden h-fit"
+                      className="relative group border rounded-lg overflow-hidden"
                     >
                       <div>
-                        <div className="w-full h-[150px] p-3 bg-gray-50">
+                        <div className="w-full h-[200px] bg-gray-50">
                           <img
-                            className="cateImg"
-                            src={v.avatar}
+                            className="h-full w-full object-contain mix-blend-multiply"
+                            src={v.avatar || v.images[i]}
                             alt="img here"
                           />
                         </div>
-                        <div className="p-2 my-2">
+                        <div className="p-2 my-4">
                           <h2 className="text-sm mb-3 line-clamp-1">
                             {v.name}
                           </h2>
@@ -109,11 +109,11 @@ export default function Categories(props) {
                       </div>
                       <div className="text-gray-600 flex flex-col gap-3 absolute top-2 right-0 translate-x-8 transition-all duration-700 group-hover:-translate-x-2">
                         <Link href={`/product/${v.slug}`}>
-                          <i class="fa-solid fa-eye hover:text-sky-600 transition duration-200 cursor-pointer"></i>
+                          <i className="fa-solid fa-eye hover:text-sky-600 transition duration-200 cursor-pointer"></i>
                         </Link>
                         <i
                           onClick={() => addToCart(v)}
-                          class="fa-solid fa-cart-plus hover:text-sky-600 transition duration-200 cursor-pointer"
+                          className="fa-solid fa-cart-plus hover:text-sky-600 transition duration-200 cursor-pointer"
                         ></i>
                       </div>
                     </div>
@@ -130,7 +130,8 @@ export default function Categories(props) {
 
 export async function getServerSideProps() {
   const response = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    "http://localhost:3000/api/get-all-product"
+    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
   );
   const data = await response.json();
 

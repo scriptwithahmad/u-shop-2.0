@@ -12,7 +12,7 @@ const SingleProduct = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(1);
   const [totalPrice, setTotalPrice] = useState(data.singleProduct.price);
-  const [activeImage, setActiveImage] = useState(data.singleProduct.avatar);
+  const [activeImage, setActiveImage] = useState(data.singleProduct.images[0]);
 
   const changeMainImage = (imageUrl) => {
     setActiveImage(imageUrl);
@@ -148,11 +148,14 @@ const SingleProduct = ({ data }) => {
   return (
     <>
       <Toaster />
-      {/* SLUG PAGE HERE  */}
+      {/* SLUG PAGE HERE --------------- */}
       <div className="product-main">
         <div className="product-col-left">
           <div className="productImg">
-            <img src={activeImage} alt="product Image here" />
+            <img
+              src={activeImage}
+              alt="product Image here"
+            />
           </div>
           <div className="product-col-inner">
             {data.singleProduct.images.map((v, i) => {
@@ -223,7 +226,7 @@ const SingleProduct = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex gap-3 bg-gray-50 rounded-lg max-w-[1200px] m-auto">
+      <div className="flex gap-3 mt-16 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
         <div className="px-8 py-24 w-1/2">
           <h1 className="mb-4 text-xl font-semibold text-sky-700">Reviews</h1>
           <Slider className="Slider" {...settings}>
@@ -233,18 +236,18 @@ const SingleProduct = ({ data }) => {
                   key={i}
                   className="rounded-lg bg-white border p-6 shadow-sm sm:p-8"
                 >
-                  <div class="flex items-center gap-4">
+                  <div className="flex items-center gap-4">
                     <img
                       alt="Man"
                       src="https://static.priceoye.pk/images/user-icon.svg"
-                      class="h-12 w-12 rounded-full object-cover border"
+                      className="h-12 w-12 rounded-full object-cover border"
                     />
 
                     <div>
-                      <p class="mt-0.5 text-sm mb-1 font-medium text-gray-900">
+                      <p className="mt-0.5 text-sm mb-1 font-medium text-gray-900">
                         {v.costomerName}
                       </p>
-                      <div class="flex text-xs gap-0.5 text-sky-600">
+                      <div className="flex text-xs gap-0.5 text-sky-600">
                         <Rating value={v.NoOfreviews} readOnly cancel={false} />
                       </div>
 
@@ -252,7 +255,7 @@ const SingleProduct = ({ data }) => {
                     </div>
                   </div>
 
-                  <p class="mt-4 text-xs text-gray-700">{v.comment}</p>
+                  <p className="mt-4 text-xs text-gray-700">{v.comment}</p>
                 </blockquote>
               );
             })}

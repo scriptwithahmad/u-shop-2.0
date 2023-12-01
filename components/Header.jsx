@@ -83,7 +83,7 @@ const Header = () => {
             </p>
             <button className="w-fit rounded-full z-40 group flex items-center gap-3 border px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white">
               Shop Now{" "}
-              <i class="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
+              <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
             </button>
           </div>
         </div>
@@ -101,7 +101,7 @@ const Header = () => {
             </p>
             <button className="w-fit rounded-full  group flex items-center gap-3 px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white">
               Shop Now{" "}
-              <i class="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
+              <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
             </button>
           </div>
         </div>

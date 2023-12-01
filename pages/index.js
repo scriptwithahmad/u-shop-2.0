@@ -30,7 +30,8 @@ export default function Home({ data }) {
 
 export async function getServerSideProps() {
   const response = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    "http://localhost:3000/api/get-all-product"
+    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
   );
   const data = await response.json();
 
