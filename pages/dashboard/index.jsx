@@ -11,7 +11,7 @@ const DashTeam = ({ data }) => {
     name: "",
   });
 
-  const handleInputChange = (e) => {
+  const searchInputHanler = (e) => {
     setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
   };
 
@@ -75,7 +75,7 @@ const DashTeam = ({ data }) => {
                 name="name"
                 placeholder="Search..."
                 value={filterByName.name}
-                onChange={handleInputChange}
+                onChange={searchInputHanler}
               />
               <button type="submit">Search</button>
             </form>

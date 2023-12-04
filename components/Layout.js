@@ -1,5 +1,4 @@
 import NavBar from "./NavBar";
-import Footer from "./Footer";
 import Dnav from "./Dnav";
 import Aside from "./Aside";
 import { useRouter } from "next/router";
@@ -8,13 +7,12 @@ import React, { useState } from "react";
 export default function Layout({ children }) {
   const { pathname, back } = useRouter();
   var privateRoutes = pathname.startsWith("/dashboard");
-  console.log(privateRoutes);
 
   return (
     <>
       <div>
         {privateRoutes ? (
-          <div className="max-h-screen flex flex-col h-screen bg-[#ffffff]">
+          <div className="max-h-screen flex flex-col h-screen bg-[#ffffff] overflow-hidden">
             <div className="w-full">
               <Dnav />
             </div>

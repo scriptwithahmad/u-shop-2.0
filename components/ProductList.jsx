@@ -46,7 +46,7 @@ const ProductList = ({ props }) => {
                   <img
                     src={v.avatar || v.images[i]}
                     alt="image here"
-                    className="h-full w-full group-hover:rotate-3 group-hover:scale-105 transition-all duration-300 rounded-lg object-cover object-center"
+                    className="h-full w-full group-hover:rotate-3 group-hover:scale-105 transition-all duration-300 rounded-lg object-contain object-center"
                   />
                 </div>
                 {/* Product Content Here --------- */}

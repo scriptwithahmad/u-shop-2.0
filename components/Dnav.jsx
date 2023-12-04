@@ -13,7 +13,7 @@ const Dnav = () => {
           <div className="flex items-center gap-4">
             <i
               onClick={() => alert("Roko Zara Sabar Karo!")}
-              className="fa-solid fa-bars-staggered"
+              className="fa-solid fa-bars-staggered text-gray-500 text-lg"
             ></i>
             <div className="flex items-center">
               <Link href="/" className="flex-none">

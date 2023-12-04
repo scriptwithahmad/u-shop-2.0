@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 
-const CreateProduct = () => {
-  const [imagePreviews, setImagePreviews] = useState([]);
+const EditProduct = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -16,14 +16,15 @@ const CreateProduct = () => {
     avatar: "",
     images: [],
   });
+  const router = useRouter();
+  const slug = router.query.slug;
 
   const formDataChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Cloudinary States Fucnton -------------------------/
+  // Cloudinary States Fucnton ----------------------------/
   const [tempImage, setTempImage] = useState("");
-
   const uploadImagesToCloudinary = async () => {
     try {
       const imageUrls = [];
@@ -52,36 +53,39 @@ const CreateProduct = () => {
     }
   };
 
-  // Add New Product -----------------------------------/
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/products/${slug}`);
+      const data = await res.json();
+
+      console.log(data.singleProduct)
+      setFormData(data?.singleProduct);
+      setImagePreviews(data?.singleProduct?.images || []);
+    };
+    fetchData();
+  }, []);
+
+  // Update Product Data ----------------------------------/
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
-      const res = await axios.post("/api/products", {
+      const res = await axios.put(`/api/products/${slug}`, {
         ...formData,
         images: imageUrls,
       });
-      toast.success("Product Added Successfully!");
-      setFormData({
-        name: "",
-        sale: "",
-        description: "",
-        price: "",
-        category: "",
-        seller: "",
-        stock: "",
-        images: [],
-      });
-      setTempImage(" ");
+      toast.success("Product Updated Successfully!");
+      router.push("/dashboard/products");
     } catch (error) {
-      toast.error(error.response?.data?.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  // Show Image on Clinet Side -------------------------/
+  const [imagePreviews, setImagePreviews] = useState([]);
+  // Show Image on Clinet Side ----------------------------/
   const handleImageChange = (e) => {
     const files = e.target.files;
     const previews = [];
@@ -98,7 +102,7 @@ const CreateProduct = () => {
     }
   };
 
-  // Remove Specific Image from Client Side ------------/
+  // Remove Specific Image from Client Side ----------------/
   const removeImagePreview = (indexToRemove) => {
     setImagePreviews((prevPreviews) =>
       prevPreviews.filter((_, index) => index !== indexToRemove)
@@ -106,10 +110,10 @@ const CreateProduct = () => {
   };
 
   return (
-    <div>
+    <>
       <Toaster />
       <section className="createProductOuter">
-        <h1>Create Product</h1>
+        <h1>Update Product</h1>
         <form onSubmit={submitHandler}>
           <div className="createProductMain">
             {/* 1. Name ------------*/}
@@ -227,7 +231,7 @@ const CreateProduct = () => {
                         key={index}
                         src={preview}
                         alt={`Preview ${index}`}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-contain rounded-lg"
                       />
                       <i
                         onClick={() => removeImagePreview(index)}
@@ -245,8 +249,8 @@ const CreateProduct = () => {
           </div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 
-export default CreateProduct;
+export default EditProduct;

@@ -1,6 +1,8 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 const tableHeader = [
   { lable: "Name", align: "left" },
@@ -14,12 +16,13 @@ const tableHeader = [
 
 const index = ({ data }) => {
   const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [productData, setProductData] = useState(data.ProductData);
   const [filterByName, setFilterByName] = useState({
     name: "",
   });
 
-  const handleInputChange = (e) => {
+  const searchInputHanler = (e) => {
     setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
   };
 
@@ -49,12 +52,15 @@ const index = ({ data }) => {
 
   const fetchProductData = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get("/api/get-all-product", {
         params: { name: filterByName.name },
       });
-      setFData(data.ProductData);
+      setProductData(data.ProductData);
     } catch (error) {
-      console.log(error);
+      toast.error(error?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,22 +70,41 @@ const index = ({ data }) => {
 
   return (
     <>
-      {/* =============================
-              TABLE STARTED  
-      ================================= */}
+      <Toaster />
+      {/* ============================= TABLE STARTED  ================================= */}
       <div className="w-full">
-        <div className="overflow-x-auto w-full border rounded-lg">
+        <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row">
             <h2 className="text-xl font-semibold">
               All <span className="text-indigo-600">Products</span>
             </h2>
-            <div className="relative">
-              <input
-                className="border border-gray-200 text-gray-400 text-sm pl-3 p-2 rounded-full focus:border-gray-400 transition-colors focus:text-gray-400"
-                type="search"
-                placeholder="Search here..."
-              />
-              <i className="absolute top-1/2 -translate-y-1/2 right-3 border-l pl-2 cursor-pointer text-gray-400 hover:text-gray-500 bx bx-search-alt-2"></i>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="">
+                  <input
+                    name="name"
+                    value={filterByName.name}
+                    placeholder="Search here..."
+                    onChange={searchInputHanler}
+                    className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] w-56 rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
+                  />
+                  <span>
+                    {loading ? (
+                      <i className="fa-solid fa-spinner absolute top-[30%] right-3 text-xs text-gray-500 dashboardSearchSlide"></i>
+                    ) : null}{" "}
+                  </span>
+                </div>
+                <i
+                  title="Add Product"
+                  className="absolute top-1/2 -translate-y-1/2 right-3 border-l pl-2 cursor-pointer text-gray-400 hover:text-gray-500 bx bx-search-alt-2"
+                ></i>
+              </div>
+              <div>
+                <i
+                  onClick={() => setShowForm(true)}
+                  className="fa-solid fa-plus rounded-full h-8 w-8 flex items-center justify-center bg-blue-500 text-white transition-all duration-150 cursor-pointer text-sm"
+                ></i>
+              </div>
             </div>
           </div>
           <table className="text-sm min-w-[1000px] w-full text-left text-gray-500">
@@ -106,9 +131,9 @@ const index = ({ data }) => {
                       scope="row"
                       className="px-6 flex border-0 items-center py-2 font-medium text-gray-600 whitespace-nowrap"
                     >
-                      <div className="w-10 h-10 mr-3 border rounded-full overflow-hidden">
+                      <div className="w-10 h-10 mr-3 border border-gray-100 rounded-full overflow-hidden">
                         <img
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                           src={v.avatar || v.images[0]}
                           alt="Image Here"
                         />
@@ -134,19 +159,19 @@ const index = ({ data }) => {
                       <Link href={`/product/${v.slug}`}>
                         <i
                           title="View"
-                          className="fa fa-solid fa-eye p-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
+                          className="fa fa-solid fa-eye px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
                         ></i>
                       </Link>
-                      <Link href={`/edit/${v.slug}`}>
+                      <Link href={`products/edit-product/${v.slug}`}>
                         <i
                           title="Edit"
-                          className="fa-solid fa-pen-to-square p-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
+                          className="fa-solid fa-pen-to-square px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
                         ></i>
                       </Link>
                       <i
                         title="Delete"
                         onClick={() => delPost(v.slug)}
-                        className="fa fa-solid fa-trash p-1 cursor-pointer hover:bg-gray-100 rounded-full text-red-400 text-sm"
+                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-red-400 text-sm"
                       ></i>
                     </td>
                   </tr>
@@ -165,7 +190,7 @@ const index = ({ data }) => {
         </div>
       </div>
 
-      {/* NEW MODEL DESING */}
+      {/* NEW MODEL DESING --------------- */}
       <div
         style={{
           visibility: showForm ? "visible" : "hidden",
@@ -182,96 +207,11 @@ const index = ({ data }) => {
           <span onClick={() => setShowForm(false)} className="cursor-pointer">
             close
           </span>
-          <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {/* card 01 */}
-            <div className="rounded-md bg-[#eee] px-3 py-2">
-              <h2 className="font-bold text-xl text-gray-600 mb-3 line-clamp-2">
-                Full Stack Web Development with Node JS and Next JS
-              </h2>
-              <div className="mb-3 grid grid-cols-2">
-                <div>
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-xs bx bx-time"></i> Starting Time
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">
-                    12-10-2021
-                  </h2>
-                </div>
-                <div>
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-sm bx bx-time"></i> Ending Time
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">
-                    12-10-2023
-                  </h2>
-                </div>
-              </div>
-              <div className="grid grid-cols-2">
-                <div className="mb-2">
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-[10px] text-[#0000008c] fa-solid fa-hourglass"></i>{" "}
-                    Duration
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">4 months</h2>
-                </div>
-                <div>
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-xs bx bx-location-plus"></i> Address
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">
-                    Green Town Faislabad
-                  </h2>
-                </div>
-              </div>
-            </div>
-            {/* card 02 */}
-            <div className="rounded-md bg-[#eee] px-3 py-2">
-              <h2 className="font-bold text-xl text-gray-600 mb-3 line-clamp-2">
-                Full Stack Web Development with Node JS and Next JS
-              </h2>
-              <div className="mb-3 grid grid-cols-2">
-                <div>
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-xs bx bx-time"></i> Starting Time
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">
-                    12-10-2021
-                  </h2>
-                </div>
-                <div>
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-sm bx bx-time"></i> Ending Time
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">
-                    12-10-2023
-                  </h2>
-                </div>
-              </div>
-              <div className="grid grid-cols-2">
-                <div className="mb-2">
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-[10px] text-[#0000008c] fa-solid fa-hourglass"></i>{" "}
-                    Duration
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">4 months</h2>
-                </div>
-                <div>
-                  <span className="text-[#000000b4] text-xs mb-1">
-                    <i className="text-xs bx bx-location-plus"></i> Address
-                  </span>
-                  <h2 className="font-medium text-[#444] text-sm">
-                    Green Town Faislabad
-                  </h2>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h1>Model Design</h1>
         </div>
       </div>
-      {/* =============================
-            BOTTOM BUTTON FOR ADDING FORM
-      ============================= */}
-      <i
+      {/* ============================= BOTTOM BUTTON FOR ADDING FORM ============================= */}
+      {/* <i
         onClick={() => setShowForm(true)}
         className="fa fa-solid fa-plus hover:bg-indigo-500 transition cursor-pointer bx-plus shadow-lg mb-4 w-10 h-10 flex justify-center items-center rounded-[50%] bg-indigo-600 text-xl text-white fixed right-10 bottom-10"
       >
@@ -282,9 +222,9 @@ const index = ({ data }) => {
           }}
           className="absolute slidRight pl-2 pr-4 rounded-md whitespace-nowrap top-[50%] -translate-y-1/2 text-xs p-1 bg-indigo-600 right-[120%]"
         >
-          Click to Add Playarea
+          Click to Add Product
         </span>
-      </i>
+      </i> */}
     </>
   );
 };
