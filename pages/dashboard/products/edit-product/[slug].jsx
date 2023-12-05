@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 
 const EditProduct = () => {
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -58,7 +59,7 @@ const EditProduct = () => {
       const res = await fetch(`/api/products/${slug}`);
       const data = await res.json();
 
-      console.log(data.singleProduct)
+      // console.log(data.singleProduct)
       setFormData(data?.singleProduct);
       setImagePreviews(data?.singleProduct?.images || []);
     };
@@ -73,6 +74,7 @@ const EditProduct = () => {
       const imageUrls = await uploadImagesToCloudinary();
       const res = await axios.put(`/api/products/${slug}`, {
         ...formData,
+        ...imagePreviews,
         images: imageUrls,
       });
       toast.success("Product Updated Successfully!");
@@ -84,9 +86,10 @@ const EditProduct = () => {
     }
   };
 
-  const [imagePreviews, setImagePreviews] = useState([]);
-  // Show Image on Clinet Side ----------------------------/
+  // Show Image on Clinet Side -----------------------------/
   const handleImageChange = (e) => {
+    setTempImage(e.target.files);
+
     const files = e.target.files;
     const previews = [];
 
@@ -221,6 +224,7 @@ const EditProduct = () => {
                 id="arryOfImages"
                 className="remainDiv"
                 style={{ color: "#7d879c" }}
+                // onChange={(e) => setTempImage(e.target.files)}
                 onChange={handleImageChange}
               />
               {imagePreviews.length == 0 ? null : (

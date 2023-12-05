@@ -1,5 +1,5 @@
 import { Rating } from "primereact/rating";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
@@ -7,13 +7,14 @@ import { Toaster, toast } from "react-hot-toast";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { CartContext } from "@/context/CartProvider";
 
 const SingleProduct = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(1);
   const [totalPrice, setTotalPrice] = useState(data.singleProduct.price);
   const [activeImage, setActiveImage] = useState(data.singleProduct.images[0]);
-
+  const { addToCart } = useContext(CartContext);
   const changeMainImage = (imageUrl) => {
     setActiveImage(imageUrl);
   };
@@ -27,7 +28,7 @@ const SingleProduct = ({ data }) => {
     updateTotalPrice();
   }, [value]);
 
-  // REVIEWS SYSTEMS HERE
+  // REVIEWS SYSTEMS HERE ======================================/
   const [reviewData, setReviewData] = useState({
     costomerName: "",
     NoOfreviews: "",
@@ -38,7 +39,7 @@ const SingleProduct = ({ data }) => {
   const [rating, setRating] = useState(0);
   const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews]);
 
-  // input handler
+  // input handler =============================================/
   const inputHandler = (e) => {
     const { value, name } = e.target;
     setReviewData({ ...reviewData, [name]: value });
@@ -48,7 +49,7 @@ const SingleProduct = ({ data }) => {
     setRating(selectedRating);
   };
 
-  // Reviews on Sumbit
+  // Reviews on Sumbit =========================================/
   const submitReview = async (e) => {
     e.preventDefault();
 
@@ -82,7 +83,7 @@ const SingleProduct = ({ data }) => {
     }
   };
 
-  // SLIDER -----------------
+  // SLIDER ====================================================/
   var settings = {
     infinite: true,
     autoplay: true,
@@ -125,7 +126,7 @@ const SingleProduct = ({ data }) => {
     const { className, style, onClick } = props;
     return (
       <i
-        id="slickBtnNext"
+        id="slickBtnNextReview"
         style={{ ...style }}
         onClick={onClick}
         className="fa-solid fa-arrow-right-long"
@@ -137,7 +138,7 @@ const SingleProduct = ({ data }) => {
     const { className, style, onClick } = props;
     return (
       <i
-        id="slickBtnPrev"
+        id="slickBtnPrevReview"
         style={{ ...style }}
         onClick={onClick}
         className="fa-solid fa-arrow-left-long"
@@ -151,11 +152,8 @@ const SingleProduct = ({ data }) => {
       {/* SLUG PAGE HERE --------------- */}
       <div className="product-main">
         <div className="product-col-left">
-          <div className="productImg">
-            <img
-              src={activeImage}
-              alt="product Image here"
-            />
+          <div className="productImg border">
+            <img src={activeImage} alt="product Image here" />
           </div>
           <div className="product-col-inner">
             {data.singleProduct.images.map((v, i) => {
@@ -165,7 +163,11 @@ const SingleProduct = ({ data }) => {
                   src={v}
                   alt="product Images"
                   onClick={() => changeMainImage(v)}
-                  className={v === activeImage ? "active" : ""}
+                  className={
+                    v === activeImage
+                      ? "border border-sky-300 bg-gray-100"
+                      : "border hover:bg-gray-50 hover:border-sky-200"
+                  }
                 />
               );
             })}
@@ -174,40 +176,41 @@ const SingleProduct = ({ data }) => {
         <div className="product-col-right">
           <div className="col-right-info">
             <h2 className="brand">{data.singleProduct.category}</h2>
-            <h1 className="name">{data.singleProduct.name}</h1>
-            <span className="price">Rs. {data.singleProduct.price}</span>
-            <p className="desc">
-              {data.singleProduct.description.slice(0, 200) + "..."}
-            </p>
-            <div className="contentMain">
-              <div className="quantitiyDiv">
-                <button
-                  className="MinusBtn"
-                  disabled={value === 0}
-                  onClick={() => {
-                    if (value > 0) {
-                      setValue(value - 1);
-                      updateTotalPrice();
-                    }
-                  }}
-                >
-                  -
-                </button>
-                <span> {value} </span>
-                <button
-                  className="PlusBtn"
-                  disabled={value === 9}
-                  onClick={() => {
-                    if (value < 9) {
-                      setValue(value + 1);
-                      updateTotalPrice();
-                    }
-                  }}
-                >
-                  +
-                </button>
-              </div>
-              <div className="priceInfoCard">
+            <h1 className="text-[30px] my-3 font-semibold text-slate-700">
+              {data.singleProduct.name}
+            </h1>
+            <span className="text-xl text-gray-700 line-clamp-2 font-medium">
+              Rs. {data.singleProduct.price}
+            </span>
+            <p className="desc">{data.singleProduct.description}</p>
+            <div className=" flex items-center gap-4 my-4">
+              <div className="border w-fit px-3 flex items-center justify-center gap-4">
+                <span className=" text-gray-500 text-xl w-[20px]">{value}</span>
+                <div className="flex flex-col">
+                  <button
+                    disabled={value === 9}
+                    onClick={() => {
+                      if (value < 9) {
+                        setValue(value + 1);
+                        updateTotalPrice();
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-angle-up text-gray-500 text-sm"></i>
+                  </button>
+                  <button
+                    disabled={value === 0}
+                    onClick={() => {
+                      if (value > 0) {
+                        setValue(value - 1);
+                        updateTotalPrice();
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-angle-down text-gray-500 text-sm"></i>
+                  </button>
+                </div>
+                {/* <div className="priceInfoCard border">
                 <div className="card">
                   <h2>Actual Price</h2>
                   <span> {data.singleProduct.price} </span>
@@ -220,13 +223,20 @@ const SingleProduct = ({ data }) => {
                   <h2>Total Price</h2>
                   <span>{totalPrice}</span>
                 </div>
+              </div> */}
               </div>
+              <button
+                onClick={() => addToCart(data.singleProduct)}
+                className=" px-10 py-4 text-white text-sm bg-gray-700"
+              >
+                Add To Cart
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-3 mt-16 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
+      <div className="flex gap-3 mt-24 mb-8 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
         <div className="px-8 py-24 w-1/2">
           <h1 className="mb-4 text-xl font-semibold text-sky-700">Reviews</h1>
           <Slider className="Slider" {...settings}>

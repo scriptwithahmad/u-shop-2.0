@@ -53,7 +53,7 @@ const ShoppingCart = () => {
                     <div className="w-[200px] h-[150px] lg:w-[180px] lg:h-[180px] bg-[#f7f7f7] rounded-md lg:border-r lg:border-r-gray-200">
                       <img
                         className="lg:p-8 md:p-2 mix-blend-multiply h-full w-full object-contain lg:object-cover"
-                        src={v.avatar}
+                        src={v.avatar || v.images[i]}
                         alt="img here"
                       />
                     </div>
