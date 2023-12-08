@@ -81,7 +81,7 @@ const Header = () => {
               A specialist label creating luxury essentials. Ethically crafted
               with an unwavering commitment to exceptional quality.
             </p>
-            <button className="w-fit rounded-full z-40 group flex items-center gap-3 border px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white">
+            <button className="w-fit rounded-full z-40 group flex items-center gap-3 px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white">
               Shop Now{" "}
               <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
             </button>

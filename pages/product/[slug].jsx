@@ -115,8 +115,13 @@ const SingleProduct = ({ data }) => {
       {
         breakpoint: 425,
         settings: {
-          nextArrow: false,
-          prevArrow: false,
+          slidesToShow: 2,
+          vertical: true,
+          verticalSwiping: true,
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
         },
       },
     ],
@@ -146,6 +151,42 @@ const SingleProduct = ({ data }) => {
     );
   }
 
+  const settings2 = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 2,
+    vertical: true,
+    verticalSwiping: true,
+    speed: 1000,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings2: {
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings2: {
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 425,
+        settings2: {
+          speed: 500,
+          autoplaySpeed: 1000,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <Toaster />
@@ -155,22 +196,45 @@ const SingleProduct = ({ data }) => {
           <div className="productImg border">
             <img src={activeImage} alt="product Image here" />
           </div>
-          <div className="product-col-inner">
-            {data.singleProduct.images.map((v, i) => {
-              return (
-                <img
-                  key={i}
-                  src={v}
-                  alt="product Images"
-                  onClick={() => changeMainImage(v)}
-                  className={
-                    v === activeImage
-                      ? "border border-sky-300 bg-gray-100"
-                      : "border hover:bg-gray-50 hover:border-sky-200"
-                  }
-                />
-              );
-            })}
+
+          <div className="product-col-inner h-[500px] overflow-hidden w-[150px]">
+            {data.singleProduct.images.length >= 5 ? (
+              <Slider className="h-full w-full" {...settings2}>
+                {data.singleProduct.images.map((v, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={v}
+                      alt="product Images"
+                      onClick={() => changeMainImage(v)}
+                      className={
+                        v === activeImage
+                          ? "border border-sky-300 bg-gray-100"
+                          : "border hover:bg-gray-50 hover:border-sky-200"
+                      }
+                    />
+                  );
+                })}
+              </Slider>
+            ) : (
+              <div className="h-full w-full">
+                {data.singleProduct.images.map((v, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={v}
+                      alt="product Images"
+                      onClick={() => changeMainImage(v)}
+                      className={
+                        v === activeImage
+                          ? "border border-sky-300 bg-gray-100"
+                          : "border hover:bg-gray-50 hover:border-sky-200"
+                      }
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
         <div className="product-col-right">
@@ -179,10 +243,12 @@ const SingleProduct = ({ data }) => {
             <h1 className="text-[30px] my-3 font-semibold text-slate-700">
               {data.singleProduct.name}
             </h1>
-            <span className="text-xl text-gray-700 line-clamp-2 font-medium">
+            <span className="text-xl text-gray-700 line-clamp-1 font-medium">
               Rs. {data.singleProduct.price}
             </span>
-            <p className="desc">{data.singleProduct.description}</p>
+            <p className="text-gray-500 text-sm mt-4 mb-8">
+              {data.singleProduct.description}
+            </p>
             <div className=" flex items-center gap-4 my-4">
               <div className="border w-fit px-3 flex items-center justify-center gap-4">
                 <span className=" text-gray-500 text-xl w-[20px]">{value}</span>
@@ -236,15 +302,15 @@ const SingleProduct = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex gap-3 mt-24 mb-8 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
-        <div className="px-8 py-24 w-1/2">
+      <div className="flex flex-col w-full lg:flex-row md:flex-col gap-3 mt-24 mb-8 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
+        <div className="px-8 py-24 w-full lg:w-1/2 md:w-full">
           <h1 className="mb-4 text-xl font-semibold text-sky-700">Reviews</h1>
           <Slider className="Slider" {...settings}>
             {newReviews.map((v, i) => {
               return (
                 <blockquote
                   key={i}
-                  className="rounded-lg bg-white border p-6 shadow-sm sm:p-8"
+                  className="rounded-lg bg-white border p-6 shadow-sm sm:p-8 h-40 max-h-full"
                 >
                   <div className="flex items-center gap-4">
                     <img

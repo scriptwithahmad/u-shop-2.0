@@ -233,8 +233,8 @@ export default index;
 
 export async function getServerSideProps() {
   const res = await fetch(
-    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
-    "http://localhost:3000/api/get-all-product"
+    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    // "http://localhost:3000/api/get-all-product"
   );
   const data = await res.json();
 

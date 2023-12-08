@@ -10,14 +10,16 @@ export default function Categories(props) {
     <>
       <div className="bg-[#ffffff]">
         <div>
-          <main className="mx-auto max-w-7xl px-4 sm:px-6">
+          <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
             <div className="border-b border-gray-200 pb-4 my-8">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">
                 Category
               </h1>
             </div>
-            <div className="grid gap-4 grid-cols-[200px_minmax(1000px,_1fr)_100px]">
-              <div className="border-[1px] h-full hover:bg-[#dddde61c] rounded-lg p-2">
+            <div className="flex gap-4 flex-col md:flex-row">
+              <div
+                className={`border hover:bg-[#dddde61c] rounded-lg p-2 overflow-hidden`}
+              >
                 <h2 className="px-2 text-xl my-2 font-semibold tracking-wide text-blue-700">
                   Filters
                 </h2>
@@ -78,7 +80,7 @@ export default function Categories(props) {
                   </label>
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-2 h-full border-[1px] rounded-lg p-4">
+              <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 2xl:grid-cols-4 gap-2 h-full border-[1px] rounded-lg p-4">
                 {productData.map((v, i) => {
                   return (
                     <div
@@ -130,8 +132,7 @@ export default function Categories(props) {
 
 export async function getServerSideProps() {
   const response = await fetch(
-    "http://localhost:3000/api/get-all-product"
-    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
   );
   const data = await response.json();
 
