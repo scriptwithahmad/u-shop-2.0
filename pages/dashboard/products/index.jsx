@@ -84,8 +84,8 @@ const index = ({ data }) => {
                   <input
                     name="name"
                     value={filterByName.name}
-                    placeholder="Search here..."
                     onChange={searchInputHanler}
+                    placeholder="Search here..."
                     className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] w-56 rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
                   />
                   <span>

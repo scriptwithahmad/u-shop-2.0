@@ -23,7 +23,6 @@ const CreateProduct = () => {
 
   // Cloudinary States Fucnton -------------------------/
   const [tempImage, setTempImage] = useState("");
-
   const uploadImagesToCloudinary = async () => {
     try {
       const imageUrls = [];
@@ -71,9 +70,8 @@ const CreateProduct = () => {
         category: "",
         seller: "",
         stock: "",
-        images: [],
       });
-      setTempImage(" ");
+      setImagePreviews([]);
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
@@ -85,6 +83,7 @@ const CreateProduct = () => {
   const handleImageChange = (e) => {
     const files = e.target.files;
     const previews = [];
+    const tempImages = [];
 
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
@@ -95,7 +94,13 @@ const CreateProduct = () => {
         }
       };
       reader.readAsDataURL(files[i]);
+
+      // Push the files to tempImages array
+      tempImages.push(files[i]);
     }
+
+    // Update the tempImage state with the new array of files
+    setTempImage(tempImages);
   };
 
   // Remove Specific Image from Client Side ------------/

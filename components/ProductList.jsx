@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 
 const ProductList = ({ props }) => {
   const AllProductsData = props.ProductData;
-  console.log(AllProductsData);
+  // console.log(AllProductsData);
   const { addToCart } = useContext(CartContext);
 
   return (

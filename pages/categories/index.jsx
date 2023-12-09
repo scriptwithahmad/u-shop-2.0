@@ -1,87 +1,165 @@
-import { CartContext } from "@/context/CartProvider";
+import axios from "axios";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
+import { CartContext } from "@/context/CartProvider";
+import { useContext, useEffect, useState } from "react";
 
 export default function Categories(props) {
-  const [productData, setProductData] = useState(props.data.ProductData);
   const { addToCart } = useContext(CartContext);
+  const [showForm, setShowForm] = useState(false);
+  const [productData, setProductData] = useState(props.data.ProductData);
+  const [filterByName, setFilterByName] = useState({
+    name: "",
+  });
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  // Filter by Category ----------------------------------------------------------/
+  const handleCategoryChange = (e) => {
+    const { name, checked } = e.target;
+
+    // Update selected categories based on checkbox change
+    if (checked) {
+      setSelectedCategories((prevCategories) => [...prevCategories, name]);
+    } else {
+      setSelectedCategories((prevCategories) =>
+        prevCategories.filter((category) => category !== name)
+      );
+    }
+  };
+
+  // Input OnChange Function -----------------------------------------------------/
+  const searchInputHanler = (e) => {
+    setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
+  };
+
+  // Fetch Data Basis Filter by Name Function ------------------------------------/
+  const fetchProductData = async () => {
+    try {
+      const { data } = await axios.get("/api/get-all-product", {
+        params: { name: filterByName.name },
+      });
+      setProductData(data.ProductData);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
+  // Fetch data on Every Render  -------------------------------------------------/
+  useEffect(() => {
+    fetchProductData();
+  }, [filterByName.name]);
+
+  // Filter Data On Filteration --------------------------------------------------/
+  const filteredProducts = selectedCategories.length
+    ? productData.filter((product) =>
+        selectedCategories.includes(product.category)
+      )
+    : productData;
 
   return (
     <>
+      <Toaster />
       <div className="bg-[#ffffff]">
-        <div>
-          <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
-            <div className="border-b border-gray-200 pb-4 my-8">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-                Category
-              </h1>
+        <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
+          <div className="border-b border-gray-200 pb-6 my-8 flex items-center justify-between">
+            <h1 className="text-4xl font-bold tracking-wide text-gray-700">
+              Category
+            </h1>
+            <div className="relative">
+              <input
+                style={{
+                  visibility: showForm ? "visible" : "hidden",
+                  opacity: showForm ? "1" : "0",
+                  transition: ".4s",
+                }}
+                name="name"
+                placeholder="Search here"
+                value={filterByName.name}
+                onChange={searchInputHanler}
+                className="border px-3 py-1 rounded-md w-[240px] text-gray-500 placeholder:text-gray-300 outline-none focus:ring-2"
+              />
+              <i
+                onClick={() => setShowForm(true)}
+                className="fa-solid fa-magnifying-glass animate-pulse text-sm text-gray-400 hover:text-gray-500 cursor-pointer absolute top-1/2 right-2 -translate-y-1/2 transition-all duration-300"
+              ></i>
             </div>
-            <div className="flex gap-4 flex-col md:flex-row">
-              <div
-                className={`border hover:bg-[#dddde61c] rounded-lg p-2 overflow-hidden`}
-              >
-                <h2 className="px-2 text-xl my-2 font-semibold tracking-wide text-blue-700">
-                  Filters
-                </h2>
-                <div className="flex gap-4 px-4 py-2">
-                  <input
-                    className="cursor-pointer"
-                    type="checkbox"
-                    name="Mobiles"
-                    id="Mobiles"
-                  />
-                  <label
-                    className="cursor-pointer text-gray-600 text-sm"
-                    htmlFor="Mobiles"
-                  >
-                    Mobiles
-                  </label>
-                </div>
-                <div className="flex gap-4 px-4 py-2">
-                  <input
-                    className="cursor-pointer"
-                    type="checkbox"
-                    name="Earbuds"
-                    id="Earbuds"
-                  />
-                  <label
-                    className="cursor-pointer text-gray-600 text-sm"
-                    htmlFor="Earbuds"
-                  >
-                    Earbuds
-                  </label>
-                </div>
-                <div className="flex gap-4 px-4 py-2">
-                  <input
-                    className="cursor-pointer"
-                    type="checkbox"
-                    name="Tablets"
-                    id="Tablets"
-                  />
-                  <label
-                    className="cursor-pointer text-gray-600 text-sm"
-                    htmlFor="Tablets"
-                  >
-                    Tablets
-                  </label>
-                </div>
-                <div className="flex gap-4 px-4 py-2">
-                  <input
-                    className="cursor-pointer"
-                    type="checkbox"
-                    name="Smart Watches"
-                    id="Smart Watches"
-                  />
-                  <label
-                    className="cursor-pointer text-gray-600 text-sm"
-                    htmlFor="Smart Watches"
-                  >
-                    Smart Watches
-                  </label>
-                </div>
+          </div>
+          <div className="flex gap-4 flex-col md:flex-row">
+            <div
+              className={`border hover:bg-[#dddde61c] rounded-lg p-2 overflow-hidden`}
+            >
+              <h2 className="px-2 text-xl my-2 font-medium tracking-wider text-blue-600">
+                Filter Products
+              </h2>
+              <div className="flex gap-4 px-4 py-2">
+                <input
+                  id="Men"
+                  name="Men"
+                  type="checkbox"
+                  className="cursor-pointer"
+                  onChange={handleCategoryChange}
+                />
+                <label
+                  className="cursor-pointer text-gray-600 text-sm"
+                  htmlFor="Men"
+                >
+                  Men
+                </label>
               </div>
-              <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 2xl:grid-cols-4 gap-2 h-full border-[1px] rounded-lg p-4">
-                {productData.map((v, i) => {
+              <div className="flex gap-4 px-4 py-2">
+                <input
+                  id="Women"
+                  name="Women"
+                  type="checkbox"
+                  className="cursor-pointer"
+                  onChange={handleCategoryChange}
+                />
+                <label
+                  className="cursor-pointer text-gray-600 text-sm"
+                  htmlFor="Women"
+                >
+                  Women
+                </label>
+              </div>
+              <div className="flex gap-4 px-4 py-2">
+                <input
+                  id="Kids"
+                  name="Kids"
+                  type="checkbox"
+                  className="cursor-pointer"
+                  onChange={handleCategoryChange}
+                />
+                <label
+                  className="cursor-pointer text-gray-600 text-sm"
+                  htmlFor="Kids"
+                >
+                  Kids
+                </label>
+              </div>
+              <div className="flex gap-4 px-4 py-2">
+                <input
+                  id="Sports"
+                  name="Sports"
+                  type="checkbox"
+                  className="cursor-pointer"
+                  onChange={handleCategoryChange}
+                />
+                <label
+                  className="cursor-pointer text-gray-600 text-sm"
+                  htmlFor="Sports"
+                >
+                  Sports
+                </label>
+              </div>
+            </div>
+            <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 2xl:grid-cols-4 gap-2 h-full border-[1px] rounded-lg p-4">
+              {filteredProducts.length == 0 ? (
+                <h1 className="text-gray-500 my-10 whitespace-nowrap">
+                  Opps! Products Not Found.
+                </h1>
+              ) : (
+                filteredProducts.map((v, i) => {
                   return (
                     <div
                       key={i}
@@ -120,16 +198,17 @@ export default function Categories(props) {
                       </div>
                     </div>
                   );
-                })}
-              </div>
+                })
+              )}
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     </>
   );
 }
 
+// Fetch All Product Data Api ------------------------------------------------------/
 export async function getServerSideProps() {
   const response = await fetch(
     "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
