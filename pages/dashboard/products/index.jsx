@@ -15,6 +15,7 @@ const tableHeader = [
 ];
 
 const index = ({ data }) => {
+  const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [productData, setProductData] = useState(data.ProductData);
@@ -22,11 +23,12 @@ const index = ({ data }) => {
     name: "",
   });
 
+  // Input Hadler For Searching by Name ------------------------------------------/
   const searchInputHanler = (e) => {
     setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
   };
 
-  const router = useRouter();
+  // delete Product by Slug ------------------------------------------------------/
   const delPost = async (slug) => {
     try {
       if (window.confirm("Do you wnat to Delete this Product") === true) {
@@ -50,6 +52,7 @@ const index = ({ data }) => {
     }
   };
 
+  // Fetch Data Basis Filter by Name Function ------------------------------------/
   const fetchProductData = async () => {
     try {
       setLoading(true);
@@ -64,6 +67,7 @@ const index = ({ data }) => {
     }
   };
 
+  // Filter Data On Filteration --------------------------------------------------/
   useEffect(() => {
     fetchProductData();
   }, [filterByName.name]);
@@ -71,7 +75,9 @@ const index = ({ data }) => {
   return (
     <>
       <Toaster />
-      {/* ============================= TABLE STARTED  ================================= */}
+      /* TABLE STARTED
+      ---------------------------------------------------------------------------
+      */
       <div className="w-full">
         <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row">
@@ -189,8 +195,9 @@ const index = ({ data }) => {
           </div>
         </div>
       </div>
-
-      {/* NEW MODEL DESING --------------- */}
+      /* NEW MODEL DESING
+      ---------------------------------------------------------------------------
+      */
       <div
         style={{
           visibility: showForm ? "visible" : "hidden",
@@ -210,27 +217,13 @@ const index = ({ data }) => {
           <h1>Model Design</h1>
         </div>
       </div>
-      {/* ============================= BOTTOM BUTTON FOR ADDING FORM ============================= */}
-      {/* <i
-        onClick={() => setShowForm(true)}
-        className="fa fa-solid fa-plus hover:bg-indigo-500 transition cursor-pointer bx-plus shadow-lg mb-4 w-10 h-10 flex justify-center items-center rounded-[50%] bg-indigo-600 text-xl text-white fixed right-10 bottom-10"
-      >
-        <span
-          style={{
-            clipPath:
-              "polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 0 50%, 0% 0%)",
-          }}
-          className="absolute slidRight pl-2 pr-4 rounded-md whitespace-nowrap top-[50%] -translate-y-1/2 text-xs p-1 bg-indigo-600 right-[120%]"
-        >
-          Click to Add Product
-        </span>
-      </i> */}
     </>
   );
 };
 
 export default index;
 
+// Fetch All Product Data Api ------------------------------------------------------/
 export async function getServerSideProps() {
   const res = await fetch(
     "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"

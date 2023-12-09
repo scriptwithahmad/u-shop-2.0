@@ -10,6 +10,7 @@ import Steps from "@/components/Steps";
 import { data } from "autoprefixer";
 import Product from "@/models/product";
 import ProductList from "@/components/ProductList";
+import Features from "@/components/Features";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <Features />
       <ProductList props={data} />
     </>
   );
