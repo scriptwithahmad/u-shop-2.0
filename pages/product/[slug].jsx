@@ -1,14 +1,20 @@
-import StarRatings from "react-star-ratings";
-import { CartContext } from "@/context/CartProvider";
+import { Rating } from "primereact/rating";
 import { useState, useEffect, useContext } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { CartContext } from "@/context/CartProvider";
 
 const SingleProduct = ({ data }) => {
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(1);
   const [totalPrice, setTotalPrice] = useState(data.singleProduct.price);
-  const [activeImage, setActiveImage] = useState(data.singleProduct.avatar);
-
+  const [activeImage, setActiveImage] = useState(data.singleProduct.images[0]);
+  const { addToCart } = useContext(CartContext);
   const changeMainImage = (imageUrl) => {
     setActiveImage(imageUrl);
   };
@@ -22,16 +28,7 @@ const SingleProduct = ({ data }) => {
     updateTotalPrice();
   }, [value]);
 
-  // Cart Functionality -----------
-  const {
-    cartItems,
-    addToCart,
-    clearCart,
-    decreaseItemQuantity,
-    RemoveSpecificItemFromCart,
-  } = useContext(CartContext);
-
-  // REVIEWS SYSTEMS HERE
+  // REVIEWS SYSTEMS HERE ======================================/
   const [reviewData, setReviewData] = useState({
     costomerName: "",
     NoOfreviews: "",
@@ -39,93 +36,247 @@ const SingleProduct = ({ data }) => {
     createdAt: "",
   });
   const [hover, setHover] = useState(null);
-  const [rating, setRating] = useState(null);
-  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews])
-  console.log(newReviews)
+  const [rating, setRating] = useState(0);
+  const [newReviews, setNewReviews] = useState([...data.singleProduct.reviews]);
 
-  // input handler
+  // input handler =============================================/
   const inputHandler = (e) => {
     const { value, name } = e.target;
     setReviewData({ ...reviewData, [name]: value });
   };
 
-  // Reviews on Sumbit
+  const onStarClick = (selectedRating) => {
+    setRating(selectedRating);
+  };
+
+  // Reviews on Sumbit =========================================/
   const submitReview = async (e) => {
     e.preventDefault();
 
-    alert("hey")
-    // try {
-    //   alert("hey")
-    //   const res = await axios.put(
-    //     `/api/products/${data.singleProduct.slug}?reviews=POST`,
-    //     reviewData
-    //   );
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/api/products/${data.singleProduct.slug}?reviews=POST`,
+        { ...reviewData, NoOfreviews: rating }
+      );
+      const updatedReview = res.data;
 
-    //   setNewReviews(...newReviews, reviewData);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      setNewReviews([...newReviews, updatedReview]);
+
+      toast.success("Review Added Successfully!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
+      setReviewData({
+        costomerName: "",
+        NoOfreviews: "",
+        comment: "",
+        createdAt: "",
+      });
+      setRating(0);
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // SLIDER ====================================================/
+  var settings = {
+    infinite: true,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 3000,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    nextArrow: true,
+    prevArrow: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 2,
+          vertical: true,
+          verticalSwiping: true,
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+    ],
+  };
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <i
+        id="slickBtnNextReview"
+        style={{ ...style }}
+        onClick={onClick}
+        className="fa-solid fa-arrow-right-long"
+      ></i>
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <i
+        id="slickBtnPrevReview"
+        style={{ ...style }}
+        onClick={onClick}
+        className="fa-solid fa-arrow-left-long"
+      ></i>
+    );
+  }
+
+  const settings2 = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 2,
+    vertical: true,
+    verticalSwiping: true,
+    speed: 1000,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings2: {
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings2: {
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 425,
+        settings2: {
+          speed: 500,
+          autoplaySpeed: 1000,
+        },
+      },
+    ],
   };
 
   return (
     <>
-      {/* SLUG PAGE HERE  */}
+      <Toaster />
+      {/* SLUG PAGE HERE --------------- */}
       <div className="product-main">
         <div className="product-col-left">
-          <div className="productImg">
+          <div className="productImg border">
             <img src={activeImage} alt="product Image here" />
           </div>
-          <div className="product-col-inner">
-            {data.singleProduct.images.map((v, i) => {
-              return (
-                <img
-                  key={i}
-                  src={v}
-                  alt="product Images"
-                  onClick={() => changeMainImage(v)}
-                  className={v === activeImage ? "active" : ""}
-                />
-              );
-            })}
+
+          <div className="product-col-inner h-[500px] overflow-hidden w-[150px]">
+            {data.singleProduct.images.length >= 5 ? (
+              <Slider className="h-full w-full" {...settings2}>
+                {data.singleProduct.images.map((v, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={v}
+                      alt="product Images"
+                      onClick={() => changeMainImage(v)}
+                      className={
+                        v === activeImage
+                          ? "border border-sky-300 bg-gray-100"
+                          : "border hover:bg-gray-50 hover:border-sky-200"
+                      }
+                    />
+                  );
+                })}
+              </Slider>
+            ) : (
+              <div className="h-full w-full">
+                {data.singleProduct.images.map((v, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={v}
+                      alt="product Images"
+                      onClick={() => changeMainImage(v)}
+                      className={
+                        v === activeImage
+                          ? "border border-sky-300 bg-gray-100"
+                          : "border hover:bg-gray-50 hover:border-sky-200"
+                      }
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
         <div className="product-col-right">
           <div className="col-right-info">
             <h2 className="brand">{data.singleProduct.category}</h2>
-            <h1 className="name">{data.singleProduct.name}</h1>
-            <span className="price">Rs. {data.singleProduct.price}</span>
-            <p className="desc">
-              {data.singleProduct.description.slice(0, 200) + "..."}
+            <h1 className="text-[30px] my-3 font-semibold text-slate-700">
+              {data.singleProduct.name}
+            </h1>
+            <span className="text-xl text-gray-700 line-clamp-1 font-medium">
+              Rs. {data.singleProduct.price}
+            </span>
+            <p className="text-gray-500 text-sm mt-4 mb-8">
+              {data.singleProduct.description}
             </p>
-            <div className="contentMain">
-              <div className="quantitiyDiv">
-                <button
-                  className="MinusBtn"
-                  disabled={value === 0}
-                  onClick={() => {
-                    if (value > 0) {
-                      setValue(value - 1);
-                      updateTotalPrice();
-                    }
-                  }}
-                >
-                  -
-                </button>
-                <span> {value} </span>
-                <button
-                  className="PlusBtn"
-                  disabled={value === 9}
-                  onClick={() => {
-                    if (value < 9) {
-                      setValue(value + 1);
-                      updateTotalPrice();
-                    }
-                  }}
-                >
-                  +
-                </button>
-              </div>
-              <div className="priceInfoCard">
+            <div className=" flex items-center gap-4 my-4">
+              <div className="border w-fit px-3 flex items-center justify-center gap-4">
+                <span className=" text-gray-500 text-xl w-[20px]">{value}</span>
+                <div className="flex flex-col">
+                  <button
+                    disabled={value === 9}
+                    onClick={() => {
+                      if (value < 9) {
+                        setValue(value + 1);
+                        updateTotalPrice();
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-angle-up text-gray-500 text-sm"></i>
+                  </button>
+                  <button
+                    disabled={value === 0}
+                    onClick={() => {
+                      if (value > 0) {
+                        setValue(value - 1);
+                        updateTotalPrice();
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-angle-down text-gray-500 text-sm"></i>
+                  </button>
+                </div>
+                {/* <div className="priceInfoCard border">
                 <div className="card">
                   <h2>Actual Price</h2>
                   <span> {data.singleProduct.price} </span>
@@ -134,141 +285,160 @@ const SingleProduct = ({ data }) => {
                   <h2>Discount Price</h2>
                   <span>Not Available</span>
                 </div>
-                {/* Display the updated total price */}
                 <div className="card card3">
                   <h2>Total Price</h2>
                   <span>{totalPrice}</span>
                 </div>
+              </div> */}
               </div>
+              <button
+                onClick={() => addToCart(data.singleProduct)}
+                className=" px-10 py-4 text-white text-sm bg-gray-700"
+              >
+                Add To Cart
+              </button>
             </div>
-            <button
-              className="cartBtn"
-              onClick={() => addToCart(data.singleProduct)}
-            >
-              Add to Cart
-            </button>
-            <button
-              className="cartBtn"
-              onClick={() => {
-                decreaseItemQuantity(data.singleProduct);
-              }}
-            >
-              Remove From Cart
-            </button>
-            <button
-              className="cartBtn"
-              onClick={() => {
-                clearCart();
-              }}
-            >
-              Clear Cart
-            </button>
-            <button
-              className="cartBtn"
-              onClick={() => RemoveSpecificItemFromCart(data.singleProduct._id)}
-            >
-              Remove
-            </button>
-            {/* <h1 className="text-lg font-bold">Total: ${getCartTotal()}</h1> */}
           </div>
         </div>
       </div>
 
-      {/* REVIEW FORM HERE  */}
-      <form
-        onSubmit={submitReview}
-        method="POST"
-        className="border max-w-[400px] rounded-lg m-auto globalShadow p-4"
-      >
-        <h1 className="text-blue-400 font-medium mb-4 text-lg">
-          Submit Your Review
-        </h1>
-        {/* Name */}
-        <div className="">
-          {/* <label htmlFor="name">Name</label> */}
-          <input
-            required
-            id="name"
-            name="costomerName"
-            placeholder="Your Name"
-            onChange={inputHandler}
-            value={reviewData.costomerName}
-            className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
-          />
-        </div>
-
-        {/* Ratings ---------------- */}
-        <div className="my-3">
-          <p className=" text-gray-700 font-medium text-sm mb-2">
-            Your Ratings
-          </p>
-          {/* NoOfreviews -----------*/}
-          <div className="">
-            {/* <label htmlFor="NoOfReviews">No Of Reviews</label> */}
-            <input
-              type="number"
-              name="NoOfreviews"
-              onChange={inputHandler}
-              value={reviewData.NoOfreviews}
-              placeholder="Stars Ratings"
-              min="1"
-              id="NoOfReviews"
-              max="5"
-              required
-              className="hidden"
-            />
-          </div>
-          <div>
-            {[...Array(5)]?.map((star, index) => {
-              const currentRating = index + 1;
-
+      <div className="flex flex-col w-full lg:flex-row md:flex-col gap-3 mt-24 mb-8 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
+        <div className="px-8 py-24 w-full lg:w-1/2 md:w-full">
+          <h1 className="mb-4 text-xl font-semibold text-sky-700">Reviews</h1>
+          <Slider className="Slider" {...settings}>
+            {newReviews.map((v, i) => {
               return (
-                <label>
-                  <FaStar
-                    className="fa-regular fa-star cursor-pointer"
-                    size={20}
-                    color={
-                      currentRating <= (hover || rating)
-                        ? "rgb(230, 67, 47)"
-                        : "#c8c8c8"
-                    }
-                    onMouseEnter={() => setHover(currentRating)}
-                    onMouseLeave={() => setHover(null)}
-                  />
-                  <input
-                    type="radio"
-                    className="hidden"
-                    name="NoOfreviews"
-                    onClick={() => setRating(currentRating)}
-                    value={reviewData.NoOfreviews}
-                  />
-                </label>
+                <blockquote
+                  key={i}
+                  className="rounded-lg bg-white border p-6 shadow-sm sm:p-8 h-40 max-h-full"
+                >
+                  <div className="flex items-center gap-4">
+                    <img
+                      alt="Man"
+                      src="https://static.priceoye.pk/images/user-icon.svg"
+                      className="h-12 w-12 rounded-full object-cover border"
+                    />
+
+                    <div>
+                      <p className="mt-0.5 text-sm mb-1 font-medium text-gray-900">
+                        {v.costomerName}
+                      </p>
+                      <div className="flex text-xs gap-0.5 text-sky-600">
+                        <Rating value={v.NoOfreviews} readOnly cancel={false} />
+                      </div>
+
+                      {/* <span>{v.NoOfreviews}</span> */}
+                    </div>
+                  </div>
+
+                  <p className="mt-4 text-xs text-gray-700">{v.comment}</p>
+                </blockquote>
               );
             })}
+          </Slider>
+        </div>
+        {/* REVIEW FORM HERE  */}
+        <form
+          onSubmit={submitReview}
+          className="border bg-white rounded-lg m-auto globalShadow p-4 min-w-[400px] my-8"
+        >
+          <h1 className="text-sky-700 font-semibold mb-4 text-lg">
+            Submit Your Review
+          </h1>
+          {/* Name */}
+          <div className="">
+            {/* <label htmlFor="name">Name</label> */}
+            <input
+              id="name"
+              name="costomerName"
+              placeholder="Your Name"
+              onChange={inputHandler}
+              value={reviewData.costomerName}
+              className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+            />
           </div>
-        </div>
-        {/* Comment -------------*/}
-        <div className="reviewtextarea reviewsInput">
-          {/* <label htmlFor="comment">Comment</label> */}
-          <textarea
-            rows="3"
-            cols="30"
-            id="comment"
-            name="comment"
-            placeholder="Comment"
-            onChange={inputHandler}
-            value={reviewData.comment}
-            className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
-          ></textarea>
-        </div>
 
-        <div className="my-2">
-          <button type="submit" className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white">
-            Submit Review
-          </button>
-          <button type="reset">reset</button>
-        </div>
-      </form>
+          {/* Ratings ---------------- */}
+          <div className="my-3">
+            {/* NoOfreviews -----------*/}
+            <div className="flex flex-col">
+              <label
+                htmlFor="NoOfReviews"
+                className="text-gray-700 font-medium text-sm mb-2"
+              >
+                Your Ratings
+              </label>
+              <input
+                type="number"
+                name="NoOfreviews"
+                onChange={inputHandler}
+                value={rating}
+                placeholder="Stars Ratings"
+                min="1"
+                id="NoOfReviews"
+                max="5"
+                className="hidden"
+              />
+            </div>
+            <div>
+              {[...Array(5)]?.map((star, index) => {
+                const currentRating = index + 1;
+
+                return (
+                  <label key={index}>
+                    <FaStar
+                      className="fa-regular fa-star cursor-pointer"
+                      size={20}
+                      color={
+                        currentRating <= (hover || rating)
+                          ? "rgb(230, 67, 47)"
+                          : "#c8c8c8"
+                      }
+                      onMouseEnter={() => setHover(currentRating)}
+                      onMouseLeave={() => setHover(null)}
+                      onClick={() => onStarClick(currentRating)} // Call onStarClick when a star is clicked
+                    />
+                    <input
+                      type="radio"
+                      className="hidden"
+                      name="NoOfreviews"
+                      value={currentRating} // Pass the current rating value
+                    />
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+          {/* Comment -------------*/}
+          <div className="reviewtextarea reviewsInput">
+            <label
+              className="text-gray-700 font-medium text-sm mb-2"
+              htmlFor="comment"
+            >
+              Your Comment
+            </label>
+            <textarea
+              rows="3"
+              cols="30"
+              id="comment"
+              name="comment"
+              placeholder="Comment"
+              onChange={inputHandler}
+              value={reviewData.comment}
+              className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+            ></textarea>
+          </div>
+
+          <div className="my-2">
+            <button
+              type="submit"
+              className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white"
+            >
+              {loading ? "Loading..." : "Submit Review"}
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

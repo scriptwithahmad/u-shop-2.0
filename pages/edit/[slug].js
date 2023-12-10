@@ -7,7 +7,7 @@ const SingleProduct = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    brand: "",
+    sale: "",
     description: "",
     price: "",
     category: "",
@@ -18,7 +18,6 @@ const SingleProduct = () => {
   });
 
   const router = useRouter();
-
   const slug = router.query.slug;
   const formDataChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,34 +53,9 @@ const SingleProduct = () => {
     }
   };
 
-  const uploadAvatarToCloudinary = async () => {
-    try {
-      const data = new FormData();
-      data.append("file", formData.avatar);
-      data.append("upload_preset", "blog-image");
-
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dmyrswz0r/image/upload",
-        {
-          body: data,
-          method: "POST",
-        }
-      );
-
-      const jsonRes = await res.json();
-      return jsonRes.secure_url;
-    } catch (error) {
-      alert("Something went wrong while uploading the avatar");
-      return "";
-    }
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(
-        `/api/products/${slug}`
-        // `https://e-commerce-frontend-zeta.vercel.app/api/products/${slug}`
-      );
+      const res = await fetch(`/api/products/${slug}`);
       const data = await res.json();
       setFormData(data?.singleProduct);
     };
@@ -93,15 +67,10 @@ const SingleProduct = () => {
     try {
       setLoading(true);
       const imageUrls = await uploadImagesToCloudinary();
-      const avatarUrl = await uploadAvatarToCloudinary();
-      const res = await axios.put(`/api/products/${slug}`,
-        // `https://e-commerce-frontend-zeta.vercel.app//api/products/${slug}`,
-        {
-          ...formData,
-          avatar: avatarUrl,
-          images: imageUrls,
-        }
-      );
+      const res = await axios.put(`/api/products/${slug}`, {
+        ...formData,
+        images: imageUrls,
+      });
       toast.success("Product Updated Successfully!");
       router.push("/dashboard");
       //   setTempImage("");
@@ -121,7 +90,7 @@ const SingleProduct = () => {
           <div className="createProductMain">
             {/* 1. Name ------------*/}
             <div className="createProductInner">
-              <label htmlFor="name">Product Name: </label>
+              <label htmlFor="name">Product Name</label>
               <input
                 value={formData.name}
                 onChange={formDataChangeHandler}
@@ -131,16 +100,16 @@ const SingleProduct = () => {
                 placeholder="Product Name"
               />
             </div>
-            {/* 2. Brand ------------*/}
+            {/* 2. Sale ------------*/}
             <div className="createProductInner">
-              <label htmlFor="brand">Product Brand: </label>
+              <label htmlFor="sale">Product Sale </label>
               <input
-                value={formData.brand}
+                value={formData.sale}
                 onChange={formDataChangeHandler}
                 type="text"
-                name="brand"
-                id="brand"
-                placeholder="Product Brand "
+                name="sale"
+                id="sale"
+                placeholder="Product Sale"
               />
             </div>
             {/* 3. Price ------------*/}
@@ -168,12 +137,10 @@ const SingleProduct = () => {
                 <option disabled selected value="select Category">
                   Select Category
                 </option>
-                <option value="Watches">Watches</option>
-                <option value="Cameras">Cameras</option>
-                <option value="Tablets">Tablets</option>
-                <option value="Mobiles">Mobiles</option>
-                <option value="Earbuds">Earbuds</option>
-                {/* <option value="Sports">Sports</option> */}
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Kids">Kids</option>
+                <option value="Sports">Sports</option>
               </select>
             </div>
             {/* 5. Seller ------------*/}
@@ -237,8 +204,8 @@ const SingleProduct = () => {
                 className="remainDiv"
                 id="arryOfImages"
                 type="file"
-                onChange={(e) => setTempImage(e.target.files)} // Use e.target.files to get multiple files
-                multiple // Allow multiple file selection
+                onChange={(e) => setTempImage(e.target.files)}
+                multiple
               />
             </div>
 

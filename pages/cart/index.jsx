@@ -37,7 +37,7 @@ const ShoppingCart = () => {
               </h1>
               <Link
                 href="/categories"
-                className=" bg-blue-500 px-4 py-1 rounded-lg text-white hover:bg-blue-600"
+                className="bg-blue-500 px-4 py-2 rounded-lg text-white hover:bg-blue-600"
               >
                 Continue Shopping
               </Link>
@@ -52,14 +52,14 @@ const ShoppingCart = () => {
                   >
                     <div className="w-[200px] h-[150px] lg:w-[180px] lg:h-[180px] bg-[#f7f7f7] rounded-md lg:border-r lg:border-r-gray-200">
                       <img
-                        className="lg:p-8 md:p-2 mix-blend-multiply h-full w-full object-contain lg:object-cover"
-                        src={v.avatar}
+                        className="lg:p-4 md:p-2 mix-blend-multiply h-full w-full object-contain lg:object-cover"
+                        src={v.avatar || v.images[i]}
                         alt="img here"
                       />
                     </div>
                     <div className="lg:h-[180px] flex flex-col justify-between lg:py-2 lg:w-[300px] 2xl:w-[400px]">
                       <div className="">
-                        <h2 className="text-indigo-900 font-semibold md:text-lg lg:text-lg mb-2 mt-3">
+                        <h2 className="text-blue-600 line-clamp-2 font-semibold md:text-lg lg:text-lg mb-2 mt-3">
                           {v.name}
                         </h2>
                         <p className="text-[#000000d7] text-sm md:text-xs mb-1 md:mb-2">

@@ -19,13 +19,16 @@ export default async function handler(req, res) {
     ProductData = await productModel
       .find(match, {
         description: 0,
-        images: 0,
+        reviews: 0,
         ratings: 0,
       })
       .sort({ createdAt: -1 });
 
+    const TotalProducts = await productModel.find(match).count();
+
     res.status(200).json({
       success: true,
+      TotalProducts,
       ProductData,
     });
   } catch (error) {
