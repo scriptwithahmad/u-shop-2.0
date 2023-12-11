@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* ICons Link */}
         <link
           rel="stylesheet"
           crossOrigin="anonymous"

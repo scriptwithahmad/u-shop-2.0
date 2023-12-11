@@ -24,7 +24,7 @@ const ShoppingCart = () => {
   }, 0);
 
   return (
-    <div className="max-w-[1200px] 2xl:m-auto 2xl:mt-5 md:m-5 border rounded-lg p-4 globalShadow">
+    <div className="max-w-[1200px] 2xl:m-auto 2xl:my-12 md:m-5 border rounded-lg p-4 globalShadow">
       <h2 className="text-blue-600 py-2 mb-4 pb-4 text-3xl font-bold border-b border-gray-200">
         Shopping Cart
       </h2>

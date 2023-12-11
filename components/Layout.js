@@ -2,7 +2,7 @@ import NavBar from "./NavBar";
 import Dnav from "./Dnav";
 import Aside from "./Aside";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import Footer from "./Footer";
 
 export default function Layout({ children }) {
   const { pathname, back } = useRouter();
@@ -27,6 +27,7 @@ export default function Layout({ children }) {
           <div>
             <NavBar />
             {children}
+            <Footer />
           </div>
         )}
       </div>

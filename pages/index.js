@@ -7,7 +7,6 @@ import LatestMobiles from "@/components/LatestMobiles";
 import ShopByPrice from "@/components/ShopByPrice";
 import InstallmentBanner from "@/components/installmentBanner";
 import Steps from "@/components/Steps";
-import { data } from "autoprefixer";
 import Product from "@/models/product";
 import ProductList from "@/components/ProductList";
 import Features from "@/components/Features";
@@ -26,15 +25,16 @@ export default function Home({ data }) {
       <Header />
       <Features />
       <ProductList props={data} />
+      <Steps />
     </>
-  );
+  )
 }
 
 export async function getServerSideProps() {
   const response = await fetch(
     "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
   );
-  const data = await response.json();
+  const data = await response.json()
 
-  return { props: { data } };
+  return { props: { data } }
 }

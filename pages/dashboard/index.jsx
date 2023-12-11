@@ -119,7 +119,7 @@ const DashTeam = ({ data }) => {
                     ></i>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </div>

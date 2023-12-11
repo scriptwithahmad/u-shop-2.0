@@ -557,87 +557,7 @@ body {
 }
 
 /* ----------------- OTHER SECTION 01 ENDS ----------------------- */
-/* ----------------- FOOTER START ----------------------- */
 
-.footer {
-  background: #0091ff;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 30px 6%;
-
-  .footer-col-1 {
-    & img {
-      width: 10rem;
-    }
-    & ul {
-      margin-top: 30px;
-    }
-
-    & ul li a {
-      font-size: 13px;
-      color: white;
-      position: relative;
-      top: 0;
-      left: 0;
-      transition: 0.3s ease-in;
-      line-height: 2;
-    }
-    & a:hover {
-      letter-spacing: 1px;
-      color: #07121b;
-    }
-  }
-
-  .footer-col-2 {
-    & h1 {
-      color: white;
-      font-size: 18px;
-    }
-
-    & .linkDiv {
-      margin-top: 30px;
-
-      & a {
-        /* margin-top: 30px; */
-        display: flex;
-        color: white;
-        font-size: 13px;
-        line-height: 2.1;
-        transition: 0.3s linear;
-      }
-      & a:hover {
-        letter-spacing: 1px;
-        color: #07121b;
-      }
-    }
-  }
-  .footer-col-3 {
-    & h1 {
-      color: white;
-      font-size: 18px;
-    }
-    & img {
-      width: 12rem;
-      margin-top: 20px;
-    }
-    .img1 {
-      width: 18rem;
-    }
-  }
-}
-@media screen and (max-width: 768px) {
-  .footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media screen and (max-width: 425px) {
-  .footer {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-}
-/* ----------------- FOOTER ENDS ----------------------- */
 
 .defaultPara {
   font-size: 14px;
@@ -646,7 +566,7 @@ body {
   margin: auto;
 }
 
-/* Dashboard -------------- */
+/* Dashboard ------------------------------------------------------- */
 .backCover {
   /* background: linear-gradient(90deg, #fafafa 20px, transparent 1%) 50%,
     linear-gradient(#fafafa 20px, transparent 1%) 50%, #c7c4c4;
@@ -932,3 +852,4 @@ body {
     transform: rotate(360deg);
   }
 }
+
