@@ -11,6 +11,7 @@
   z-index: 2;
   box-shadow: 0px 0px 88px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid #007bff28;
+  z-index: 99999;
 }
 
 .nav-left {
