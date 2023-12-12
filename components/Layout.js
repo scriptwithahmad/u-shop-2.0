@@ -25,9 +25,9 @@ export default function Layout({ children }) {
           </div>
         ) : (
           <div>
-            {/* <NavBar /> */}
+            <NavBar />
             {children}
-            {/* <Footer /> */}
+            <Footer />
           </div>
         )}
       </div>

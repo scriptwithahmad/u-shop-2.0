@@ -1,14 +1,15 @@
 import { CartContext } from "@/context/CartProvider";
 import Link from "next/link";
 import React, { useContext } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 const ProductList = ({ props }) => {
   const AllProductsData = props.ProductData;
-  // console.log(AllProductsData);
   const { addToCart } = useContext(CartContext);
 
   return (
     <>
+      <Toaster />
       <div className="bg-white">
         <div className="max-w-[1200px] m-auto overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
           <h2 className="text-2xl font-bold tracking-tight text-slate-800">
@@ -24,7 +25,10 @@ const ProductList = ({ props }) => {
                 {/* Action Icons Here */}
                 <div className="absolute top-4 right-3 flex flex-col gap-2 group-hover:translate-x-0 translate-x-12 transition-all duration-500 z-30">
                   <i
-                    onClick={() => addToCart(v)}
+                    onClick={() => {
+                      addToCart(v);
+                      toast.success("Add To Cart Successfully!");
+                    }}
                     className="fa-solid fa-cart-plus text-slate-600 bg-gray-200 p-2 rounded cursor-pointer hover:bg-gray-300"
                   ></i>
                   <Link href={`/product/${v.slug}`}>
@@ -37,7 +41,7 @@ const ProductList = ({ props }) => {
                   {v.sale == 0 ? (
                     <span className="hidden"></span>
                   ) : (
-                    <span className=" bg-blue-400 px-4 py-1 text-sm rounded-r-lg text-white">
+                    <span className=" bg-orange-400 px-4 py-1 text-sm rounded-r-lg text-white">
                       Sale
                     </span>
                   )}
@@ -51,7 +55,7 @@ const ProductList = ({ props }) => {
                 </div>
                 {/* Product Content Here --------- */}
                 <div className="px-4 py-4">
-                  <h3 className="text-lg font-medium text-slate-700 line-clamp-1 hover:text-blue-900 transition-all duration-300">
+                  <h3 className="text-lg font-medium text-slate-700 line-clamp-1 hover:text-orange-700 transition-all duration-300">
                     <Link href={`/product/${v.slug}`}>{v.name}</Link>
                   </h3>
                   <div className="flex justify-between items-center">
