@@ -93,7 +93,7 @@ const CartProvider = ({ children }) => {
         RemoveSpecificItemFromCart,
       }}
     >
-      {children};
+      {children}
     </CartContext.Provider>
   );
 };
