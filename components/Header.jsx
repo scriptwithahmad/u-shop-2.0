@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -82,10 +83,13 @@ const Header = () => {
                 A specialist label creating luxury essentials. Ethically crafted
                 with an unwavering commitment to exceptional quality.
               </p>
-              <button className="w-fit rounded-full z-40 group flex items-center gap-3 px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white">
+              <Link
+                href={"/categories"}
+                className="w-fit rounded-full z-40 group flex items-center gap-3 px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white"
+              >
                 Shop Now{" "}
-                <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
-              </button>
+                <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300 asideAnimate"></i>
+              </Link>
             </div>
           </div>
           <div className="headerImageDiv px-2 md:px-12 2xl:px-0">
@@ -100,10 +104,13 @@ const Header = () => {
                 A specialist label creating luxury essentials. Ethically crafted
                 with an unwavering commitment to exceptional quality.
               </p>
-              <button className="w-fit rounded-full  group flex items-center gap-3 px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white">
+              <Link
+                href={"/categories"}
+                className="w-fit rounded-full  group flex items-center gap-3 px-5 py-[10px] bg-slate-600 hover:bg-slate-800 text-white"
+              >
                 Shop Now{" "}
-                <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300"></i>
-              </button>
+                <i className="fa-solid fa-arrow-right-long cursor-pointer z-50 group-hover:translate-x-1 transition-all duration-300 asideAnimate"></i>
+              </Link>
             </div>
           </div>
         </Slider>

@@ -64,7 +64,7 @@ export default function Categories(props) {
         <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
           <div className="border-b border-gray-200 pb-6 my-8 flex items-center justify-between">
             <h1 className="text-4xl font-bold tracking-wide text-gray-700">
-              Category
+              All Products
             </h1>
             <div className="relative">
               <input
@@ -89,7 +89,7 @@ export default function Categories(props) {
             <div
               className={`border hover:bg-[#dddde61c] rounded-lg p-2 overflow-hidden`}
             >
-              <h2 className="px-2 text-xl my-2 font-medium tracking-wider text-blue-600">
+              <h2 className="px-2 text-xl my-2 font-medium tracking-wider text-orange-500">
                 Filter Products
               </h2>
               <div className="flex gap-4 px-4 py-2">
@@ -167,33 +167,37 @@ export default function Categories(props) {
                     >
                       <div>
                         <div className="w-full h-[200px] bg-gray-50">
-                          <img
-                            className="h-full w-full object-contain mix-blend-multiply"
-                            src={v.avatar || v.images[i]}
-                            alt="img here"
-                          />
+                          <Link href={`/product/${v.slug}`}>
+                            <img
+                              alt="img here"
+                              src={v.avatar || v.images[i]}
+                              className="h-full w-full object-contain mix-blend-multiply cursor-pointer"
+                            />
+                          </Link>
                         </div>
                         <div className="p-2 my-4">
-                          <h2 className="text-sm mb-3 line-clamp-1">
-                            {v.name}
-                          </h2>
+                          <Link href={`/product/${v.slug}`}>
+                            <h2 className="text-sm mb-3 line-clamp-1 text-slate-700 hover:text-slate-900">
+                              {v.name}
+                            </h2>
+                          </Link>
                           <div className="flex justify-between items-center">
-                            <h2 className="text-xs bg-blue-50 w-fit p-[4px] px-3 rounded-md text-blue-900">
+                            <h2 className="text-xs border border-orange-100 w-fit p-[4px] px-3 rounded-md text-orange-400 font-normal">
                               {v.category}
                             </h2>
-                            <h2 className="text-xs w-fit p-[4px] px-3 rounded-md text-blue-900">
+                            <h2 className="text-sm w-fit p-[4px] px-3 rounded-md text-slate-500">
                               Pkr/- {v.price}
                             </h2>
                           </div>
                         </div>
                       </div>
-                      <div className="text-gray-600 flex flex-col gap-3 absolute top-2 right-0 translate-x-8 transition-all duration-700 group-hover:-translate-x-2">
+                      <div className="text-gray-600 bg-[#dadada80] p-2 rounded-md flex flex-col gap-2 absolute top-2 right-0 translate-x-12 transition-all duration-700 group-hover:-translate-x-2">
                         <Link href={`/product/${v.slug}`}>
-                          <i className="fa-solid fa-eye hover:text-sky-600 transition duration-200 cursor-pointer"></i>
+                          <i className="fa-solid fa-eye hover:text-orange-500 bg-white rounded-md p-1 transition duration-200 cursor-pointer"></i>
                         </Link>
                         <i
                           onClick={() => addToCart(v)}
-                          className="fa-solid fa-cart-plus hover:text-sky-600 transition duration-200 cursor-pointer"
+                          className="fa-solid fa-cart-plus hover:text-orange-500 bg-white rounded-md p-1 transition duration-200 cursor-pointer"
                         ></i>
                       </div>
                     </div>

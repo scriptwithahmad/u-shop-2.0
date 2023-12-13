@@ -19,6 +19,7 @@ const productSchema = new mongoose.Schema({
   sale: {
     type: String,
     required: [true, "Enter Sale Avalibilty!"],
+    default: 0,
   },
   avatar: {
     type: String,

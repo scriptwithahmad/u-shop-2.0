@@ -558,7 +558,6 @@ body {
 
 /* ----------------- OTHER SECTION 01 ENDS ----------------------- */
 
-
 .defaultPara {
   font-size: 14px;
   color: #666;
@@ -743,7 +742,6 @@ body {
 }
 
 .OrderDivMain {
-  background-color: #f7f7f7;
   padding: 20px;
   border-radius: 8px;
 }
@@ -823,18 +821,16 @@ body {
 }
 
 @keyframes slide {
-  0%{
+  0% {
     transform: translateX(0px);
   }
-  50%{
+  50% {
     transform: translateX(4px);
   }
-  100%{
+  100% {
     transform: translateX(0px);
   }
 }
-
-
 
 .dashboardSearchSlide {
   animation-name: spin;
@@ -845,11 +841,10 @@ body {
 }
 
 @keyframes spin {
-  from{
+  from {
     transform: rotate(0);
   }
-  to{
+  to {
     transform: rotate(360deg);
   }
 }
-

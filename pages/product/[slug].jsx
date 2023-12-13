@@ -189,7 +189,7 @@ const SingleProduct = ({ data }) => {
 
   return (
     <>
-      <Toaster />
+      <Toaster position="top-right" reverseOrder={false} />
       {/* SLUG PAGE HERE --------------- */}
       <div className="product-main">
         <div className="product-col-left">
@@ -250,7 +250,7 @@ const SingleProduct = ({ data }) => {
               {data.singleProduct.description}
             </p>
             <div className=" flex items-center gap-4 my-4">
-              <div className="border w-fit px-3 flex items-center justify-center gap-4">
+              <div className="border rounded-full w-fit px-9 flex items-center justify-center py-2 gap-4">
                 <span className=" text-gray-500 text-xl w-[20px]">{value}</span>
                 <div className="flex flex-col">
                   <button
@@ -262,7 +262,7 @@ const SingleProduct = ({ data }) => {
                       }
                     }}
                   >
-                    <i className="fa-solid fa-angle-up text-gray-500 text-sm"></i>
+                    <i className="fa-solid fa-angle-up text-gray-500 text-xs block"></i>
                   </button>
                   <button
                     disabled={value === 0}
@@ -273,27 +273,17 @@ const SingleProduct = ({ data }) => {
                       }
                     }}
                   >
-                    <i className="fa-solid fa-angle-down text-gray-500 text-sm"></i>
+                    <i className="fa-solid fa-angle-down text-gray-500 text-xs block"></i>
                   </button>
                 </div>
-                {/* <div className="priceInfoCard border">
-                <div className="card">
-                  <h2>Actual Price</h2>
-                  <span> {data.singleProduct.price} </span>
-                </div>
-                <div className="card">
-                  <h2>Discount Price</h2>
-                  <span>Not Available</span>
-                </div>
-                <div className="card card3">
-                  <h2>Total Price</h2>
-                  <span>{totalPrice}</span>
-                </div>
-              </div> */}
               </div>
               <button
-                onClick={() => addToCart(data.singleProduct)}
-                className=" px-10 py-4 text-white text-sm bg-gray-700"
+                // onClick={() => addToCart(data.singleProduct)}
+                onClick={() => {
+                  addToCart(data.singleProduct);
+                  toast.success("Add To Cart Successfully 😍");
+                }}
+                className=" px-10 py-4 text-white text-sm bg-gray-700 rounded-full hover:bg-slate-800"
               >
                 Add To Cart
               </button>

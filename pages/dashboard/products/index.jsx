@@ -75,9 +75,7 @@ const index = ({ data }) => {
   return (
     <>
       <Toaster />
-      /* TABLE STARTED
-      ---------------------------------------------------------------------------
-      */
+      {/* TABLE STARTED ---------------------------------------------------------------------------  */}
       <div className="w-full">
         <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row">
@@ -195,9 +193,7 @@ const index = ({ data }) => {
           </div>
         </div>
       </div>
-      /* NEW MODEL DESING
-      ---------------------------------------------------------------------------
-      */
+      {/* NEW MODEL DESING ---------------------------------------------------------------------------  */}
       <div
         style={{
           visibility: showForm ? "visible" : "hidden",
