@@ -43,6 +43,7 @@ const Aside = () => {
                       }`}
                     >
                       <i
+                        key={i}
                         className={`${v.icon} text-base ${
                           router.pathname === v.href
                             ? "text-[#3E1E97]"
@@ -50,6 +51,7 @@ const Aside = () => {
                         }`}
                       ></i>
                       <div
+                        key={i}
                         style={{
                           opacity: toggle ? "1" : "0",
                           transition: ".5s",

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Chart } from "primereact/chart";
 import React, { useState, useEffect } from "react";
+import queryStr from "query-string";
 
 const tableHeader = [
   { lable: "Name", align: "left" },
@@ -8,8 +10,10 @@ const tableHeader = [
   { lable: "Price", align: "left" },
 ];
 
-const Dashboard = ({ data }) => {
-  const [productData, setProductData] = useState(data.ProductData);
+const Dashboard = ({ products, start, end, total, page }) => {
+  var pageCount = parseInt(page);
+
+  // console.log(pageCount)
 
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
@@ -74,6 +78,8 @@ const Dashboard = ({ data }) => {
     setChartOptions(options);
   }, []);
 
+  const router = useRouter();
+
   return (
     <>
       <main>
@@ -103,7 +109,7 @@ const Dashboard = ({ data }) => {
               </p>
             </div>
             <div>
-              <i className="fa-solid fa-box bg-purple-200 text-purple-700 p-2 rounded-md"></i>
+              <i className="fa-solid fa-box bg-emerald-200 text-green-700 p-2 rounded-md"></i>
             </div>
           </div>
           {/* Dashboard Card 03 -----------*/}
@@ -116,7 +122,7 @@ const Dashboard = ({ data }) => {
               </p>
             </div>
             <div>
-              <i className="fa-regular fa-user bg-pink-200 text-pink-700 p-2 rounded-md"></i>
+              <i className="fa-solid fa-user bg-fuchsia-200 text-fuchsia-700 p-2 rounded-md"></i>
             </div>
           </div>
           {/* Dashboard Card 04 -----------*/}
@@ -129,13 +135,13 @@ const Dashboard = ({ data }) => {
               </p>
             </div>
             <div>
-              <i className="fa-brands fa-opencart bg-indigo-200 text-indigo-700 p-2 rounded-md"></i>
+              <i className="fa-solid fa-cart-shopping bg-rose-200 text-rose-700 p-2 rounded-md"></i>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 p-4">
-          <div className="bg-white rounded-lg py-5 px-0 flex globalShadow">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2 gap-4 px-4 py-2">
+          <div className="bg-white rounded-lg py-4 px-0 flex globalShadow">
             <div className="overflow-x-auto w-full">
               <div className="p-4">
                 <h2 className="text-xl text-slate-700">Recent Sales</h2>
@@ -157,9 +163,9 @@ const Dashboard = ({ data }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {productData.map((v, i) => {
+                  {products?.map((v, i) => {
                     return (
-                      <tr className="bg-white border-b border-gray-100">
+                      <tr key={i} className="bg-white border-b border-gray-100">
                         <td
                           scope="row"
                           className="px-6 flex items-center py-3 text-gray-600"
@@ -182,19 +188,36 @@ const Dashboard = ({ data }) => {
                   })}
                 </tbody>
               </table>
-              <div className=" flex items-center justify-center gap-4 w-full my-5 border-b border-gray-100 pb-4">
-                <i className="fa-solid fa-angles-left text-gray-400 text-xs"></i>
-                <i class="fa-solid fa-angle-left text-gray-400 text-xs"></i>
-                <div className="flex items-center">
-                  <span className="bg-[#EEF2FF] text-blue-600 text-xs p-2 rounded-full h-10 w-10 flex items-center justify-center cursor-pointer hover:text-blue-500">
-                    1
-                  </span>
-                  <span className="text-xs text-gray-500 p-2 rounded-full h-10 w-10 flex items-center justify-center cursor-pointer hover:text-blue-500">
-                    2
-                  </span>
+              {/* Pagination Starts ------------------ */}
+              <div className=" flex items-center justify-end pr-14 gap-5 w-full my-5 border-b border-gray-100 pb-4">
+                <span className=" whitespace-nowrap flex items-center justify-center text-sm text-slate-500">
+                  {pageCount} to {end} of {total}
+                </span>
+                <div className="flex border gap-4 px-4 py-1 rounded-full">
+                  <i
+                    onClick={() =>
+                      router.push(`/dashboard?page=${pageCount - 1}`)
+                    }
+                    className={`fa-solid fa-angle-left p-1 text-orange-600 text-xs border-r pr-4 ${
+                      start == 1
+                        ? "cursor-not-allowed text-slate-300"
+                        : "cursor-pointer hover:text-orange-500"
+                    }`}
+                  ></i>
+
+                  <i
+                    onClick={() => {
+                      if (end < total) {
+                        router.push(`/dashboard?page=${pageCount + 1}`);
+                      }
+                    }}
+                    className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${
+                      end >= total
+                        ? "cursor-not-allowed text-slate-300"
+                        : "cursor-pointer hover:text-orange-500"
+                    }`}
+                  ></i>
                 </div>
-                <i class="fa-solid fa-angle-right text-gray-400 text-xs"></i>
-                <i className="fa-solid fa-angles-right text-gray-400 text-xs"></i>
               </div>
             </div>
           </div>
@@ -216,11 +239,21 @@ const Dashboard = ({ data }) => {
 
 export default Dashboard;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(props) {
+  const queryString = queryStr.stringify(props.query);
   const res = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}"
+    // `http://localhost:3000/api/get-all-product?${queryString}`
   );
   const data = await res.json();
 
-  return { props: { data } };
+  return {
+    props: {
+      products: data.message.ProductData,
+      start: data.message.starting,
+      end: data.message.ending,
+      total: data.message.TotalProducts,
+      page: data?.message?.page,
+    },
+  };
 }

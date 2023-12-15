@@ -1,24 +1,26 @@
 import axios from "axios";
 import Link from "next/link";
+import queryStr from "query-string";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import React, { useEffect, useState } from "react";
 
 const tableHeader = [
   { lable: "Name", align: "left" },
   { lable: "Category", align: "left" },
   { lable: "Price", align: "left" },
   { lable: "Stock", align: "left" },
+  { lable: "Sale", align: "left" },
   { lable: "Seller", align: "left" },
-  { lable: "Sele", align: "center" },
   { lable: "Actions", align: "center" },
 ];
 
-const index = ({ data }) => {
+const index = ({ products, start, end, total, page }) => {
   const router = useRouter();
+  var pageCount = parseInt(page);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [productData, setProductData] = useState(data.ProductData);
+  const [productData, setProductData] = useState(products);
   const [filterByName, setFilterByName] = useState({
     name: "",
   });
@@ -128,7 +130,7 @@ const index = ({ data }) => {
               </tr>
             </thead>
             <tbody>
-              {productData.map((v, i) => {
+              {products.map((v, i) => {
                 return (
                   <tr className="bg-white border-b border-gray-100">
                     <td
@@ -151,14 +153,14 @@ const index = ({ data }) => {
                       <span
                         className={`${
                           v.sale
-                            ? "text-green-500 border-green-300"
+                            ? "text-green-500 border-green-200"
                             : "text-red-500 border-red-100"
-                        } border px-2 rounded-md`}
+                        } border px-2 rounded-md font-light `}
                       >
                         {v.sale ? "Sale" : "Not Sale"}
                       </span>
                     </td>
-                    <td className="px-6 py-2"> {v.sale} </td>
+                    <td className="px-6 py-2"> {v.seller} </td>
                     <td className="px-6 py-2 text-lg text-center">
                       <Link href={`/product/${v.slug}`}>
                         <i
@@ -184,11 +186,34 @@ const index = ({ data }) => {
             </tbody>
           </table>
           {/* Pagination start  ----------- */}
-          <div className="flex justify-end items-center gap-2 pr-10 p-2 bg-gray-50 text-[#666]">
-            <span>1 to 5 of 80</span>
-            <div className="flex gap-2">
-              <i className="cursor-pointer fa-solid fa-angle-left"></i>
-              <i className="cursor-pointer fa-solid fa-angle-right"></i>
+          <div className=" flex items-center justify-end pr-14 gap-5 w-full py-5 border-b border-gray-100 bg-gray-50">
+            <span className=" whitespace-nowrap flex items-center justify-center text-sm text-slate-500">
+              {pageCount} to {end} of {total}
+            </span>
+            <div className="flex border gap-4 px-4 py-1 rounded-full">
+              <i
+                onClick={() =>
+                  router.push(`/dashboard/products?page=${pageCount - 1}`)
+                }
+                className={`fa-solid fa-angle-left p-1 text-orange-600 text-xs border-r pr-4 ${
+                  start == 1
+                    ? "cursor-not-allowed text-slate-300"
+                    : "cursor-pointer hover:text-orange-500"
+                }`}
+              ></i>
+
+              <i
+                onClick={() => {
+                  if (end < total) {
+                    router.push(`/dashboard/products?page=${pageCount + 1}`);
+                  }
+                }}
+                className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${
+                  end >= total
+                    ? "cursor-not-allowed text-slate-300"
+                    : "cursor-pointer hover:text-orange-500"
+                }`}
+              ></i>
             </div>
           </div>
         </div>
@@ -220,12 +245,21 @@ const index = ({ data }) => {
 export default index;
 
 // Fetch All Product Data Api ------------------------------------------------------/
-export async function getServerSideProps() {
+export async function getServerSideProps(props) {
+  const queryString = queryStr.stringify(props.query);
   const res = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
-    // "http://localhost:3000/api/get-all-product"
+    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}"
+    // `http://localhost:3000/api/get-all-product?${queryString}`
   );
   const data = await res.json();
 
-  return { props: { data } };
+  return {
+    props: {
+      products: data.message.ProductData,
+      start: data.message.starting,
+      end: data.message.ending,
+      total: data.message.TotalProducts,
+      page: data?.message?.page,
+    },
+  };
 }
