@@ -1,8 +1,9 @@
-import { Rating } from "primereact/rating";
-import { useState, useEffect, useContext } from "react";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import axios from "axios";
+import { Rating } from "primereact/rating";
 import { Toaster, toast } from "react-hot-toast";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { TabView, TabPanel } from "primereact/tabview";
+import { useState, useEffect, useContext } from "react";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -292,142 +293,165 @@ const SingleProduct = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex flex-col w-full lg:flex-row md:flex-col gap-3 mt-24 mb-8 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
-        <div className="px-8 py-24 w-full lg:w-1/2 md:w-full">
-          <h1 className="mb-4 text-xl font-semibold text-sky-700">Reviews</h1>
-          <Slider className="Slider" {...settings}>
-            {newReviews.map((v, i) => {
-              return (
-                <blockquote
-                  key={i}
-                  className="rounded-lg bg-white border p-6 shadow-sm sm:p-8 h-40 max-h-full"
-                >
-                  <div className="flex items-center gap-4">
-                    <img
-                      alt="Man"
-                      src="https://static.priceoye.pk/images/user-icon.svg"
-                      className="h-12 w-12 rounded-full object-cover border"
-                    />
+      {/* Tabs here  */}
+      <div className="border max-w-[1200px] m-auto p-4 rounded-lg my-16">
+        <TabView>
+          <TabPanel header="Description" className="mb-4 mr-4">
+            <p className="m-0 text-slate-500 text-sm">
+              {data.singleProduct.description}
+            </p>
+          </TabPanel>
+          <TabPanel header="Review" className="mb-4 mr-4">
+            <div className="flex flex-col w-full lg:flex-row md:flex-col gap-3 my-8 bg-gray-100 rounded-lg max-w-[1200px] m-auto">
+              <div className="px-8 py-24 w-full lg:w-1/2 md:w-full">
+                <h1 className="mb-4 text-xl font-semibold text-sky-700">
+                  Reviews
+                </h1>
+                <Slider className="Slider" {...settings}>
+                  {newReviews.map((v, i) => {
+                    return (
+                      <blockquote
+                        key={i}
+                        className="rounded-lg bg-white border p-6 shadow-sm sm:p-8 h-40 max-h-full"
+                      >
+                        <div className="flex items-center gap-4">
+                          <img
+                            alt="Man"
+                            src="https://static.priceoye.pk/images/user-icon.svg"
+                            className="h-12 w-12 rounded-full object-cover border"
+                          />
 
-                    <div>
-                      <p className="mt-0.5 text-sm mb-1 font-medium text-gray-900">
-                        {v.costomerName}
-                      </p>
-                      <div className="flex text-xs gap-0.5 text-sky-600">
-                        <Rating value={v.NoOfreviews} readOnly cancel={false} />
-                      </div>
+                          <div>
+                            <p className="mt-0.5 text-sm mb-1 font-medium text-gray-900">
+                              {v.costomerName}
+                            </p>
+                            <div className="flex text-xs gap-0.5 text-sky-600">
+                              <Rating
+                                value={v.NoOfreviews}
+                                readOnly
+                                cancel={false}
+                              />
+                            </div>
 
-                      {/* <span>{v.NoOfreviews}</span> */}
-                    </div>
-                  </div>
+                            {/* <span>{v.NoOfreviews}</span> */}
+                          </div>
+                        </div>
 
-                  <p className="mt-4 text-xs text-gray-700">{v.comment}</p>
-                </blockquote>
-              );
-            })}
-          </Slider>
-        </div>
-        {/* REVIEW FORM HERE  */}
-        <form
-          onSubmit={submitReview}
-          className="border bg-white rounded-lg m-auto globalShadow p-4 min-w-[400px] my-8"
-        >
-          <h1 className="text-sky-700 font-semibold mb-4 text-lg">
-            Submit Your Review
-          </h1>
-          {/* Name */}
-          <div className="">
-            {/* <label htmlFor="name">Name</label> */}
-            <input
-              id="name"
-              name="costomerName"
-              placeholder="Your Name"
-              onChange={inputHandler}
-              value={reviewData.costomerName}
-              className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
-            />
-          </div>
-
-          {/* Ratings ---------------- */}
-          <div className="my-3">
-            {/* NoOfreviews -----------*/}
-            <div className="flex flex-col">
-              <label
-                htmlFor="NoOfReviews"
-                className="text-gray-700 font-medium text-sm mb-2"
+                        <p className="mt-4 text-xs text-gray-700">
+                          {v.comment}
+                        </p>
+                      </blockquote>
+                    );
+                  })}
+                </Slider>
+              </div>
+              {/* REVIEW FORM HERE  */}
+              <form
+                onSubmit={submitReview}
+                className="border bg-white rounded-lg m-auto globalShadow p-4 min-w-[400px] my-8"
               >
-                Your Ratings
-              </label>
-              <input
-                type="number"
-                name="NoOfreviews"
-                onChange={inputHandler}
-                value={rating}
-                placeholder="Stars Ratings"
-                min="1"
-                id="NoOfReviews"
-                max="5"
-                className="hidden"
-              />
-            </div>
-            <div>
-              {[...Array(5)]?.map((star, index) => {
-                const currentRating = index + 1;
+                <h1 className="text-sky-700 font-semibold mb-4 text-lg">
+                  Submit Your Review
+                </h1>
+                {/* Name */}
+                <div className="">
+                  {/* <label htmlFor="name">Name</label> */}
+                  <input
+                    id="name"
+                    name="costomerName"
+                    placeholder="Your Name"
+                    onChange={inputHandler}
+                    value={reviewData.costomerName}
+                    className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+                  />
+                </div>
 
-                return (
-                  <label key={index}>
-                    <FaStar
-                      className="fa-regular fa-star cursor-pointer"
-                      size={20}
-                      color={
-                        currentRating <= (hover || rating)
-                          ? "rgb(230, 67, 47)"
-                          : "#c8c8c8"
-                      }
-                      onMouseEnter={() => setHover(currentRating)}
-                      onMouseLeave={() => setHover(null)}
-                      onClick={() => onStarClick(currentRating)} // Call onStarClick when a star is clicked
-                    />
+                {/* Ratings ---------------- */}
+                <div className="my-3">
+                  {/* NoOfreviews -----------*/}
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="NoOfReviews"
+                      className="text-gray-700 font-medium text-sm mb-2"
+                    >
+                      Your Ratings
+                    </label>
                     <input
-                      type="radio"
-                      className="hidden"
+                      type="number"
                       name="NoOfreviews"
-                      value={currentRating} // Pass the current rating value
+                      onChange={inputHandler}
+                      value={rating}
+                      placeholder="Stars Ratings"
+                      min="1"
+                      id="NoOfReviews"
+                      max="5"
+                      className="hidden"
                     />
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-          {/* Comment -------------*/}
-          <div className="reviewtextarea reviewsInput">
-            <label
-              className="text-gray-700 font-medium text-sm mb-2"
-              htmlFor="comment"
-            >
-              Your Comment
-            </label>
-            <textarea
-              rows="3"
-              cols="30"
-              id="comment"
-              name="comment"
-              placeholder="Comment"
-              onChange={inputHandler}
-              value={reviewData.comment}
-              className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
-            ></textarea>
-          </div>
+                  </div>
+                  <div>
+                    {[...Array(5)]?.map((star, index) => {
+                      const currentRating = index + 1;
 
-          <div className="my-2">
-            <button
-              type="submit"
-              className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white"
-            >
-              {loading ? "Loading..." : "Submit Review"}
-            </button>
-          </div>
-        </form>
+                      return (
+                        <label key={index}>
+                          <FaStar
+                            className="fa-regular fa-star cursor-pointer"
+                            size={20}
+                            color={
+                              currentRating <= (hover || rating)
+                                ? "rgb(230, 67, 47)"
+                                : "#c8c8c8"
+                            }
+                            onMouseEnter={() => setHover(currentRating)}
+                            onMouseLeave={() => setHover(null)}
+                            onClick={() => onStarClick(currentRating)} // Call onStarClick when a star is clicked
+                          />
+                          <input
+                            type="radio"
+                            className="hidden"
+                            name="NoOfreviews"
+                            value={currentRating} // Pass the current rating value
+                          />
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* Comment -------------*/}
+                <div className="reviewtextarea reviewsInput">
+                  <label
+                    className="text-gray-700 font-medium text-sm mb-2"
+                    htmlFor="comment"
+                  >
+                    Your Comment
+                  </label>
+                  <textarea
+                    rows="3"
+                    cols="30"
+                    id="comment"
+                    name="comment"
+                    placeholder="Comment"
+                    onChange={inputHandler}
+                    value={reviewData.comment}
+                    className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+                  ></textarea>
+                </div>
+
+                <div className="my-2">
+                  <button
+                    type="submit"
+                    className="bg-sky-500 hover:bg-sky-600 rounded-md w-full py-1  text-white"
+                  >
+                    {loading ? "Loading..." : "Submit Review"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </TabPanel>
+          <TabPanel header="Price" className="mb-4 mr-4">
+            <p className="m-0">03 here</p>
+          </TabPanel>
+        </TabView>
       </div>
     </>
   );

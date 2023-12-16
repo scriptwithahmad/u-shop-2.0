@@ -73,9 +73,14 @@ const ShoppingCart = () => {
                           <h2 className="line-clamp-1 text-slate-800 font-medium">
                             {v.name}
                           </h2>
-                          <span className=" text-xs font-light text-slate-600">
-                            {v.category}
-                          </span>
+                          <div className="flex flex-col gap-2 mt-3">
+                            <span className="text-xs font-normal text-slate-950">
+                              Rs/- {v.price}
+                            </span>
+                            <span className="text-xs font-light text-slate-600">
+                              {v.category}
+                            </span>
+                          </div>
                         </div>
                       </div>
                       <div className="col-span-1 grid lg:items-end md:mt-4 my-4">

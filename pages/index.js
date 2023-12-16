@@ -1,19 +1,14 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
-import BestSeller from "@/components/BestSeller";
-import LatestProductSec from "@/components/LatestProductSec";
-import LatestMobiles from "@/components/LatestMobiles";
-import ShopByPrice from "@/components/ShopByPrice";
-import InstallmentBanner from "@/components/installmentBanner";
 import Steps from "@/components/Steps";
-import Product from "@/models/product";
 import ProductList from "@/components/ProductList";
 import Features from "@/components/Features";
+import queryStr from "query-string";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ data }) {
+export default function Home({ products, start, end, total, page }) {
   return (
     <>
       <Head>
@@ -24,17 +19,32 @@ export default function Home({ data }) {
       </Head>
       <Header />
       <Features />
-      <ProductList props={data} />
+      <ProductList
+        props={products}
+        start={start}
+        end={end}
+        total={total}
+        page={page}
+      />
       <Steps />
     </>
-  )
-}
-
-export async function getServerSideProps() {
-  const response = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
   );
-  const data = await response.json()
+}
+export async function getServerSideProps(props) {
+  const queryString = queryStr.stringify(props.query);
+  const res = await fetch(
+    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}"
+    `http://localhost:3000/api/get-all-product?${queryString}`
+  );
+  const data = await res.json();
 
-  return { props: { data } }
+  return {
+    props: {
+      products: data.message.ProductData,
+      start: data.message.starting,
+      end: data.message.ending,
+      total: data.message.TotalProducts,
+      page: data?.message?.page,
+    },
+  };
 }
