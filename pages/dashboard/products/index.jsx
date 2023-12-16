@@ -15,15 +15,14 @@ const tableHeader = [
   { lable: "Actions", align: "center" },
 ];
 
-const index = ({ products, start, end, total, page }) => {
+const index = ({ products: initialProducts, start, end, total, page }) => {
   const router = useRouter();
   var pageCount = parseInt(page);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [productData, setProductData] = useState(products);
-  const [filterByName, setFilterByName] = useState({
-    name: "",
-  });
+
+  const [productData, setProductData] = useState(initialProducts);
+  const [filterByName, setFilterByName] = useState({ name: "" });
 
   // Input Hadler For Searching by Name ------------------------------------------/
   const searchInputHanler = (e) => {
@@ -58,10 +57,14 @@ const index = ({ products, start, end, total, page }) => {
   const fetchProductData = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("/api/get-all-product", {
-        params: { name: filterByName.name },
+
+      const queryString = queryStr.stringify({
+        name: filterByName.name,
+        page: pageCount,
       });
-      setProductData(data.ProductData);
+
+      const { data } = await axios.get(`/api/get-all-product?${queryString}`);
+      setProductData(data.message.ProductData);
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -71,8 +74,15 @@ const index = ({ products, start, end, total, page }) => {
 
   // Filter Data On Filteration --------------------------------------------------/
   useEffect(() => {
-    fetchProductData();
-  }, [filterByName.name]);
+    if (pageCount === page) {
+      setProductData(initialProducts);
+      // SetStart(start);
+      // SetEnd(end);
+      // SetTotal(total);
+    } else {
+      fetchProductData();
+    }
+  }, [filterByName.name, pageCount]);
 
   return (
     <>
@@ -92,7 +102,7 @@ const index = ({ products, start, end, total, page }) => {
                     value={filterByName.name}
                     onChange={searchInputHanler}
                     placeholder="Search here..."
-                    className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] w-56 rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
+                    className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] lg:w-[12vw] w-[25vw] rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
                   />
                   <span>
                     {loading ? (
@@ -130,7 +140,7 @@ const index = ({ products, start, end, total, page }) => {
               </tr>
             </thead>
             <tbody>
-              {products.map((v, i) => {
+              {productData.map((v, i) => {
                 return (
                   <tr className="bg-white border-b border-gray-100">
                     <td
@@ -244,12 +254,12 @@ const index = ({ products, start, end, total, page }) => {
 
 export default index;
 
-// Fetch All Product Data Api ------------------------------------------------------/
+// Fetch All Product Data Api ----------------------------------------------------------------------------/
 export async function getServerSideProps(props) {
   const queryString = queryStr.stringify(props.query);
   const res = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}"
-    // `http://localhost:3000/api/get-all-product?${queryString}`
+    // "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}"
+    `http://localhost:3000/api/get-all-product?${queryString}`
   );
   const data = await res.json();
 
