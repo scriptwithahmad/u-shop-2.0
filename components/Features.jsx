@@ -32,8 +32,8 @@ const Features = () => {
   return (
     <>
       <div className="max-w-[1200px] m-auto my-4 lg:my-16 px-6 lg:px-6 2xl:px-0">
-        <div class="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-3 gap-5">
-          <div class="col-span-1 row-span-1 bg-gray-200 h-full overflow-hidden rounded-lg shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-3 gap-5">
+          <div className="col-span-1 row-span-1 bg-gray-200 h-full overflow-hidden rounded-lg shadow-xl">
             <div className="flex items-center h-full relative font-medium tracking-wide">
               <div>
                 <h1 className=" text-3xl ml-4 mb-1">
@@ -56,7 +56,7 @@ const Features = () => {
               />
             </div>
           </div>
-          <div class="col-span-1 row-span-1 bg-gray-200 h-full overflow-hidden rounded-lg shadow-xl">
+          <div className="col-span-1 row-span-1 bg-gray-200 h-full overflow-hidden rounded-lg shadow-xl">
             <div className="flex items-center h-full relative font-medium tracking-wide">
               <div>
                 <h1 className=" text-3xl ml-4 mb-1">
@@ -79,7 +79,7 @@ const Features = () => {
               />
             </div>
           </div>
-          <div class="col-span-1 md:col-span-2 lg:col-span-1 row-span-2 relative bg-gray-200 rounded-lg shadow-xl overflow-hidden">
+          <div className="col-span-1 md:col-span-2 lg:col-span-1 row-span-2 relative bg-gray-200 rounded-lg shadow-xl overflow-hidden">
             <img
               src="/fp5.png"
               alt="image here"
@@ -135,7 +135,7 @@ const Features = () => {
               </div>
             </div>
           </div>
-          <div class="col-span-1 md:col-span-2 row-span-1 bg-gray-200 rounded-lg shadow-xl">
+          <div className="col-span-1 md:col-span-2 row-span-1 bg-gray-200 rounded-lg shadow-xl">
             <div className=" flex items-center gap-2 md:gap-8 lg:gap-8 justify-center">
               <img src="/fp4.png" alt="image here" className=" w-[180px]" />
               <div>

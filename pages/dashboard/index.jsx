@@ -149,17 +149,16 @@ const Dashboard = ({ products, start, end, total, page }) => {
               <table className="text-sm min-w-[800px] w-full text-left text-gray-500">
                 <thead className="text-xs text-gray-700 bg-gray-50">
                   <tr>
-                    {tableHeader.map((value, index) => {
+                    {tableHeader.map((value) => {
                       return (
                         <th
                           scope="col"
-                          key={index}
                           className={`px-6 py-3 text-${value.align}`}
                         >
                           {value.lable}
                         </th>
                       );
-                    })}
+                    })}``
                   </tr>
                 </thead>
                 <tbody>

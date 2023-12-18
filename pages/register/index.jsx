@@ -1,18 +1,58 @@
-import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    fullname: "",
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+  });
+
+  const routehandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      const user = await axios.post("/api/auth/register", formData, {});
+      console.log(user);
+      toast.success("User Register Successfully!");
+      router.push("/login")
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
+      <Toaster />
       <div className="flex items-center flex-col px-6 py-12 lg:px-8">
         <h2 className="my-4 text-indigo-600 text-center text-2xl font-bold leading-9 tracking-tight">
           Sign in to your account
         </h2>
-        <div className="shadow-2xl border-b-4 border-b-indigo-200 rounded-lg px-6 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6">
-            {/* Full name  --------*/}
+        <div className="shadow-2xl border-y-4 border-y-indigo-200 rounded-lg px-6 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-6" onSubmit={submitForm}>
+            {/* Full name  ----------------*/}
             <div>
               <label
-                for="fullName"
+                htmlFor="fullName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Full Name
@@ -20,18 +60,56 @@ const Register = () => {
               <div className="mt-2">
                 <input
                   id="fullName"
-                  name="fullName"
-                  type="fullName"
-                  autocomplete="fullName"
-                  required
+                  name="fullname"
+                  onChange={routehandler}
+                  value={formData.fullname}
+                  autoComplete="fullName"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-            {/* email  --------*/}
+            {/* Username  ----------------*/}
             <div>
               <label
-                for="email"
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Username
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  onChange={routehandler}
+                  autoComplete="username"
+                  value={formData.username}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* Phone  ----------------*/}
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Phone
+              </label>
+              <div className="mt-2">
+                <input
+                  id="phone"
+                  name="phone"
+                  onChange={routehandler}
+                  autoComplete="phone"
+                  value={formData.phone}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* Email ----------------*/}
+            <div>
+              <label
+                htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Email address
@@ -39,26 +117,20 @@ const Register = () => {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
                   type="email"
-                  autocomplete="email"
-                  required
+                  name="email"
+                  onChange={routehandler}
+                  value={formData.email}
+                  autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-            {/* Password  ------*/}
+            {/* Password ----------------*/}
             <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-                className=""
-              >
+              <div className="flex items-center justify-between">
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Password
@@ -75,31 +147,33 @@ const Register = () => {
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
                   type="password"
-                  autocomplete="current-password"
-                  required
+                  name="password"
+                  onChange={routehandler}
+                  value={formData.password}
+                  autoComplete="current-password"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-            {/* button  --------*/}
+            {/* button ----------------*/}
             <div>
               <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Log in
+                {loading ? "Processing..." : "Sign Up"}
               </button>
             </div>
           </form>
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
+            Already Have an Account /
             <a
-              href="#"
+              href="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Start a 14 day free trial
+              {" "}
+              Sign In
             </a>
           </p>
         </div>

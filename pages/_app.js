@@ -6,13 +6,16 @@ import "@/styles/Navbar.css";
 import "@/styles/ShopingCart.css";
 import Layout from "@/components/Layout";
 import CartProvider from "@/context/CartProvider";
+import Context from "@/context/AuthContext";
 
 export default function App({ Component, pageProps }) {
   return (
-    <CartProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </CartProvider>
-  )
+    <Context>
+      <CartProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </CartProvider>
+    </Context>
+  );
 }

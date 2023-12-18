@@ -30,10 +30,10 @@ const Aside = () => {
       <div className="flex flex-col relative">
         <div className="flex flex-1 flex-col justify-between h-full my-4">
           <ul className="text-sm">
-            {navLinks.map((v, i) => {
+            {navLinks.map((v) => {
               return (
                 <>
-                  <li key={i}>
+                  <li>
                     <Link
                       href={v.href}
                       className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full lg:hover:bg-[#3e1e970b] hover:bg-[#3e1e970b] group cursor-pointer ${
@@ -43,7 +43,6 @@ const Aside = () => {
                       }`}
                     >
                       <i
-                        key={i}
                         className={`${v.icon} text-base ${
                           router.pathname === v.href
                             ? "text-[#3E1E97]"
@@ -51,7 +50,6 @@ const Aside = () => {
                         }`}
                       ></i>
                       <div
-                        key={i}
                         style={{
                           opacity: toggle ? "1" : "0",
                           transition: ".5s",
