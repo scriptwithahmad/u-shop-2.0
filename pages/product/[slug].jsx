@@ -128,39 +128,15 @@ const SingleProduct = ({ data }) => {
     ],
   };
 
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <i
-        id="slickBtnNextReview"
-        style={{ ...style }}
-        onClick={onClick}
-        className="fa-solid fa-arrow-right-long"
-      ></i>
-    );
-  }
-
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <i
-        id="slickBtnPrevReview"
-        style={{ ...style }}
-        onClick={onClick}
-        className="fa-solid fa-arrow-left-long"
-      ></i>
-    );
-  }
-
+  // SLIDER OF Product Images ===================================/
   const settings2 = {
-    dots: true,
+    speed: 1000,
+    vertical: true,
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 2,
-    vertical: true,
+    autoplaySpeed: 1000,
     verticalSwiping: true,
-    speed: 1000,
-    autoplaySpeed: 2000,
     responsive: [
       {
         breakpoint: 1024,
@@ -188,10 +164,34 @@ const SingleProduct = ({ data }) => {
     ],
   };
 
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <i
+        id="slickBtnNextReview"
+        style={{ ...style }}
+        onClick={onClick}
+        className="fa-solid fa-arrow-right-long"
+      ></i>
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <i
+        id="slickBtnPrevReview"
+        style={{ ...style }}
+        onClick={onClick}
+        className="fa-solid fa-arrow-left-long"
+      ></i>
+    );
+  }
+
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      {/* SLUG PAGE HERE --------------- */}
+      {/* SLUG PAGE HERE ------------------------------------- */}
       <div className="product-main">
         <div className="product-col-left">
           <div className="productImg border">
@@ -266,7 +266,7 @@ const SingleProduct = ({ data }) => {
                     <i className="fa-solid fa-angle-up text-gray-500 text-xs block"></i>
                   </button>
                   <button
-                    disabled={value === 0}
+                    disabled={value === 1}
                     onClick={() => {
                       if (value > 0) {
                         setValue(value - 1);
@@ -293,7 +293,7 @@ const SingleProduct = ({ data }) => {
         </div>
       </div>
 
-      {/* Tabs here  */}
+      {/* Tabs here  ----------------------------------------- */}
       <div className="border max-w-[1200px] m-auto p-4 rounded-lg my-16">
         <TabView>
           <TabPanel header="Description" className="mb-4 mr-4">
