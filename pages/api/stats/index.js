@@ -1,14 +1,17 @@
 import dbConnect from "@/config/dbConnect";
 import productModel from "../../../models/product";
+import userModal from "@/models/user";
 
 export default async function handler(req, res) {
   dbConnect();
 
   try {
     const products = await productModel.find().count();
+    const users = await userModal.find().count();
     res.status(200).json({
       success: true,
-      message: products,
+      products,
+      users,
     });
   } catch (error) {
     res.status(500).json({

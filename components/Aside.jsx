@@ -11,6 +11,11 @@ var navLinks = [
     lable: "Customer",
     icon: "fa-solid fa-circle-user",
   },
+  {
+    href: "/dashboard/users",
+    lable: "Users",
+    icon: "fa-solid fa-users",
+  },
 ];
 
 const Aside = () => {

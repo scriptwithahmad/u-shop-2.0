@@ -7,50 +7,24 @@ import React, { useEffect, useState } from "react";
 
 const tableHeader = [
   { lable: "Name", align: "left" },
-  { lable: "Category", align: "left" },
-  { lable: "Price", align: "left" },
-  { lable: "Stock", align: "left" },
-  { lable: "Sale", align: "left" },
-  { lable: "Seller", align: "left" },
+  { lable: "Email", align: "left" },
+  { lable: "Phone No", align: "left" },
+  { lable: "Role", align: "left" },
   { lable: "Actions", align: "center" },
 ];
 
-const index = ({ products: initialProducts, start, end, total, page }) => {
+const index = ({ users: initialProducts, start, page, end, total }) => {
   const router = useRouter();
   var pageCount = parseInt(page);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [productData, setProductData] = useState(initialProducts);
-  const [filterByName, setFilterByName] = useState({ name: "" });
+  const [user, setUser] = useState(initialProducts);
+  const [filterByName, setFilterByName] = useState({ fullname: "" });
 
   // Input Hadler For Searching by Name ------------------------------------------/
   const searchInputHanler = (e) => {
     setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
-  };
-
-  // delete Product by Slug ------------------------------------------------------/
-  const delPost = async (slug) => {
-    try {
-      if (window.confirm("Do you wnat to Delete this Product") === true) {
-        const res = await fetch(`/api/products/${slug}`, {
-          method: "DELETE",
-        });
-        if (
-          toast.success("Product Deleted Successfully!", {
-            duration: 2000,
-          })
-        ) {
-          router.push("/dashboard");
-          window.location.reload();
-        } else {
-          toast.error("Something went Wrong");
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.message);
-    }
   };
 
   // Fetch Data Basis Filter by Name Function ------------------------------------/
@@ -59,12 +33,12 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
       setLoading(true);
 
       const queryString = queryStr.stringify({
-        name: filterByName.name,
+        name: filterByName.fullname,
         page: pageCount,
       });
 
-      const { data } = await axios.get(`/api/get-all-product?${queryString}`);
-      setProductData(data.message.ProductData);
+      const { data } = await axios.get(`/api/users?${queryString}`);
+      setUser(data.message.user);
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -75,18 +49,14 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
   // Filter Data On Filteration --------------------------------------------------/
   useEffect(() => {
     if (pageCount === page) {
-      setProductData(initialProducts);
-      // SetStart(start);
-      // SetEnd(end);
-      // SetTotal(total);
+      setUser(initialProducts);
     } else {
       fetchProductData();
     }
-  }, [filterByName.name, pageCount]);
+  }, [filterByName.fullname, pageCount]);
 
   return (
     <>
-      <Toaster />
       {/* TABLE STARTED ---------------------------------------------------------------------------  */}
       <div className="w-full">
         <div className="overflow-x-auto w-full border rounded-2xl">
@@ -98,8 +68,8 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
               <div className="relative">
                 <div className="">
                   <input
-                    name="name"
-                    value={filterByName.name}
+                    name="fullname"
+                    value={filterByName.fullname}
                     onChange={searchInputHanler}
                     placeholder="Search here..."
                     className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] lg:w-[12vw] w-[25vw] rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
@@ -140,9 +110,9 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
               </tr>
             </thead>
             <tbody>
-              {productData.map((v, i) => {
+              {user?.map((v, i) => {
                 return (
-                  <tr className="bg-white border-b border-gray-100">
+                  <tr key={i} className="bg-white border-b border-gray-100">
                     <td
                       scope="row"
                       className="px-6 flex border-0 items-center py-2 font-medium text-gray-600 whitespace-nowrap"
@@ -150,27 +120,15 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
                       <div className="w-10 h-10 mr-3 border border-gray-100 rounded-full overflow-hidden">
                         <img
                           className="w-full h-full object-contain"
-                          src={v.avatar || v.images[0]}
+                          src={v.photo}
                           alt="Image Here"
                         />
                       </div>
-                      {v.name}
+                      {v.fullname}
                     </td>
-                    <td className="px-6 py-2"> {v.category} </td>
-                    <td className="px-6 py-2"> {v.price} </td>
-                    <td className="px-6 py-2"> {v.stock} </td>
-                    <td className={`px-6 py-2`}>
-                      <span
-                        className={`${
-                          v.sale
-                            ? "text-green-500 border-green-200"
-                            : "text-red-500 border-red-100"
-                        } border px-2 rounded-md font-light `}
-                      >
-                        {v.sale ? "Sale" : "Not Sale"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-2"> {v.seller} </td>
+                    <td className="px-6 py-2"> {v.email} </td>
+                    <td className="px-6 py-2"> {v.phone} </td>
+                    <td className="px-6 py-2"> {v.role} </td>
                     <td className="px-6 py-2 text-lg text-center">
                       <Link href={`/product/${v.slug}`}>
                         <i
@@ -195,7 +153,6 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
               })}
             </tbody>
           </table>
-          {/* Pagination start  ----------- */}
           <div className=" flex items-center justify-end pr-14 gap-5 w-full py-5 border-b border-gray-100 bg-gray-50">
             <span className=" whitespace-nowrap flex items-center justify-center text-sm text-slate-500">
               {pageCount} to {end} of {total}
@@ -203,7 +160,7 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
             <div className="flex border gap-4 px-4 py-1 rounded-full">
               <i
                 onClick={() =>
-                  router.push(`/dashboard/products?page=${pageCount - 1}`)
+                  router.push(`/dashboard/users?page=${pageCount - 1}`)
                 }
                 className={`fa-solid fa-angle-left p-1 text-orange-600 text-xs border-r pr-4 ${
                   start == 1
@@ -215,7 +172,7 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
               <i
                 onClick={() => {
                   if (end < total) {
-                    router.push(`/dashboard/products?page=${pageCount + 1}`);
+                    router.push(`/dashboard/users?page=${pageCount + 1}`);
                   }
                 }}
                 className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${
@@ -258,16 +215,18 @@ export default index;
 export async function getServerSideProps(props) {
   const queryString = queryStr.stringify(props.query);
   const res = await fetch(
-    `https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}`
+    //   `https://e-commerce-frontend-zeta.vercel.app//api/users?${queryString}`
+    `http://localhost:3000/api/users?${queryString}`
   );
   const data = await res.json();
+  console.log(data);
 
   return {
     props: {
-      products: data.message.ProductData,
+      users: data.message.users,
       start: data.message.starting,
       end: data.message.ending,
-      total: data.message.TotalProducts,
+      total: data.message.totalUser,
       page: data?.message?.page,
     },
   };
