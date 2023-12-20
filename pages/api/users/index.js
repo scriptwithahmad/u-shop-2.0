@@ -9,15 +9,15 @@ export default async function handler(req, res) {
     var users = {};
 
     const page = req.query.page || 1;
-    const limit = req.query.limit || 1;
+    const limit = req.query.limit || 4;
     const skip = (page - 1) * limit;
 
-    if (req.query.name) {
-      match.name = new RegExp(req.query.name, "i");
-    } else if (req.query.category) {
-      match.category = new RegExp(req.query.category, "i");
-    } else if (req.query.seller) {
-      match.seller = new RegExp(req.query.seller, "i");
+    if (req.query.fullname) {
+      match.fullname = new RegExp(req.query.fullname, "i");
+    } else if (req.query.phone) {
+      match.phone = new RegExp(req.query.phone, "i");
+    } else if (req.query.role) {
+      match.role = new RegExp(req.query.role, "i");
     }
 
     users = await userModal
@@ -29,7 +29,6 @@ export default async function handler(req, res) {
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(skip);
-      console.log(users)
 
     const totalUser = await userModal.find(match).count();
 

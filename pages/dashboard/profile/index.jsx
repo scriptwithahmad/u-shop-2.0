@@ -24,44 +24,58 @@ const index = () => {
               <div className="max-w-full m-auto">
                 <div className="h-fit w-fit border-[10px] border-[#eeeeee9c] rounded-full max-w-full m-auto">
                   <img
-                    className="h-60 w-60 border-[10px] object-cover border-[#c9c9c9cc] rounded-full"
+                    alt="image here"
                     src={user.photo}
-                    alt=""
+                    className="h-60 w-60 border-[10px] object-cover border-[#c9c9c9cc] rounded-full"
                   />
                 </div>
               </div>
 
               {/* Full Name ----------------------------------------------- */}
               <div className="flex items-center justify-center flex-col mt-6">
-                <h1 className="capitalize text-3xl mb-3 text-slate-800 font-bold">
+                <h1 className="capitalize text-3xl mb-3 text-slate-800 font-bold tracking-wider">
                   {user.fullname}
                 </h1>
-                <h2 className="text-[#6c757d] text-xs">{user.designation}</h2>
+                <h2 className="text-[#6c757d] text-xs uppercase tracking-wide">
+                  {user.username}
+                </h2>
               </div>
               {/* Inner Divs ----------------------------------------------- */}
               <div className="grid grid-cols-2 mt-6 gap-4">
                 {/* Email ----------------------------------------------- */}
                 <div className="px-4 py-2 flex items-center gap-4 shadow-md rounded-lg">
-                  <i class="fa-solid fa-envelope text-xl text-gray-500"></i>
+                  <i class="fa-solid fa-envelope text-xl text-gray-400"></i>
                   <div>
                     <p className="text-xs text-[#00000084] mb-1">Email</p>
-                    <span className="text-[#444]">{user.email}</span>
+                    <span className="text-[#444] text-sm">{user.email}</span>
                   </div>
                 </div>
                 {/* UserName ----------------------------------------------- */}
                 <div className="px-4 py-2 flex items-center gap-2 shadow-md rounded-lg">
-                  <i className="fa-solid fa-phone text-gray-500"></i>
+                  <i className="fa-solid fa-phone text-gray-400"></i>
                   <div>
                     <p className="text-xs text-[#00000084] mb-1">Phone</p>
-                    <span className="text-[#444]">+92 {user.phone}</span>
+                    <span className="text-[#444] text-sm">
+                      +92 {user.phone}
+                    </span>
+                  </div>
+                </div>
+                {/* User Role ---------------------------------------------- */}
+                <div className="px-4 py-2 flex items-center gap-3 shadow-md rounded-lg">
+                  <i className="fa-solid fa-user-secret text-lg text-gray-400"></i>
+                  <div>
+                    <p className="text-xs text-[#00000084] mb-1">User Role</p>
+                    <span className="text-[#444] text-sm">{user.role}</span>
                   </div>
                 </div>
                 {/* Gender ----------------------------------------------- */}
                 <div className="px-4 py-2 flex items-center gap-3 shadow-md rounded-lg">
-                  <i className="fa-solid fa-user text-gray-500"></i>
+                  <i className="fa-solid fa-user text-gray-400 text-lg"></i>
                   <div>
                     <p className="text-xs text-[#00000084] mb-1">Gender</p>
-                    <span className="text-[#444]">{user.gender || "Male"}</span>
+                    <span className="text-[#444] text-sm">
+                      {user.gender || "Male"}
+                    </span>
                   </div>
                 </div>
               </div>

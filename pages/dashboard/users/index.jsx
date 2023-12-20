@@ -7,19 +7,20 @@ import React, { useEffect, useState } from "react";
 
 const tableHeader = [
   { lable: "Name", align: "left" },
+  { lable: "Username", align: "left" },
   { lable: "Email", align: "left" },
   { lable: "Phone No", align: "left" },
   { lable: "Role", align: "left" },
   { lable: "Actions", align: "center" },
 ];
 
-const index = ({ users: initialProducts, start, page, end, total }) => {
+const index = ({ users: initialProducts, start, end, total, page }) => {
   const router = useRouter();
   var pageCount = parseInt(page);
-  const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
-  const [user, setUser] = useState(initialProducts);
+  const [fuser, setFuser] = useState(initialProducts);
   const [filterByName, setFilterByName] = useState({ fullname: "" });
 
   // Input Hadler For Searching by Name ------------------------------------------/
@@ -27,8 +28,32 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
     setFilterByName({ ...filterByName, [e.target.name]: e.target.value });
   };
 
+  // delete Product by Slug ------------------------------------------------------/
+  const delPost = async (slug) => {
+    try {
+      if (window.confirm("Do you wnat to Delete this Product") === true) {
+        const res = await fetch(`/api/users/${slug}`, {
+          method: "DELETE",
+        });
+        if (
+          toast.success("Product Deleted Successfully!", {
+            duration: 2000,
+          })
+        ) {
+          // router.push("/dashboard");
+          window.location.reload();
+        } else {
+          toast.error("Something went Wrong");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+    }
+  };
+
   // Fetch Data Basis Filter by Name Function ------------------------------------/
-  const fetchProductData = async () => {
+  const fetchUserData = async () => {
     try {
       setLoading(true);
 
@@ -38,7 +63,7 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
       });
 
       const { data } = await axios.get(`/api/users?${queryString}`);
-      setUser(data.message.user);
+      setFuser(data.message.users);
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -49,15 +74,25 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
   // Filter Data On Filteration --------------------------------------------------/
   useEffect(() => {
     if (pageCount === page) {
-      setUser(initialProducts);
+      setFuser(initialProducts);
     } else {
-      fetchProductData();
+      fetchUserData();
     }
-  }, [filterByName.fullname, pageCount]);
+  }, [filterByName.name, pageCount]);
+
+  // Modal States ------------------------------------------------------------------/
+  const [showModal, setShowModal] = useState(false);
+  const [modeladata, setModeldata] = useState("");
+
+  // Modal here -------------------------------------------------------------------/
+  const openModal = (v) => {
+    setModeldata(v);
+    setShowModal(true);
+  };
 
   return (
     <>
-      {/* TABLE STARTED ---------------------------------------------------------------------------  */}
+      {/* TABLE STARTED ---------------------------------------------------------- */}
       <div className="w-full">
         <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row">
@@ -68,6 +103,7 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
               <div className="relative">
                 <div className="">
                   <input
+                    type="search"
                     name="fullname"
                     value={filterByName.fullname}
                     onChange={searchInputHanler}
@@ -110,7 +146,7 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
               </tr>
             </thead>
             <tbody>
-              {user?.map((v, i) => {
+              {fuser?.map((v, i) => {
                 return (
                   <tr key={i} className="bg-white border-b border-gray-100">
                     <td
@@ -120,28 +156,24 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
                       <div className="w-10 h-10 mr-3 border border-gray-100 rounded-full overflow-hidden">
                         <img
                           className="w-full h-full object-contain"
-                          src={v.photo}
+                          src={v.photo || "/user.jpeg"}
                           alt="Image Here"
                         />
                       </div>
                       {v.fullname}
                     </td>
+                    <td className="px-6 py-2"> {v.username} </td>
                     <td className="px-6 py-2"> {v.email} </td>
                     <td className="px-6 py-2"> {v.phone} </td>
                     <td className="px-6 py-2"> {v.role} </td>
                     <td className="px-6 py-2 text-lg text-center">
-                      <Link href={`/product/${v.slug}`}>
+                      <button>
                         <i
-                          title="View"
+                          title="View Deatail"
+                          onClick={() => openModal(v)}
                           className="fa fa-solid fa-eye px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
                         ></i>
-                      </Link>
-                      <Link href={`products/edit-product/${v.slug}`}>
-                        <i
-                          title="Edit"
-                          className="fa-solid fa-pen-to-square px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
-                        ></i>
-                      </Link>
+                      </button>
                       <i
                         title="Delete"
                         onClick={() => delPost(v.slug)}
@@ -185,24 +217,83 @@ const index = ({ users: initialProducts, start, page, end, total }) => {
           </div>
         </div>
       </div>
-      {/* NEW MODEL DESING ---------------------------------------------------------------------------  */}
+      {/* NEW MODEL DESING ------------------------------------------------------- */}
       <div
         style={{
-          visibility: showForm ? "visible" : "hidden",
-          opacity: showForm ? "1" : "0",
+          visibility: showModal ? "visible" : "hidden",
+          opacity: showModal ? "1" : "0",
           transition: ".4s",
         }}
         className="fixed z-10 top-0 left-0 w-full h-screen border-red-600 backdrop-blur-[2px] bg-[#00000094] overflow-auto"
       >
         <div
           className={`${
-            showForm ? "scale-100 opacity-100" : "scale-0 opacity-0"
-          } bg-white duration-500 mx-auto my-8 relative p-4 max-w-xl lg:max-w-4xl border rounded-lg`}
+            showModal ? "scale-100 opacity-100" : "scale-0 opacity-0"
+          } bg-transparent duration-500 mx-auto my-8 relative p-4 max-w-xl lg:max-w-2xl rounded-lg lg:px-0 px-4`}
         >
-          <span onClick={() => setShowForm(false)} className="cursor-pointer">
-            close
+          <span onClick={() => setShowModal(false)} className="cursor-pointer">
+            <i className="fa-solid fa-x bxShadow absolute top-10 right-2 h-8 w-8 flex items-center justify-center text-slate-400 hover:text-gray-500 z-20 cursor-pointer"></i>
           </span>
-          <h1>Model Design</h1>
+          <div className="mt-3 grid grid-cols-2 items-center justify-center gap-2 rounded-lg bg-white backdrop-blur-sm">
+            <div className="w-full h-[420px]">
+              <img
+                alt="photo alt"
+                src={modeladata.photo || "/user.jpeg"}
+                className="w-full h-full object-cover rounded-l-lg"
+              />
+            </div>
+            <div className="p-2 bg-transparent rounded-r-lg">
+              <h1 className="text-[#1553A1] font-bold mb-4 text-3xl">
+                {modeladata.fullname}
+              </h1>
+              <div className="mt-2 text-left">
+                <div className="mb-4 grid col-span-2 items-center w-full">
+                  <span className="mb-1 text-[#222222ab] font-medium text-xs">
+                    User Name
+                  </span>
+                  <span className="text-[#444] text-sm font-semibold">
+                    {modeladata.username}
+                  </span>
+                </div>
+
+                <div className="mb-4 grid col-span-2 items-center w-full">
+                  <span className="mb-1 text-[#222222ab] font-medium text-xs">
+                    Email
+                  </span>
+                  <span className="text-[#444] text-sm font-semibold">
+                    {modeladata.email}
+                  </span>
+                </div>
+
+                <div className="mb-4 grid col-span-2 items-center w-full">
+                  <span className="mb-1 text-[#222222ab] font-medium text-xs">
+                    phone
+                  </span>
+                  <span className="text-[#444] text-sm font-semibold">
+                    {modeladata.phone}
+                  </span>
+                </div>
+
+                <div className="mb-4 grid col-span-2 items-center w-full">
+                  <span className="mb-1 text-[#222222ab] font-medium text-xs">
+                    User Role
+                  </span>
+                  <span className="text-[#444] text-sm font-semibold">
+                    {modeladata.role}
+                  </span>
+                </div>
+
+                {/* <div className="mb-4 grid col-span-2 items-center w-full">
+                  <span className="mb-1 text-[#222222ab] font-medium text-xs">
+                    Address
+                  </span>
+                  <span className="text-[#444] text-sm font-semibold">
+                    {modeladata.address}
+                  </span>
+                </div> */}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -219,7 +310,6 @@ export async function getServerSideProps(props) {
     `http://localhost:3000/api/users?${queryString}`
   );
   const data = await res.json();
-  console.log(data);
 
   return {
     props: {

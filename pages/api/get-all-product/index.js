@@ -32,10 +32,6 @@ export default async function handler(req, res) {
 
     const TotalProducts = await productModel.find(match).count();
 
-
-  
-    
-
     var starting = TotalProducts ? skip + 1 : 0;
     var ending =
       starting + limit > TotalProducts ? TotalProducts : starting + limit - 1;
@@ -47,7 +43,7 @@ export default async function handler(req, res) {
         ProductData,
         starting,
         ending,
-        page
+        page,
       },
     });
   } catch (error) {
