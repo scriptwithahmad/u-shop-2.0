@@ -1,13 +1,14 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import { SessionData } from "@/context/AuthContext";
+// import { SessionData } from "@/context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 import axios from "axios";
 
 const Dnav = () => {
   const router = useRouter();
 
-  const { user, setUser } = useContext(SessionData);
+  const { user } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -91,13 +92,13 @@ const Dnav = () => {
             ) : (
               <div className="flex py-2 group relative items-center gap-2 pr-4">
                 <img
-                  src="https://res.cloudinary.com/dmyrswz0r/image/upload/v1700594680/blog-image/latest_prev_ui_btfeug.png"
+                  src="/user.jpeg"
                   alt="image here"
                   className="rounded-full h-9 w-9 object-cover cursor-pointer border border-gray-300"
                 />
                 <div className="leading-3">
                   <p className="text-[14px] capitalize font-medium">
-                    Default Name
+                    Not Found
                   </p>
                   <span className="text-[11px] cursor-pointer text-red-500 hover:text-red-600">
                     User

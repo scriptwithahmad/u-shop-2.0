@@ -2,10 +2,13 @@ import axios from "axios";
 import Link from "next/link";
 import queryStr from "query-string";
 import { useRouter } from "next/router";
+import { useQuery } from "react-query";
 import { Toaster, toast } from "react-hot-toast";
 import React, { useEffect, useState } from "react";
+import { format, render, cancel, register } from "timeago.js";
 
 const tableHeader = [
+  { lable: "Date", align: "left" },
   { lable: "Name", align: "left" },
   { lable: "Category", align: "left" },
   { lable: "Price", align: "left" },
@@ -15,14 +18,26 @@ const tableHeader = [
   { lable: "Actions", align: "center" },
 ];
 
-const index = ({ products: initialProducts, start, end, total, page }) => {
+const index = () => {
   const router = useRouter();
-  var pageCount = parseInt(page);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [productData, setProductData] = useState(initialProducts);
   const [filterByName, setFilterByName] = useState({ name: "" });
+
+  const {
+    data: productData,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(["products", filterByName], async () => {
+    try {
+      const queryString = queryStr.stringify(filterByName);
+      const res = await axios.get(`/api/get-all-product?${queryString}`);
+      return res.data.message;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
 
   // Input Hadler For Searching by Name ------------------------------------------/
   const searchInputHanler = (e) => {
@@ -38,11 +53,11 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
         });
         if (
           toast.success("Product Deleted Successfully!", {
-            duration: 2000,
+            duration: 1000,
           })
         ) {
-          router.push("/dashboard");
-          window.location.reload();
+          // router.push("/dashboard/products");
+          refetch();
         } else {
           toast.error("Something went Wrong");
         }
@@ -57,14 +72,7 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
   const fetchProductData = async () => {
     try {
       setLoading(true);
-
-      const queryString = queryStr.stringify({
-        name: filterByName.name,
-        page: pageCount,
-      });
-
-      const { data } = await axios.get(`/api/get-all-product?${queryString}`);
-      setProductData(data.message.ProductData);
+      await refetch();
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -74,15 +82,8 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
 
   // Filter Data On Filteration --------------------------------------------------/
   useEffect(() => {
-    if (pageCount === page) {
-      setProductData(initialProducts);
-      // SetStart(start);
-      // SetEnd(end);
-      // SetTotal(total);
-    } else {
-      fetchProductData();
-    }
-  }, [filterByName.name, pageCount]);
+    fetchProductData();
+  }, [filterByName]); // Refetch when filterByName changes
 
   return (
     <>
@@ -90,7 +91,7 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
       {/* TABLE STARTED ---------------------------------------------------------------------------  */}
       <div className="w-full">
         <div className="overflow-x-auto w-full border rounded-2xl">
-          <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row">
+          <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row w-full">
             <h2 className="text-xl font-semibold">
               All <span className="text-indigo-600">Products</span>
             </h2>
@@ -140,9 +141,12 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
               </tr>
             </thead>
             <tbody>
-              {productData.map((v, i) => {
+              {productData?.ProductData?.map((v, i) => {
                 return (
                   <tr className="bg-white border-b border-gray-100">
+                    <td className="px-6 py-2 text-xs">
+                      {format(new Date(v.createdAt), "en_US")}
+                    </td>
                     <td
                       scope="row"
                       className="px-6 flex border-0 items-center py-2 font-medium text-gray-600 whitespace-nowrap"
@@ -196,17 +200,21 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
             </tbody>
           </table>
           {/* Pagination start  ----------- */}
-          <div className=" flex items-center justify-end pr-14 gap-5 w-full py-5 border-b border-gray-100 bg-gray-50">
+          <div className=" flex items-center justify-end pr-10 gap-5 w-full py-5 border-b border-gray-100 bg-gray-50">
             <span className=" whitespace-nowrap flex items-center justify-center text-sm text-slate-500">
-              {pageCount} to {end} of {total}
+              {/* {pageCount} to {end} of {total} */}
+              {productData?.page} of {productData?.ending} to{" "}
+              {productData?.TotalProducts}
             </span>
             <div className="flex border gap-4 px-4 py-1 rounded-full">
               <i
                 onClick={() =>
-                  router.push(`/dashboard/products?page=${pageCount - 1}`)
+                  router.push(
+                    `/dashboard/products?page=${productData?.page - 1}`
+                  )
                 }
                 className={`fa-solid fa-angle-left p-1 text-orange-600 text-xs border-r pr-4 ${
-                  start == 1
+                  productData?.starting == 1
                     ? "cursor-not-allowed text-slate-300"
                     : "cursor-pointer hover:text-orange-500"
                 }`}
@@ -214,12 +222,14 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
 
               <i
                 onClick={() => {
-                  if (end < total) {
-                    router.push(`/dashboard/products?page=${pageCount + 1}`);
+                  if (productData?.end < productData?.TotalProducts) {
+                    router.push(
+                      `/dashboard/products?page=${productData?.page + 1}`
+                    );
                   }
                 }}
                 className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${
-                  end >= total
+                  productData?.end >= productData?.TotalProducts
                     ? "cursor-not-allowed text-slate-300"
                     : "cursor-pointer hover:text-orange-500"
                 }`}
@@ -253,22 +263,3 @@ const index = ({ products: initialProducts, start, end, total, page }) => {
 };
 
 export default index;
-
-// Fetch All Product Data Api ----------------------------------------------------------------------------/
-export async function getServerSideProps(props) {
-  const queryString = queryStr.stringify(props.query);
-  const res = await fetch(
-    `https://e-commerce-frontend-zeta.vercel.app//api/get-all-product?${queryString}`
-  );
-  const data = await res.json();
-
-  return {
-    props: {
-      products: data.message.ProductData,
-      start: data.message.starting,
-      end: data.message.ending,
-      total: data.message.TotalProducts,
-      page: data?.message?.page,
-    },
-  };
-}

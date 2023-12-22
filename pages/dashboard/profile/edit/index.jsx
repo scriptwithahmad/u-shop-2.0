@@ -1,4 +1,4 @@
-import { SessionData } from "@/context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -9,7 +9,7 @@ const EditProfile = () => {
   const [formData, setFormData] = useState({});
   const router = useRouter();
 
-  const { user, setUser } = useContext(SessionData);
+  const { user, refetch } = useContext(AuthContext);
 
   const [tempImage, setTempImage] = useState(null);
 
@@ -63,9 +63,9 @@ const EditProfile = () => {
         photo: imgUrl,
       });
       if (res.data.success) {
-        setUser(res.data.message);
         toast.success("User Updated Successfully 😍😎");
       }
+      refetch();
       setTimeout(() => {
         router.push("/dashboard/profile");
       }, 2000);

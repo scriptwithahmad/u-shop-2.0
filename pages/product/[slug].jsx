@@ -88,14 +88,68 @@ const SingleProduct = ({ data }) => {
   var settings = {
     infinite: true,
     autoplay: true,
+    vertical: true,
     speed: 2000,
-    autoplaySpeed: 3000,
-    slidesToShow: 2,
+    autoplaySpeed: 4000,
+    slidesToShow: 4,
     slidesToScroll: 1,
     nextArrow: true,
     prevArrow: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 2,
+          centerMode: true,
+          vertical: false,
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+      {
+        breakpoint: 375,
+        settings: {
+          slidesToShow: 2,
+          centerMode: true,
+          vertical: false,
+          nextArrow: true,
+          prevArrow: true,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
+        },
+      },
+    ],
+  };
+
+  // SLIDER OF Product Images ===================================/
+  const settings2 = {
+    speed: 2000,
+    autoplay: true,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplaySpeed: 3000,
+    autoplaySpeed: 1000,
     responsive: [
       {
         breakpoint: 1024,
@@ -128,42 +182,6 @@ const SingleProduct = ({ data }) => {
     ],
   };
 
-  // SLIDER OF Product Images ===================================/
-  const settings2 = {
-    speed: 1000,
-    vertical: true,
-    infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 2,
-    autoplaySpeed: 1000,
-    verticalSwiping: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings2: {
-          nextArrow: true,
-          prevArrow: true,
-          nextArrow: <SampleNextArrow />,
-          prevArrow: <SamplePrevArrow />,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings2: {
-          nextArrow: <SampleNextArrow />,
-          prevArrow: <SamplePrevArrow />,
-        },
-      },
-      {
-        breakpoint: 425,
-        settings2: {
-          speed: 500,
-          autoplaySpeed: 1000,
-        },
-      },
-    ],
-  };
-
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -191,16 +209,16 @@ const SingleProduct = ({ data }) => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      {/* SLUG PAGE HERE ------------------------------------- */}
+      {/* Single PAGE HERE ---------------------------------- */}
       <div className="product-main">
         <div className="product-col-left">
           <div className="productImg border">
             <img src={activeImage} alt="product Image here" />
           </div>
 
-          <div className="product-col-inner h-[500px] overflow-hidden w-[150px]">
+          <div className="product-col-inner h-full w-[150px]">
             {data.singleProduct.images.length >= 5 ? (
-              <Slider className="h-full w-full" {...settings2}>
+              <Slider className="h-full w-full" {...settings}>
                 {data.singleProduct.images.map((v, i) => {
                   return (
                     <img
@@ -240,18 +258,20 @@ const SingleProduct = ({ data }) => {
         </div>
         <div className="product-col-right">
           <div className="col-right-info">
-            <h2 className="brand">{data.singleProduct.category}</h2>
-            <h1 className="text-[30px] my-3 font-semibold text-slate-700">
+            <h2 className="text-xs lg:text-sm text-slate-500">
+              {data.singleProduct.category}
+            </h2>
+            <h1 className=" text-xl lg:text-[28px] my-3 font-semibold text-slate-700">
               {data.singleProduct.name}
             </h1>
-            <span className="text-xl text-gray-700 line-clamp-1 font-medium">
+            <span className=" text-sm lg:text-xl text-gray-700 line-clamp-1 font-medium">
               Rs. {data.singleProduct.price}
             </span>
-            <p className="text-gray-500 text-sm mt-4 mb-8">
-              {data.singleProduct.description}
+            <p className="text-gray-500 text-[13px] lg:text-sm mt-4 mb-8 text-justify">
+              {data.singleProduct.description.slice(0, 200) + "..."}
             </p>
             <div className=" flex items-center gap-4 my-4">
-              <div className="border rounded-full w-fit px-9 flex items-center justify-center py-2 gap-4">
+              <div className="border rounded-full w-fit px-8 lg:px-9 flex items-center justify-center py-1 lg:py-2 gap-4">
                 <span className=" text-gray-500 text-xl w-[20px]">{value}</span>
                 <div className="flex flex-col">
                   <button
@@ -279,12 +299,11 @@ const SingleProduct = ({ data }) => {
                 </div>
               </div>
               <button
-                // onClick={() => addToCart(data.singleProduct)}
                 onClick={() => {
                   addToCart(data.singleProduct);
                   toast.success("Add To Cart Successfully 😍");
                 }}
-                className=" px-10 py-4 text-white text-sm bg-gray-700 rounded-full hover:bg-slate-800"
+                className="px-8 lg:px-10 py-3 lg:py-4 text-white text-sm bg-gray-700 rounded-full hover:bg-slate-800"
               >
                 Add To Cart
               </button>
@@ -297,7 +316,7 @@ const SingleProduct = ({ data }) => {
       <div className="border max-w-[1200px] m-auto p-4 rounded-lg my-16">
         <TabView>
           <TabPanel header="Description" className="mb-4 mr-4">
-            <p className="m-0 text-slate-500 text-sm">
+            <p className="m-0 text-slate-500 text-xs leading-5 lg:text-sm">
               {data.singleProduct.description}
             </p>
           </TabPanel>
@@ -307,7 +326,7 @@ const SingleProduct = ({ data }) => {
                 <h1 className="mb-4 text-xl font-semibold text-sky-700">
                   Reviews
                 </h1>
-                <Slider className="Slider" {...settings}>
+                <Slider className="Slider" {...settings2}>
                   {newReviews.map((v, i) => {
                     return (
                       <blockquote
@@ -461,9 +480,7 @@ export default SingleProduct;
 
 export async function getServerSideProps({ params }) {
   const slug = params.slug;
-  const res = await fetch(
-    `https://e-commerce-frontend-zeta.vercel.app/api/products/${slug}`
-  );
+  const res = await fetch(`https://u-store.vercel.app/api/products/${slug}`);
   const data = await res.json();
 
   return { props: { data } };

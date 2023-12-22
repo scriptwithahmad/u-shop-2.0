@@ -6,7 +6,6 @@ async function GenAccessToken(data) {
     .setExpirationTime("1d")
     .setIssuedAt()
     .sign(new TextEncoder().encode(process.env.SECURE_URL));
-    console.log(token)
   return token;
 }
 
@@ -17,7 +16,7 @@ async function JWTVerify(token) {
       new TextEncoder().encode(process.env.SECURE_URL)
     );
 
-    return payload;
+    return payload.id;
   } catch (error) {
     return false;
   }

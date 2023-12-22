@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import { SessionData } from "@/context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 
 const index = () => {
   const router = useRouter();
-  const { user, setUser } = useContext(SessionData);
+  const { user } = useContext(AuthContext);
 
   return (
     <>

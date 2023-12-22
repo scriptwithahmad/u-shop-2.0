@@ -218,7 +218,7 @@ export default function Categories(props) {
 // Fetch All Product Data Api ------------------------------------------------------/
 export async function getServerSideProps() {
   const response = await fetch(
-    "https://e-commerce-frontend-zeta.vercel.app//api/get-all-product"
+    "https://u-store.vercel.app/api/get-all-product"
   );
   const data = await response.json();
 

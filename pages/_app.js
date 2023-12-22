@@ -7,21 +7,19 @@ import "@/styles/ShopingCart.css";
 import Layout from "@/components/Layout";
 import CartProvider from "@/context/CartProvider";
 import Context from "@/context/AuthContext";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 export default function App({ Component, pageProps }) {
   const queryClient = new QueryClient();
   return (
-    <Context>
-      <CartProvider>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <Context>
+        <CartProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </CartProvider>
-    </Context>
+        </CartProvider>
+      </Context>
+    </QueryClientProvider>
   );
 }
