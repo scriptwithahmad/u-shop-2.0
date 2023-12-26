@@ -51,7 +51,6 @@ export default async function Handler(req, res) {
       serialize("AccessToken", AccessToken, {
         path: "/",
         httpOnly: true,
-        secure: true,
       })
     );
 
