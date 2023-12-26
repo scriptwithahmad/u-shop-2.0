@@ -12,10 +12,17 @@ const index = () => {
       <div className="bg-white relative mt-4 max-w-5xl m-auto rounded-lg">
         <Link
           href="/dashboard/profile/edit"
-          className="absolute cursor-pointer top-6 right-6 border rounded-md text-gray-600 bg-gray-100  border-gray-200 hover:text-blue-600 hover:bg-gray-50 gap-1 text-sm flex items-center px-3 py-1 transition-all duration-1000"
+          className="absolute cursor-pointer top-6 right-6 border rounded-md text-gray-600 bg-gray-100  border-gray-200 hover:text-indigo-600 hover:bg-gray-50 gap-1 text-sm flex items-center px-3 py-1 transition-all duration-150"
         >
-          <ion-icon name="create-outline"></ion-icon>
+          <i className="fa-solid fa-pen-to-square"></i>
           Edit
+        </Link>
+        <Link
+          href="/dashboard/profile/update-password"
+          className="absolute cursor-pointer top-6 right-24 border rounded-md text-gray-600 bg-gray-100  border-gray-200 hover:text-indigo-600 hover:bg-gray-50 gap-1 text-sm flex items-center px-3 py-1 transition-all duration-150"
+        >
+          <i className="fa-solid fa-floppy-disk"></i>
+          Update
         </Link>
 
         <div className="shade rounded-lg py-10 flex items-center flex-col justify-center">
