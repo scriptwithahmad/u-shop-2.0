@@ -3,6 +3,7 @@ import Dnav from "./Dnav";
 import Aside from "./Aside";
 import { useRouter } from "next/router";
 import Footer from "./Footer";
+import Nav from "./Nav";
 
 export default function Layout({ children }) {
   const { pathname, back } = useRouter();
@@ -25,7 +26,8 @@ export default function Layout({ children }) {
           </div>
         ) : (
           <div>
-            <NavBar />
+            <Nav />
+            {/* <NavBar /> */}
             {children}
             <Footer />
           </div>
