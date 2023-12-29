@@ -116,10 +116,15 @@ const Nav = () => {
 
       {showSearch && <Search setShowSearch={setShowSearch} />}
 
-      <div className="absolute top-0 z-50">
+      <div 
+      style={{
+        transition: ".3s",
+        left: `${mobNavPosstion === true ? 0 : -100}%`,
+      }}
+      className="absolute top-0 z-50 border-4 backdrop-blur-sm bg-[#00000066] h-screen w-full overflow-hidden">
         <nav
           style={{
-            transition: ".5s",
+            transition: ".8s",
             left: `${mobNavPosstion === true ? 0 : -100}%`,
           }}
           className="navGlass h-full w-1/2 fixed p-4"
