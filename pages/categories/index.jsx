@@ -173,7 +173,7 @@ export default function Categories(props) {
                           <Link href={`/product/${v.slug}`}>
                             <img
                               alt="img here"
-                              src={v.avatar || v.images[i]}
+                              src={v.images[0]}
                               className="h-full w-full object-contain mix-blend-multiply cursor-pointer"
                             />
                           </Link>
@@ -217,9 +217,7 @@ export default function Categories(props) {
 
 // Fetch All Product Data Api ------------------------------------------------------/
 export async function getServerSideProps() {
-  const response = await fetch(
-    "http://localhost:3000/api/get-all-product"
-  );
+  const response = await fetch("http://localhost:3000/api/get-all-product");
   const data = await response.json();
 
   return { props: { data } };
