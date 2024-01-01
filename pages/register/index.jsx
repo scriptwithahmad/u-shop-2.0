@@ -28,7 +28,7 @@ const Register = () => {
       const user = await axios.post("/api/auth/register", formData, {});
       console.log(user);
       toast.success("User Register Successfully!");
-      router.push("/login")
+      router.push("/login");
     } catch (error) {
       if (error?.response?.data?.message) {
         toast.error(error?.response?.data?.message);
@@ -44,16 +44,16 @@ const Register = () => {
     <>
       <Toaster />
       <div className="flex items-center flex-col px-6 py-12 lg:px-8">
-        <h2 className="my-4 text-indigo-600 text-center text-2xl font-bold leading-9 tracking-tight">
+        <h2 className="my-4 text-slate-700 text-center text-2xl font-bold leading-9 tracking-tight">
           Sign in to your account
         </h2>
-        <div className="shadow-2xl border-y-4 border-y-indigo-200 rounded-lg px-6 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="shadow-2xl border-y-4 border-y-orange-200 rounded-lg px-6 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={submitForm}>
             {/* Full name  ----------------*/}
             <div>
               <label
                 htmlFor="fullName"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm leading-6 text-gray-500"
               >
                 Full Name
               </label>
@@ -64,7 +64,7 @@ const Register = () => {
                   onChange={routehandler}
                   value={formData.fullname}
                   autoComplete="fullName"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -72,7 +72,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm leading-6 text-gray-500"
               >
                 Username
               </label>
@@ -83,7 +83,7 @@ const Register = () => {
                   onChange={routehandler}
                   autoComplete="username"
                   value={formData.username}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -91,7 +91,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm leading-6 text-gray-500"
               >
                 Phone
               </label>
@@ -102,7 +102,7 @@ const Register = () => {
                   onChange={routehandler}
                   autoComplete="phone"
                   value={formData.phone}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -110,7 +110,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm leading-6 text-gray-500"
               >
                 Email address
               </label>
@@ -122,7 +122,7 @@ const Register = () => {
                   onChange={routehandler}
                   value={formData.email}
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -131,15 +131,12 @@ const Register = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm leading-6 text-gray-500"
                 >
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
+                  <a href="#" className="block text-sm leading-6 text-gray-500">
                     Forgot password?
                   </a>
                 </div>
@@ -152,7 +149,7 @@ const Register = () => {
                   onChange={routehandler}
                   value={formData.password}
                   autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -160,7 +157,7 @@ const Register = () => {
             <div>
               <button
                 type="submit"
-                className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
               >
                 {loading ? "Processing..." : "Sign Up"}
               </button>
@@ -170,7 +167,7 @@ const Register = () => {
             Already Have an Account /
             <a
               href="/login"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="leading-6 text-orange-500 hover:text-orange-600"
             >
               {" "}
               Sign In

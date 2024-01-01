@@ -16,6 +16,11 @@ var navLinks = [
     lable: "Users",
     icon: "fa-solid fa-users",
   },
+  {
+    href: "/dashboard/orders",
+    lable: "Orders",
+    icon: "fa-solid fa-box-open",
+  },
 ];
 
 const Aside = () => {

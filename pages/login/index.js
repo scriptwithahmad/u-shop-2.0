@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -46,16 +46,17 @@ export default function Login() {
     <>
       <Toaster />
       <div className="flex flex-col items-center px-6 py-12 lg:px-8">
-        <h2 className="my-4 text-indigo-600 text-center text-xl font-bold leading-9 tracking-tight">
+        <h2 className="my-4 text-slate-700 text-center text-xl font-bold leading-9 tracking-tight">
           Sign in to your account
         </h2>
 
-        <div className="shadow-2xl border-b-4 border-b-indigo-200 rounded-lg px-8 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="shadow-2xl border-y-4 border-y-orange-200 rounded-lg px-8 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={submitForm}>
+            {/* Username ----------------------- */}
             <div>
               <label
                 for="username"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm leading-6 text-gray-500"
               >
                 Username
               </label>
@@ -66,35 +67,18 @@ export default function Login() {
                   onChange={routehandler}
                   autocomplete="username"
                   value={formData.username}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-
+            {/* Password ----------------------- */}
             <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-                className=""
+              <label
+                for="password"
+                className="block text-sm leading-6 text-gray-500"
               >
-                <label
-                  for="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
+                Password
+              </label>
               <div className="mt-2">
                 <input
                   id="password"
@@ -102,25 +86,26 @@ export default function Login() {
                   type="password"
                   onChange={routehandler}
                   value={formData.password}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-
+            {/* Button here --------------------- */}
             <div>
               <button
                 type="submit"
-                className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
               >
                 {loading ? "Processing..." : "Log In"}
               </button>
             </div>
           </form>
-          <p className="mt-10 text-center text-sm text-gray-500">
+          {/* accout Info ----------------------- */}
+          <p className="mt-8 text-center text-sm text-gray-500">
             Don't Have an Accout /
             <a
               href="/register"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="leading-6 text-orange-500 hover:text-orange-600"
             >
               {" "}
               Sigin Up

@@ -143,7 +143,7 @@ const index = () => {
             <tbody>
               {productData?.ProductData?.map((v, i) => {
                 return (
-                  <tr className="bg-white border-b border-gray-100">
+                  <tr key={i} className="bg-white border-b border-gray-100">
                     <td className="px-6 py-2 text-xs">
                       {format(new Date(v.createdAt), "en_US")}
                     </td>

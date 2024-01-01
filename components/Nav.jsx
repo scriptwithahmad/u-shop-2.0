@@ -34,7 +34,7 @@ const Nav = () => {
                   width={700}
                   height={200}
                   alt="Logo Here"
-                  src="/navLogo.png"
+                  src="/logo1.png"
                   className="w-full h-full object-contain"
                 />
               </picture>
@@ -116,18 +116,19 @@ const Nav = () => {
 
       {showSearch && <Search setShowSearch={setShowSearch} />}
 
-      <div 
-      style={{
-        transition: ".3s",
-        left: `${mobNavPosstion === true ? 0 : -100}%`,
-      }}
-      className="absolute top-0 z-50 border-4 backdrop-blur-sm bg-[#00000066] h-screen w-full overflow-hidden">
+      <div
+        style={{
+          transition: ".3s",
+          left: `${mobNavPosstion === true ? 0 : -100}%`,
+        }}
+        className="absolute top-0 z-50 bg-[#0000001d] h-screen w-full overflow-hidden"
+      >
         <nav
           style={{
             transition: ".8s",
             left: `${mobNavPosstion === true ? 0 : -100}%`,
           }}
-          className="navGlass h-full w-1/2 fixed p-4"
+          className="navGlass border h-full w-1/2 fixed p-4"
         >
           <div className="flex items-center justify-between">
             <div className="w-[140px]">
@@ -136,7 +137,7 @@ const Nav = () => {
                   width={700}
                   height={700}
                   alt="Logo Here"
-                  src="/navLogo.png"
+                  src="/logo1.png"
                   data-src="images/logo1.webp"
                   className="w-full h-full object-cover mix-blend-multiply"
                 />
@@ -154,14 +155,14 @@ const Nav = () => {
               </li>
             ))}
 
-            <li className="text-slate-500 mt-10 hover:text-slate-600">
+            <li className="text-slate-500 mt-4 hover:text-slate-600">
               <Link
                 className="text-slate-400 border border-gray-300 px-5 py-2 rounded-full flex items-center gap-1 w-fit"
                 href="/categories"
               >
                 Explore
                 <i className="bx bx-right-arrow-alt"></i>
-                <i className="fa-solid fa-angle-right animate-pulse"></i>
+                <i className="fa-solid fa-angle-right asideAnimate"></i>
               </Link>
             </li>
           </ul>

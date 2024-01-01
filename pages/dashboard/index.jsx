@@ -158,7 +158,8 @@ const Dashboard = ({ products, start, end, total, page }) => {
                           {value.lable}
                         </th>
                       );
-                    })}``
+                    })}
+                    ``
                   </tr>
                 </thead>
                 <tbody>

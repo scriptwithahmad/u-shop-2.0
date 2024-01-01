@@ -42,7 +42,9 @@ const ShoppingCart = () => {
           <div className="lg:w-[70%] md:w-full">
             {cartLength == 0 ? (
               <div className="my-2">
-                <img
+                <Image
+                  height={200}
+                  width={200}
                   alt="empty cart image here"
                   className="w-48 select-none"
                   src="https://img.freepik.com/premium-vector/shopping-cart-with-cross-mark-wireless-paymant-icon-shopping-bag-failure-paymant-sign-online-shopping-vector_662353-912.jpg"
@@ -64,9 +66,11 @@ const ShoppingCart = () => {
                   return (
                     <div className="grid grid-cols-3 lg:grid-cols-6 items-center lg:justify-center lg:items-center place-content-center border-b border-b-slate-200 md:pb-4 md:my-3">
                       <div className="flex items-center gap-4 col-span-3">
-                        <img
+                        <Image
+                          height={200}
+                          width={200}
                           alt="image here"
-                          src={v.avatar || v.images[i] || v.images[0]}
+                          src={v.images[i] || v.images[0] || v.avatar}
                           className="lg:w-24 md:w-32 w-24 h-auto object-cover"
                         />
                         <div className="lg:w-[65%] w-[70%]">
@@ -123,12 +127,18 @@ const ShoppingCart = () => {
               </>
             )}
             <div className="flex items-center mt-5 gap-3 my-2">
+              <Link
+                href={"/checkout"}
+                className="disabled:hidden border px-5 py-2 rounded-full text-white font-light bg-orange-400 hover:bg-orange-500 transition-all"
+              >
+                Procced to Checkout
+              </Link>
               <button
                 onClick={() => {
                   clearCart();
                 }}
                 disabled={cartLength == 0}
-                className="disabled:hidden text-slate-500 font-light hover:text-orange-600 transition-all"
+                className="disabled:hidden border px-5 py-2 rounded-full text-slate-500 font-light hover:text-orange-600 transition-all"
               >
                 Clear Cart
               </button>

@@ -1,10 +1,12 @@
+import axios from "axios";
+import Image from "next/image";
 import InputMask from "react-input-mask";
+import { Toaster, toast } from "react-hot-toast";
 import React, { useContext, useState } from "react";
 import { CartContext } from "@/context/CartProvider";
-import Image from "next/image";
-import axios from "axios";
 
 const index = () => {
+  const [loading, setLoading] = useState(false);
   const { cartItems } = useContext(CartContext);
 
   // Calculate total price
@@ -31,6 +33,7 @@ const index = () => {
   var placeOrder = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       var res = await axios.post("/api/orders", {
         items: cartItems.map((v) => {
           var obj = {
@@ -44,16 +47,19 @@ const index = () => {
       });
 
       if (res.data.success) {
-        alert("Order Placed Successfully!");
+        toast.success("Order Placed Successfully!");
       }
     } catch (error) {
-      alert("Something went wrong!");
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className="px-4">
+      <Toaster />
+      <div className="px-4 my-12">
         <form
           onSubmit={placeOrder}
           className="max-w-6xl mx-auto grid gap-6 grid-cols-5 py-10 bg-white globalShadow rounded-lg p-4"
@@ -74,7 +80,7 @@ const index = () => {
                 placeholder="First Name"
                 onChange={changeHandler}
                 value={formData.firstName}
-                className="border w-full py-2 px-3 rounded-md"
+                className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
             {/* Last Name ----------------- */}
@@ -89,7 +95,7 @@ const index = () => {
                 placeholder="Last Name"
                 onChange={changeHandler}
                 value={formData.lastName}
-                className="border w-full py-2 px-3 rounded-md"
+                className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
 
@@ -105,7 +111,7 @@ const index = () => {
                 value={formData.phone}
                 onChange={changeHandler}
                 placeholder="Phone Number"
-                className="border w-full py-2 px-3 rounded-md"
+                className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
 
@@ -120,7 +126,7 @@ const index = () => {
                 placeholder="Email"
                 value={formData.email}
                 onChange={changeHandler}
-                className="border w-full py-2 px-3 rounded-md"
+                className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
 
@@ -136,7 +142,7 @@ const index = () => {
                 placeholder="City"
                 value={formData.city}
                 onChange={changeHandler}
-                className="border w-full py-2 px-3 rounded-md"
+                className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
             {/* Street Address ----------------- */}
@@ -151,12 +157,12 @@ const index = () => {
                 placeholder="Adress"
                 onChange={changeHandler}
                 value={formData.address}
-                className="border w-full py-2 px-3 rounded-md"
+                className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
-
-          <aside className="col-span-5 lg:col-span-2 bg-gray-200 p-4 flex flex-col rounded-md">
+          {/* Aside of Place Orders ------------------------------- */}
+          <aside className="col-span-5 lg:col-span-2 bg-gray-100 p-4 flex flex-col rounded-md">
             <h2 className="col-span-2 mb-4 font-semibold text-2xl text-center">
               Your Order
             </h2>
@@ -186,7 +192,7 @@ const index = () => {
                           height={200}
                           className="w-10"
                           alt="image here"
-                          src={v.images[0]}
+                          src={v.images[i] || v.images[0] || v.avatar}
                         />
                         <div>
                           <p className="line-clamp-1 font-bold">{v.title}</p>
@@ -208,8 +214,8 @@ const index = () => {
               </div>
             </div>
 
-            <button className="py-3 px-3 w-full bg-red-700 my-4 text-white rounded-md">
-              Place Order
+            <button className="py-3 px-3 w-full bg-orange-500 hover:bg-orange-600 my-4 text-white rounded-md">
+              {loading ? "Processing..." : "Place Order"}
             </button>
           </aside>
         </form>
