@@ -35,7 +35,7 @@ const Dnav = () => {
             <div className="flex items-center">
               <Link href="/" className="flex-none">
                 <img
-                  src="/logo1.png"
+                  src="/logo2.png"
                   width={20}
                   className="mx-auto w-[100px] mt-2"
                 />

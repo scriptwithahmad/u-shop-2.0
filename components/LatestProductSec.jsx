@@ -4,11 +4,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Link  from "next/link";
 
 const LatestProductSec = ({ props }) => {
-  // console.log(props.products);
 
   // filter data based on Category
   const watchesProducts = props.products?.filter((product) => product.category === "Watches");
-  // console.log(watchesProducts)
 
 
   var settings = {

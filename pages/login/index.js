@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function Login() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -29,7 +27,7 @@ export default function Login() {
       });
       toast.success("User Logged In");
       setTimeout(() => {
-        router.push("/dashboard");
+        window.location.reload();
       }, 1000);
     } catch (error) {
       if (error?.response?.data?.message) {

@@ -14,7 +14,6 @@ export default async function handler(req, res) {
           success: true,
           singleProduct,
         });
-        console.log(singleProduct);
       } catch (error) {
         console.log(error);
       }

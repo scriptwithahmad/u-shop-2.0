@@ -44,7 +44,7 @@ const Features = () => {
                 </h1>
                 <Link
                   href={"/categories"}
-                  className=" ml-4 text-gray-500 text-sm z-50 border-b border-b-gray-400 pb-1 w-fit hover:text-orange-500 hover:border-b-orange-400 transition-all duration-300 cursor-pointer"
+                  className=" ml-4 text-gray-500 text-sm border-b border-b-gray-400 pb-1 w-fit hover:text-orange-500 hover:border-b-orange-400 transition-all duration-300 cursor-pointer"
                 >
                   Shop Now
                 </Link>
@@ -83,23 +83,23 @@ const Features = () => {
             <img
               src="/fp5.png"
               alt="image here"
-              className="absolute top-0 z-10 opacity-30"
+              className="absolute top-0 opacity-30"
             />
-            <div className="p-4 flex justify-end h-full flex-col z-50">
-              <button className="bg-orange-400 text-white px-4 py-1 text-xs md:text-sm rounded-sm cursor-text w-fit z-50">
+            <div className="p-4 flex justify-end h-full flex-col">
+              <button className="bg-orange-400 text-white px-4 py-1 text-xs md:text-sm rounded-sm cursor-text w-fit z-10">
                 UP TO 30% OFF
               </button>
-              <span className=" text-gray-600 text-2xl mt-2 font-extrabold z-50">
+              <span className=" text-gray-600 text-2xl mt-2 font-extrabold">
                 Winter Styles
               </span>
               <Link
                 href={"/categories"}
-                className="mt-2 text-gray-500 text-xs md:text-sm z-50 border-b border-b-gray-400 pb-1 w-fit hover:text-orange-500 hover:border-b-orange-400 transition-all duration-300 cursor-pointer"
+                className="mt-2 text-gray-500 text-xs md:text-sm border-b border-b-gray-400 pb-1 w-fit hover:text-orange-500 hover:border-b-orange-400 transition-all duration-300 cursor-pointer"
               >
                 Shop Now
               </Link>
 
-              <div className=" mt-8 z-50">
+              <div className=" mt-8">
                 <h1 className="mb-4 text-lg md:text-xl font-semibold text-orange-400">
                   Count Down Starts
                 </h1>

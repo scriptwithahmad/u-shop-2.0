@@ -14,7 +14,7 @@ var navLinks = [
   {
     href: "/dashboard/users",
     lable: "Users",
-    icon: "fa-solid fa-users",
+    icon: "fa-solid fa-user-group",
   },
   {
     href: "/dashboard/orders",
