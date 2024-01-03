@@ -333,7 +333,7 @@ const index = () => {
                     {modeladata?.customerDetail?.address}
                   </span>
                 </div>
-                {/* Address ---------------------- */}
+                {/* Product Details ---------------------- */}
                 <div className="mb-4 flex flex-col p-4 globalShadow rounded-lg">
                   <span className="mb-1 text-[#222222ab] font-medium text-xs">
                     Product Details
@@ -342,7 +342,7 @@ const index = () => {
                     {modeladata?.status}
                   </span>
                 </div>
-                {/* Address ---------------------- */}
+                {/* Payment Details ---------------------- */}
                 <div className="mb-4 flex flex-col p-4 globalShadow rounded-lg">
                   <span className="mb-1 text-[#222222ab] font-medium text-xs">
                     Payment Details

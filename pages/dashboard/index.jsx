@@ -80,6 +80,19 @@ const Dashboard = ({ products, start, end, total, page }) => {
 
   const router = useRouter();
 
+  const [statsData, setStatsData] = useState([]);
+  console.log(statsData);
+
+  const fetchData = async () => {
+    const res = await fetch("http://localhost:3000/api/stats");
+    const statData = await res.json();
+    setStatsData(statData);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <main>
@@ -88,7 +101,9 @@ const Dashboard = ({ products, start, end, total, page }) => {
           <div className="bg-white rounded-lg py-5 px-7 flex globalShadow">
             <div className=" flex-1">
               <h2 className=" text-slate-600 text-base mb-2">Products</h2>
-              <span className=" text-slate-800 font-semibold text-lg">325</span>
+              <span className=" text-slate-800 font-semibold text-lg">
+                {statsData.products}
+              </span>
               <p className=" my-2 text-sm text-slate-400 font-light">
                 <span className="text-[#22c55e]">24</span> Newly Added Products
               </p>
@@ -101,9 +116,7 @@ const Dashboard = ({ products, start, end, total, page }) => {
           <div className="bg-white rounded-lg py-5 px-7 flex globalShadow">
             <div className=" flex-1">
               <h2 className=" text-slate-600 text-base mb-2">Customers</h2>
-              <span className=" text-slate-800 font-semibold text-lg">
-                24,88
-              </span>
+              <span className=" text-slate-800 font-semibold text-lg">288</span>
               <p className=" my-2 text-sm text-slate-400 font-light">
                 <span className="text-[#22c55e]">24</span> Newly Added Products
               </p>
@@ -116,7 +129,9 @@ const Dashboard = ({ products, start, end, total, page }) => {
           <div className="bg-white rounded-lg py-5 px-7 flex globalShadow">
             <div className=" flex-1">
               <h2 className=" text-slate-600 text-base mb-2">User</h2>
-              <span className=" text-slate-800 font-semibold text-lg">80</span>
+              <span className=" text-slate-800 font-semibold text-lg">
+                {statsData.users}
+              </span>
               <p className=" my-2 text-sm text-slate-400 font-light">
                 <span className="text-[#22c55e]">24</span> Newly Added Products
               </p>
@@ -129,7 +144,9 @@ const Dashboard = ({ products, start, end, total, page }) => {
           <div className="bg-white rounded-lg py-5 px-7 flex globalShadow">
             <div className=" flex-1">
               <h2 className=" text-slate-600 text-base mb-2">Orders</h2>
-              <span className=" text-slate-800 font-semibold text-lg">152</span>
+              <span className=" text-slate-800 font-semibold text-lg">
+                {statsData.orders}
+              </span>
               <p className=" my-2 text-sm text-slate-400 font-light">
                 <span className="text-[#22c55e]">24</span> Newly Added Products
               </p>

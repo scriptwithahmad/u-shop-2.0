@@ -57,7 +57,7 @@ const index = () => {
                     <span className="text-[#444] text-sm">{user.email}</span>
                   </div>
                 </div>
-                {/* UserName ----------------------------------------------- */}
+                {/* Phone ----------------------------------------------- */}
                 <div className="px-4 py-2 flex items-center gap-2 shadow-md rounded-lg">
                   <i className="fa-solid fa-phone text-gray-400"></i>
                   <div>
