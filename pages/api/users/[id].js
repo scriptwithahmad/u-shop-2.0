@@ -5,20 +5,33 @@ export default async function handler(req, res) {
   dbConnect();
 
   try {
-    const fetchOneUser = await userModal.findOne(req.query.id);
-    if (!fetchOneUser) {
-      res.status(404).json({
+    const fetchUser = await userModal.findById(req.query.id);
+
+    if (!fetchUser) {
+      return res.status(404).json({
         success: false,
         message: "User Not Found!",
       });
-    } else {
-      const delProduct = await userModal.findByIdAndDelete(fetchOneUser._id);
-      res.status(200).json({
-        success: true,
-        message: "Product Deleted Successfully!",
+    }
+
+    const deleteUser = await userModal.findByIdAndDelete(req.query.id);
+
+    if (!deleteUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Unable to delete the User!",
       });
     }
+
+    res.status(200).json({
+      success: true,
+      message: "User Deleted Successfully!",
+    });
   } catch (error) {
-    res.status(error?.message);
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error: error.message,
+    });
   }
 }

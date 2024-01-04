@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "PUT":
       try {
-        const postId = req.body._id;
+        const postId = req.body._id || req.query.id;
 
         const updateUser = await usersModel.findByIdAndUpdate(
           postId,

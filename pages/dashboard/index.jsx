@@ -13,8 +13,6 @@ const tableHeader = [
 const Dashboard = ({ products, start, end, total, page }) => {
   var pageCount = parseInt(page);
 
-  // console.log(pageCount)
-
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
 
@@ -81,7 +79,6 @@ const Dashboard = ({ products, start, end, total, page }) => {
   const router = useRouter();
 
   const [statsData, setStatsData] = useState([]);
-  console.log(statsData);
 
   const fetchData = async () => {
     const res = await fetch("http://localhost:3000/api/stats");

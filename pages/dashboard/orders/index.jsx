@@ -32,7 +32,6 @@ const index = () => {
     try {
       const queryString = queryStr.stringify(filterByName);
       const res = await axios.get(`/api/orders?${queryString}`);
-      console.log(res.data.message);
       return res.data.message;
     } catch (error) {
       throw new Error(error.message);
@@ -61,10 +60,34 @@ const index = () => {
     fetchProductData();
   }, [filterByName]);
 
+  // delete Order by ID ------------------------------------------------------/
+  const delPost = async (id) => {
+    try {
+      console.log(id)
+      if (window.confirm("Do you wnat to Delete this Product") === true) {
+        const res = await fetch(`/api/orders/${id}`, {
+          method: "DELETE",
+        });
+        if (
+          toast.success("Product Deleted Successfully!", {
+            duration: 2000,
+          })
+        ) {
+          // router.push("/dashboard");
+          window.location.reload();
+        } else {
+          toast.error("Something went Wrong");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+    }
+  };
+
   // Open Model ------------------------------------------------------------------/
   const [showModal, setShowModal] = useState(false);
   const [modeladata, setModeldata] = useState("");
-  console.log(modeladata);
 
   const openModal = (v) => {
     setModeldata(v);
@@ -203,7 +226,7 @@ const index = () => {
                       </Link>
                       <i
                         title="Delete"
-                        onClick={() => delPost(v.slug)}
+                        onClick={() => delPost(v._id)}
                         className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-red-400 text-sm"
                       ></i>
                     </td>
@@ -266,7 +289,10 @@ const index = () => {
             showModal ? "scale-100 opacity-100" : "scale-0 opacity-0"
           } bg-transparent duration-500 mx-auto my-8 relative p-4 max-w-[70%] rounded-lg`}
         >
-          <span onClick={() => setShowModal(false)} className="cursor-pointer h-8 w-8">
+          <span
+            onClick={() => setShowModal(false)}
+            className="cursor-pointer h-8 w-8"
+          >
             <i className="bxShadow h-8 w-8 flex items-center justify-center absolute top-[12px] p-1 text-white hover:text-gray-900 -right-[0px] bg-gray-400 z-20 hover:bg-gray-100 rounded-full cursor-pointer fa-solid fa-xmark"></i>
           </span>
           <div className="mt-3 rounded-lg bg-white backdrop-blur-sm p-4">

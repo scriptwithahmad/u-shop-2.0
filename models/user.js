@@ -43,6 +43,16 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   },
+  addressDetails: [
+    {
+      city: {
+        type: String,
+      },
+      addresses: {
+        type: String,
+      },
+    },
+  ],
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
