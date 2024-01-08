@@ -5,7 +5,7 @@ import { CartContext } from "@/context/CartProvider";
 import { useContext, useEffect, useState } from "react";
 
 export default function Categories(props) {
-  // console.log(props.data.message.ProductData)
+
   const { addToCart } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
   const [productData, setProductData] = useState(

@@ -36,37 +36,47 @@ const index = () => {
   };
 
   // adding new address here ------------
-  const [userFormData, setUserFormData] = useState({
-    town: "",
-    addressDetails: [
-      {
-        city: "",
-        addresses: "",
-      },
-    ],
+  // const [userFormData, setUserFormData] = useState({
+  //   addressDetails: {
+  //     city: "",
+  //     addresses: "",
+  //   },
+  // });
+
+  const [addressFormData, setAddressFormData] = useState({
+    city: "",
+    addresses: "",
   });
 
-
   // address router handler here ----------
-  const routehandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  // const routehandler = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
 
-    if (name === "addressDetails.city") {
-      setUserFormData({
-        ...userFormData,
-        addressDetails: [{ ...userFormData.addressDetails[0], city: value }],
-      });
-    } else if (name === "addressDetails.addresses") {
-      setUserFormData({
-        ...userFormData,
-        addressDetails: [
-          { ...userFormData.addressDetails[0], addresses: value },
-        ],
-      });
-    } else {
-      setUserFormData({ ...userFormData, [name]: value });
-    }
+  //   if (name === "addressDetails.city") {
+  //     setUserFormData({
+  //       ...userFormData,
+  //       addressDetails: [{ ...userFormData.addressDetails[0], city: value }],
+  //     });
+  //   } else if (name === "addressDetails.addresses") {
+  //     setUserFormData({
+  //       ...userFormData,
+  //       addressDetails: [
+  //         { ...userFormData.addressDetails[0], addresses: value },
+  //       ],
+  //     });
+  //   } else {
+  //     setUserFormData({ ...userFormData, [name]: value });
+  //   }
+  // };
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+
+    setAddressFormData({
+      ...addressFormData,
+      [name]: value,
+    });
   };
 
   // place order funciton api --------------
@@ -97,25 +107,39 @@ const index = () => {
   };
 
   // add address funciton api --------------
+
   const userSubmitAddressData = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
 
-      const userId = user._id;
+      const userId = user._id; 
+      console.log(userId)
 
-      const res = await axios.put(`/api/auth/edit/?id=${userId}`, {
-        ...userFormData,
-      });
+      const res = await axios.post(
+        `/api/auth/register/add-address/?id=${userId}`,
+        {
+          addressDetails: [
+            {
+              userId: userId, // Include user ID in the address details
+              city: addressFormData.city,
+              addresses: addressFormData.addresses,
+            },
+          ],
+        }
+      );
 
       if (res.data.success) {
-        toast.success("User Updated Successfully 😍😎");
+        toast.success("Address added successfully!");
+        setAddressFormData({ city: "", addresses: "" });
         setShowForm(false);
       }
     } catch (error) {
       console.log(error);
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong!");
       }
     } finally {
       setLoading(false);
@@ -144,24 +168,6 @@ const index = () => {
           </span>
 
           <form className="space-y-6 mt-4" onSubmit={userSubmitAddressData}>
-            {/* Town ----------------------- */}
-            <div>
-              <label
-                htmlFor="town"
-                className="block text-sm leading-6 text-gray-500"
-              >
-                town
-              </label>
-              <div className="mt-2">
-                <input
-                  id="town"
-                  name="town"
-                  onChange={routehandler}
-                  value={userFormData.town}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
             {/* Town / City ----------------------- */}
             <div>
               <label
@@ -172,11 +178,12 @@ const index = () => {
               </label>
               <div className="mt-2">
                 <input
+                  type="text"
                   id="city"
-                  onChange={routehandler}
-                  name={"addressDetails.city"}
-                  value={userFormData.addressDetails?.city}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                  name="city"
+                  value={addressFormData.city}
+                  onChange={handleAddressChange}
+                  className="border-gray-300 rounded-md px-3 py-2 w-full"
                 />
               </div>
             </div>
@@ -190,10 +197,12 @@ const index = () => {
               </label>
               <div className="mt-2">
                 <input
-                  name={"addressDetails.addresses"}
-                  onChange={routehandler}
-                  value={userFormData.addressDetails.addresses}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                  type="text"
+                  id="addresses"
+                  name="addresses"
+                  value={addressFormData.addresses}
+                  onChange={handleAddressChange}
+                  className="border-gray-300 rounded-md px-3 py-2 w-full"
                 />
               </div>
             </div>
