@@ -24,6 +24,10 @@ const schema = new mongoose.Schema(
       city: String,
       address: String,
     },
+    isLoginUserDetail: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
     status: {
       type: String,
       default: "Pending",

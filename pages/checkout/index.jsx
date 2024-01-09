@@ -1,15 +1,16 @@
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import InputMask from "react-input-mask";
 import { Toaster, toast } from "react-hot-toast";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/context/CartProvider";
 import { AuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/router";
 
 const index = () => {
   const router = useRouter();
-  const { user } = useContext(AuthContext);
+  const { user, refetch } = useContext(AuthContext);
+  // console.log(user?.email)
   const [loading, setLoading] = useState(false);
   const { cartItems } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
@@ -27,8 +28,6 @@ const index = () => {
     lastName: "",
     phone: "",
     email: "",
-    city: "",
-    address: "",
   });
 
   const changeHandler = (e) => {
@@ -36,13 +35,6 @@ const index = () => {
   };
 
   // adding new address here ------------
-  // const [userFormData, setUserFormData] = useState({
-  //   addressDetails: {
-  //     city: "",
-  //     addresses: "",
-  //   },
-  // });
-
   const [addressFormData, setAddressFormData] = useState({
     city: "",
     addresses: "",
@@ -69,7 +61,6 @@ const index = () => {
   //     setUserFormData({ ...userFormData, [name]: value });
   //   }
   // };
-
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
 
@@ -77,6 +68,15 @@ const index = () => {
       ...addressFormData,
       [name]: value,
     });
+  };
+
+  //  State for Handle if user slecet axisted address in addreddetails array
+  const [selectedAddress, setSelectedAddress] = useState("");
+  // console.log(selectedAddress)
+
+  // Function to handle address selection
+  const handleAddressSelection = (e) => {
+    setSelectedAddress(e.target.value);
   };
 
   // place order funciton api --------------
@@ -94,7 +94,10 @@ const index = () => {
           return obj;
         }),
         customerDetail: formData,
+        isLoginUserDetail: user._id,
       });
+
+      console.log(res.data.message);
 
       if (res.data.success) {
         toast.success("Order Placed Successfully!");
@@ -107,27 +110,24 @@ const index = () => {
   };
 
   // add address funciton api --------------
-
   const userSubmitAddressData = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
 
-      const userId = user._id; 
-      console.log(userId)
+      const userId = user._id;
+      console.log(userId);
 
       const res = await axios.post(
         `/api/auth/register/add-address/?id=${userId}`,
         {
-          addressDetails: [
-            {
-              userId: userId, // Include user ID in the address details
-              city: addressFormData.city,
-              addresses: addressFormData.addresses,
-            },
-          ],
+          userId: userId,
+          city: addressFormData.city,
+          addresses: addressFormData.addresses,
         }
       );
+
+      console.log(res);
 
       if (res.data.success) {
         toast.success("Address added successfully!");
@@ -234,6 +234,22 @@ const index = () => {
                 >
                   Add New Address
                 </span>
+                <div className=" border">
+                  <select
+                    value={selectedAddress}
+                    onChange={handleAddressSelection}
+                  >
+                    <option value="">Select Existed Address</option>
+                    {user.addressDetails.map((data, index) => (
+                      <option
+                        key={index}
+                        value={data.city + " " + data.addresses}
+                      >
+                        {data.addresses + " " + data.city}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </>
           ) : (
@@ -252,7 +268,7 @@ const index = () => {
                   name="firstName"
                   placeholder="First Name"
                   onChange={changeHandler}
-                  value={formData.firstName}
+                  value={formData.firstName | user?.fullname}
                   className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                 />
               </div>

@@ -18,7 +18,7 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
   const router = useRouter();
   var pageCount = parseInt(page);
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
 
   const [fuser, setFuser] = useState(initialProducts);
   const [filterByName, setFilterByName] = useState({ fullname: "" });
@@ -36,7 +36,7 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
           method: "DELETE",
         });
         if (
-          toast.success("Product Deleted Successfully!", {
+          toast.success("User Deleted Successfully!", {
             duration: 2000,
           })
         ) {
@@ -350,134 +350,138 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
           opacity: showForm ? "1" : "0",
           transition: ".4s",
         }}
-        className="fixed z-10 top-0 left-0 w-full h-screen border-red-600 backdrop-blur-[2px] bg-[#00000094] overflow-auto"
+        className="fixed z-10 top-0 left-0 w-full h-screen backdrop-blur-[2px] bg-[#00000094] overflow-auto"
       >
         <div
           className={`${
             showForm ? "scale-100 opacity-100" : "scale-0 opacity-0"
-          } bg-white duration-500 mx-auto my-8 relative p-4 max-w-xl lg:max-w-4xl border rounded-lg`}
+          } bg-white duration-500 sm:mx-auto mx-3 my-8 relative max-w-xl lg:max-w-4xl rounded-lg overflow-hidden`}
         >
-          {/* -------------------------- UPLOAD NEW User HERE -------------------------------------- */}
-          <div>
-            <form className="space-y-6" onSubmit={submitForm}>
-              {/* Full name  ----------------*/}
-              <div>
-                <label
-                  htmlFor="fullName"
-                  className="block text-sm leading-6 text-gray-500"
-                >
-                  Full Name
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="fullName"
-                    name="fullname"
-                    onChange={routehandler}
-                    value={formData.fullname}
-                    autoComplete="fullName"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              {/* Username  ----------------*/}
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block text-sm leading-6 text-gray-500"
-                >
-                  Username
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="username"
-                    name="username"
-                    onChange={routehandler}
-                    autoComplete="username"
-                    value={formData.username}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              {/* Phone  ----------------*/}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm leading-6 text-gray-500"
-                >
-                  Phone
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="phone"
-                    name="phone"
-                    onChange={routehandler}
-                    autoComplete="phone"
-                    value={formData.phone}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              {/* Email ----------------*/}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm leading-6 text-gray-500"
-                >
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    onChange={routehandler}
-                    value={formData.email}
-                    autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              {/* Password ----------------*/}
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm leading-6 text-gray-500"
-                  >
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <a
-                      href="#"
-                      className="block text-sm leading-6 text-gray-500"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    onChange={routehandler}
-                    value={formData.password}
-                    autoComplete="current-password"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              {/* button ----------------*/}
-              <div>
-                <button
-                  type="submit"
-                  className="rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
-                >
-                  {loading ? "Processing..." : "Sign Up"}
-                </button>
-              </div>
-            </form>
+          <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+            <h2 className=" text-slate-500 font-semibold text-xl">
+              Add New User
+            </h2>
+            <i
+              onClick={() => setShowForm(false)}
+              class="fa-solid fa-xmark  bg-gray-100 cursor-pointer text-gray-400 p-1 text-lg rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-200"
+            ></i>
           </div>
+          {/* -------------------------- UPLOAD NEW User HERE -------------------------------------- */}
+          <form className="space-y-6 p-4" onSubmit={submitForm}>
+            {/* Full name  ----------------*/}
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm leading-6 text-gray-500"
+              >
+                Full Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="fullName"
+                  name="fullname"
+                  onChange={routehandler}
+                  value={formData.fullname}
+                  autoComplete="fullName"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* Username  ----------------*/}
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm leading-6 text-gray-500"
+              >
+                Username
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  onChange={routehandler}
+                  autoComplete="username"
+                  value={formData.username}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* Phone  ----------------*/}
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm leading-6 text-gray-500"
+              >
+                Phone
+              </label>
+              <div className="mt-2">
+                <input
+                  id="phone"
+                  name="phone"
+                  onChange={routehandler}
+                  autoComplete="phone"
+                  value={formData.phone}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* Email ----------------*/}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm leading-6 text-gray-500"
+              >
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  onChange={routehandler}
+                  value={formData.email}
+                  autoComplete="email"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* Password ----------------*/}
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="block text-sm leading-6 text-gray-500"
+                >
+                  Password
+                </label>
+                <div className="text-sm">
+                  <a href="#" className="block text-sm leading-6 text-gray-500">
+                    Forgot password?
+                  </a>
+                </div>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  onChange={routehandler}
+                  value={formData.password}
+                  autoComplete="current-password"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-400 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {/* button ----------------*/}
+            <div>
+              <button
+                type="submit"
+                className="rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+              >
+                {loading ? "Processing..." : "Sign Up"}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>
