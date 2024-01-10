@@ -24,10 +24,11 @@ const index = () => {
   }, 0);
 
   var [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullname: "",
     phone: "",
     email: "",
+    city: "",
+    address: "",
   });
 
   const changeHandler = (e) => {
@@ -72,7 +73,6 @@ const index = () => {
 
   //  State for Handle if user slecet axisted address in addreddetails array
   const [selectedAddress, setSelectedAddress] = useState("");
-  // console.log(selectedAddress)
 
   // Function to handle address selection
   const handleAddressSelection = (e) => {
@@ -84,25 +84,31 @@ const index = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      var res = await axios.post("/api/orders", {
-        items: cartItems.map((v) => {
-          var obj = {
-            productID: v._id,
-            unitPrice: v.price,
-            quantity: v.quantity,
-          };
-          return obj;
-        }),
-        customerDetail: formData,
-        isLoginUserDetail: user._id,
-      });
 
+      const orderData = {
+        items: cartItems.map((v) => ({
+          productID: v._id,
+          unitPrice: v.price,
+          quantity: v.quantity,
+        })),
+      };
+
+      // Check if user is logged in
+      if (user) {
+        orderData.isLoginUserDetail = user._id;
+        orderData.isLoginUserAddress = selectedAddress;
+      } else {
+        orderData.customerDetail = formData;
+      }
+
+      var res = await axios.post("/api/orders", orderData);
       console.log(res.data.message);
 
       if (res.data.success) {
         toast.success("Order Placed Successfully!");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong!");
     } finally {
       setLoading(false);
@@ -149,7 +155,7 @@ const index = () => {
   return (
     <>
       <Toaster />
-      {/* NEW MODEL DESING ---------------------------------------------------------------------------  */}
+      {/* Add New Address ---------------------------------------------------------------------------  */}
       <div
         style={{
           visibility: showForm ? "visible" : "hidden",
@@ -257,44 +263,32 @@ const index = () => {
               <h2 className="col-span-2 font-semibold text-2xl">
                 Shipping Details
               </h2>
-              {/* First Name ----------------- */}
+
+              {/* full Name ----------------- */}
               <div className="">
-                <label className="block" htmlFor="">
-                  First Name <span className="text-red-600">*</span>
+                <label className="block" htmlFor="fullname">
+                  Full Name <span className="text-red-600">*</span>
                 </label>
                 <input
                   required
                   type="text"
-                  name="firstName"
-                  placeholder="First Name"
+                  id="fullname"
+                  name="fullname"
+                  placeholder="Full Name"
                   onChange={changeHandler}
-                  value={formData.firstName | user?.fullname}
-                  className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {/* Last Name ----------------- */}
-              <div className="">
-                <label className="block" htmlFor="">
-                  Last Name <span className="text-red-600">*</span>
-                </label>
-                <input
-                  required
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  onChange={changeHandler}
-                  value={formData.lastName}
+                  value={formData.fullname}
                   className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                 />
               </div>
 
               {/* Phone Number ----------------- */}
               <div className="">
-                <label className="block" htmlFor="">
+                <label className="block" htmlFor="phone">
                   Phone Number <span className="text-red-600">*</span>
                 </label>
                 <InputMask
                   required
+                  id="phone"
                   name="phone"
                   mask="03999999999"
                   value={formData.phone}
@@ -306,10 +300,12 @@ const index = () => {
 
               {/* Email ----------------- */}
               <div className="">
-                <label className="block" htmlFor="">
+                <label className="block" htmlFor="email">
                   Email
                 </label>
                 <input
+                  required
+                  id="email"
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -320,12 +316,13 @@ const index = () => {
               </div>
 
               {/* Town / City ----------------- */}
-              <div className="col-span-2">
-                <label className="block" htmlFor="">
+              <div className="">
+                <label className="block" htmlFor="city">
                   Town / City <span className="text-red-600">*</span>
                 </label>
                 <input
                   required
+                  id="city"
                   name="city"
                   type="text"
                   placeholder="City"
@@ -336,12 +333,13 @@ const index = () => {
               </div>
               {/* Street Address ----------------- */}
               <div className="col-span-2">
-                <label className="block" htmlFor="">
+                <label className="block" htmlFor="address">
                   Street Address <span className="text-red-600">*</span>
                 </label>
                 <input
                   required
                   type="text"
+                  id="address"
                   name="address"
                   placeholder="Adress"
                   onChange={changeHandler}

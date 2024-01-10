@@ -18,7 +18,7 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
   const router = useRouter();
   var pageCount = parseInt(page);
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   const [fuser, setFuser] = useState(initialProducts);
   const [filterByName, setFilterByName] = useState({ fullname: "" });
@@ -112,8 +112,17 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
     try {
       setLoading(true);
       const user = await axios.post("/api/auth/register", formData);
-      console.log(user);
-      toast.success("User Register Successfully!");
+      if (user.data.success) {
+        toast.success("User Register Successfully!");
+        setFormData({
+          fullname: "",
+          username: "",
+          password: "",
+          email: "",
+          phone: "",
+        });
+        setShowForm(false);
+      }
     } catch (error) {
       if (error?.response?.data?.message) {
         toast.error(error?.response?.data?.message);

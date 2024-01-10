@@ -17,8 +17,7 @@ const schema = new mongoose.Schema(
       },
     ],
     customerDetail: {
-      firstName: String,
-      lastName: String,
+      fullname: String,
       phone: String,
       email: String,
       city: String,
@@ -27,6 +26,9 @@ const schema = new mongoose.Schema(
     isLoginUserDetail: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
+    },
+    isLoginUserAddress: {
+      type: String,
     },
     status: {
       type: String,

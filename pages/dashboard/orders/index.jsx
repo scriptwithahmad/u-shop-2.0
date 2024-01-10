@@ -4,8 +4,9 @@ import queryStr from "query-string";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { Toaster, toast } from "react-hot-toast";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { format, render, cancel, register } from "timeago.js";
+import { AuthContext } from "@/context/AuthContext";
 
 const tableHeader = [
   { lable: "Date", align: "left" },
@@ -21,6 +22,9 @@ const index = () => {
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(AuthContext);
+  var hasUserID = user?._id;
+
   const [filterByName, setFilterByName] = useState({ name: "" });
 
   const {
@@ -37,6 +41,20 @@ const index = () => {
       throw new Error(error.message);
     }
   });
+
+  // Login User Address And Other Details -------------
+  const [loginUserData, setLoginUserData] = useState("");
+
+  // Fetch Login User Address And Other Details --------
+  const fetchUser = async () => {
+    var res = await axios.get(`/api/auth/profile?id=${hasUserID}`);
+    setLoginUserData(res.data.message);
+  };
+
+  // Call the Fetch Login User data Function ------------
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   // Input Hadler For Searching by Name ------------------------------------------/
   const searchInputHanler = (e) => {
@@ -62,9 +80,9 @@ const index = () => {
 
   // delete Order by ID ------------------------------------------------------/
   const delPost = async (id) => {
+    console.log(id);
     try {
-      console.log(id)
-      if (window.confirm("Do you wnat to Delete this Product") === true) {
+      if (window.confirm("Do you want to Delete this Product") === true) {
         const res = await fetch(`/api/orders/${id}`, {
           method: "DELETE",
         });
@@ -73,7 +91,6 @@ const index = () => {
             duration: 2000,
           })
         ) {
-          // router.push("/dashboard");
           window.location.reload();
         } else {
           toast.error("Something went Wrong");
@@ -184,12 +201,12 @@ const index = () => {
                     </td>
                     {/* Costomer Details ---------------------------- */}
                     <td className="px-6 py-2">
-                      {" "}
-                      {v.customerDetail.firstName[0] +
-                        " " +
-                        v.customerDetail.lastName}{" "}
+                      {v.customerDetail.fullname || loginUserData.fullname}
                     </td>
-                    <td className="px-6 py-2"> {v.customerDetail.address} </td>
+                    <td className="px-6 py-2">
+                      {" "}
+                      {v.customerDetail.address || v.isLoginUserAddress}{" "}
+                    </td>
                     <td className="px-6 py-2"> {v.total} </td>
                     <td className="px-6 py-2">
                       <span
@@ -275,7 +292,7 @@ const index = () => {
         </div>
       </div>
 
-      {/* MODEL DESING */}
+      {/* order details modal here ------------- */}
       <div
         style={{
           visibility: showModal ? "visible" : "hidden",
@@ -321,15 +338,14 @@ const index = () => {
               </h2>
               {/* customer detail main div ----------------- */}
               <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-0 gap-x-4">
-                {/* Customer Name ---------------------- */}
+                {/* Customer detail ---------------------- */}
                 <div className="mb-4 flex flex-col p-4 globalShadow rounded-lg">
                   <span className="mb-1 text-[#222222ab] font-medium text-xs">
                     Customer Name
                   </span>
                   <span className="text-[#444] text-sm font-semibold">
-                    {modeladata?.customerDetail?.firstName +
-                      " " +
-                      modeladata?.customerDetail?.lastName}
+                    {modeladata?.customerDetail?.fullname ||
+                      modeladata.isLoginUserAddress}
                   </span>
                 </div>
                 {/* Email ---------------------- */}
@@ -338,7 +354,7 @@ const index = () => {
                     Email
                   </span>
                   <span className="text-[#444] text-sm font-semibold">
-                    {modeladata?.customerDetail?.email}
+                    {modeladata?.customerDetail?.email || loginUserData.email}
                   </span>
                 </div>
                 {/* City ---------------------- */}
@@ -347,7 +363,8 @@ const index = () => {
                     City
                   </span>
                   <span className="text-[#444] text-sm font-semibold">
-                    {modeladata?.customerDetail?.city}
+                    {modeladata?.customerDetail?.city ||
+                      modeladata.isLoginUserAddress}
                   </span>
                 </div>
                 {/* Address ---------------------- */}
@@ -356,7 +373,8 @@ const index = () => {
                     Address
                   </span>
                   <span className="text-[#444] text-sm font-semibold">
-                    {modeladata?.customerDetail?.address}
+                    {modeladata?.customerDetail?.address ||
+                      modeladata.isLoginUserAddress}
                   </span>
                 </div>
                 {/* Product Details ---------------------- */}

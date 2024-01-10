@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     var users = {};
 
     const page = req.query.page || 1;
-    const limit = req.query.limit || 4;
+    const limit = req.query.limit || 6;
     const skip = (page - 1) * limit;
 
     if (req.query.fullname) {
