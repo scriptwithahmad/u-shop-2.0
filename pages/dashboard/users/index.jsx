@@ -112,7 +112,7 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
     try {
       setLoading(true);
       const user = await axios.post("/api/auth/register", formData);
-      if (user.data.success) {
+      if(user.data.success) {
         toast.success("User Register Successfully!");
         setFormData({
           fullname: "",
@@ -120,8 +120,8 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
           password: "",
           email: "",
           phone: "",
-        });
-        setShowForm(false);
+        })
+        setShowForm(false)
       }
     } catch (error) {
       if (error?.response?.data?.message) {

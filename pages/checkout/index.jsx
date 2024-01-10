@@ -14,6 +14,7 @@ const index = () => {
   const [loading, setLoading] = useState(false);
   const { cartItems } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
+  const [showFormForAddress, setShowFormForAddress] = useState(false);
 
   // Calculate total price
   const totalPrice = cartItems.reduce((total, item) => {
@@ -225,48 +226,130 @@ const index = () => {
         </div>
       </div>
 
+      {/* Another Block of Code here ------------ */}
       <div className="px-4 my-12">
         <form
           onSubmit={placeOrder}
-          className="max-w-6xl mx-auto grid gap-6 grid-cols-5 py-10 bg-white globalShadow rounded-lg p-4"
+          className="globalShadow bg-white max-w-[1200px] m-auto grid gap-6 grid-cols-5 py-10 rounded-lg p-4"
         >
           {user ? (
             <>
-              <div className="p-2 border col-span-3">
-                <h2 className="font-semibold text-2xl mb-4">Add Address</h2>
-                <span
-                  onClick={() => setShowForm(true)}
-                  className="border px-4 py-1 rounded-lg cursor-pointer hover:bg-gray-200"
-                >
-                  Add New Address
-                </span>
-                <div className=" border">
-                  <select
-                    value={selectedAddress}
-                    onChange={handleAddressSelection}
+              <div className="p-2 col-span-3">
+                <div className=" flex items-center justify-between mb-4">
+                  <h2 className="font-semibold text-2xl">Quick Action</h2>
+                  {/* Add New Address Here -------------- */}
+                  <div
+                    onClick={() => setShowForm(true)}
+                    className=" flex items-center gap-2 p-2 rounded-lg bg-blue-100 cursor-pointer hover:bg-blue-200 transition"
                   >
-                    <option value="">Select Existed Address</option>
-                    {user.addressDetails.map((data, index) => (
-                      <option
-                        key={index}
-                        value={data.city + " " + data.addresses}
-                      >
-                        {data.addresses + " " + data.city}
+                    <i className="fa-solid fa-plus rounded-full h-6 w-6 flex items-center justify-center bg-blue-500 text-white transition-all duration-150 cursor-pointer text-sm"></i>
+                    <span className=" text-blue-500">Add New Address</span>
+                  </div>
+                </div>
+                <div className="py-2 rounded-lg flex items-center gap-3">
+                  <div>
+                    <span
+                      className="px-2 py-1 rounded-lg border border-gray-200 text-gray-500 cursor-pointer hover:bg-gray-100 transition-all duration-200"
+                      onClick={() => setShowFormForAddress(!showFormForAddress)}
+                    >
+                      Manually Added Address
+                    </span>
+                  </div>
+                  {/* Select Existing Address ---------- */}
+                  <div>
+                    <select
+                      value={selectedAddress}
+                      onChange={handleAddressSelection}
+                      className=" rounded-lg border border-gray-200 text-gray-500 focus:text-gray-600 focus:border-blue-300 cursor-pointer focus:bg-gray-50 hover:bg-gray-100 transition-all duration-200"
+                    >
+                      <option disabled value="">
+                        Select Existed Address
                       </option>
-                    ))}
-                  </select>
+                      {user.addressDetails.map((data, index) => (
+                        <option
+                          key={index}
+                          value={data.city + " " + data.addresses}
+                        >
+                          {data.addresses + " " + data.city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    transition: ".2s",
+                    opacity: showFormForAddress ? "1" : "0",
+                    height: showFormForAddress ? "100%" : "0",
+                    visibility: showFormForAddress ? "visible" : "hidden",
+                  }}
+                  className="p-2 overflow-hidden"
+                >
+                  <div className="grid grid-cols-2 gap-6 col-span-5 lg:col-span-3">
+                    <h2 className="col-span-2 font-semibold text-2xl">
+                      Shipping Details
+                    </h2>
+
+                    {/* full Name ----------------- */}
+                    <div className="">
+                      <label className="block" htmlFor="fullname">
+                        Full Name <span className="text-red-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="fullname"
+                        name="fullname"
+                        placeholder="Full Name"
+                        onChange={changeHandler}
+                        value={formData.fullname}
+                        className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+
+                    {/* Phone Number ----------------- */}
+                    <div className="">
+                      <label className="block" htmlFor="phone">
+                        Phone Number <span className="text-red-600">*</span>
+                      </label>
+                      <InputMask
+                        id="phone"
+                        name="phone"
+                        mask="03999999999"
+                        value={formData.phone}
+                        onChange={changeHandler}
+                        placeholder="Phone Number"
+                        className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+
+                    {/* Email ----------------- */}
+                    <div className="">
+                      <label className="block" htmlFor="email">
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={changeHandler}
+                        className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-6 col-span-5 lg:col-span-3 p-2">
+            <div className="grid grid-cols-2 gap-5 col-span-5 lg:col-span-3 p-2">
               <h2 className="col-span-2 font-semibold text-2xl">
                 Shipping Details
               </h2>
 
               {/* full Name ----------------- */}
-              <div className="">
-                <label className="block" htmlFor="fullname">
+              <div className=" h-fit">
+                <label htmlFor="fullname">
                   Full Name <span className="text-red-600">*</span>
                 </label>
                 <input
@@ -282,7 +365,7 @@ const index = () => {
               </div>
 
               {/* Phone Number ----------------- */}
-              <div className="">
+              <div className=" h-fit">
                 <label className="block" htmlFor="phone">
                   Phone Number <span className="text-red-600">*</span>
                 </label>
@@ -299,7 +382,7 @@ const index = () => {
               </div>
 
               {/* Email ----------------- */}
-              <div className="">
+              <div className=" h-fit">
                 <label className="block" htmlFor="email">
                   Email
                 </label>
@@ -316,7 +399,7 @@ const index = () => {
               </div>
 
               {/* Town / City ----------------- */}
-              <div className="">
+              <div className=" h-fit">
                 <label className="block" htmlFor="city">
                   Town / City <span className="text-red-600">*</span>
                 </label>
@@ -332,7 +415,7 @@ const index = () => {
                 />
               </div>
               {/* Street Address ----------------- */}
-              <div className="col-span-2">
+              <div className="col-span-2 h-fit">
                 <label className="block" htmlFor="address">
                   Street Address <span className="text-red-600">*</span>
                 </label>

@@ -36,6 +36,7 @@ const index = () => {
     try {
       const queryString = queryStr.stringify(filterByName);
       const res = await axios.get(`/api/orders?${queryString}`);
+      console.log(res.data);
       return res.data.message;
     } catch (error) {
       throw new Error(error.message);
@@ -200,9 +201,7 @@ const index = () => {
                       {v.items[0].productID.name.slice(0, 18) + "..."}
                     </td>
                     {/* Costomer Details ---------------------------- */}
-                    <td className="px-6 py-2">
-                      {v.customerDetail.fullname || loginUserData.fullname}
-                    </td>
+                    <td className="px-6 py-2">{v.customerDetail.fullname}</td>
                     <td className="px-6 py-2">
                       {" "}
                       {v.customerDetail.address || v.isLoginUserAddress}{" "}
@@ -327,7 +326,7 @@ const index = () => {
                   />
                   <h2 className=" text-gray-500 text-sm">
                     {" "}
-                    {item.productID.name}{" "}
+                    {item.productID.name}
                   </h2>
                 </>
               ))}
