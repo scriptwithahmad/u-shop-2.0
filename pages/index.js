@@ -19,32 +19,32 @@ export default function Home({ products, start, end, total, page }) {
       </Head>
       <Header />
       <Features />
-      <ProductList
+      {/* <ProductList
         props={products}
         start={start}
         end={end}
         total={total}
         page={page}
-      />
+      /> */}
       <Steps />
     </>
   );
 }
-export async function getServerSideProps(props) {
-  const queryString = queryStr.stringify(props.query);
-  const res = await fetch(
-    `https://u-shop-phi.vercel.app/api/get-all-product?${queryString}`
-    // `http://localhost:3000/api/get-all-product?${queryString}`
-  );
-  const data = await res.json();
+// export async function getServerSideProps(props) {
+//   const queryString = queryStr.stringify(props.query);
+//   const res = await fetch(
+//     `https://u-shop-phi.vercel.app/api/get-all-product?${queryString}`
+//     // `http://localhost:3000/api/get-all-product?${queryString}`
+//   );
+//   const data = await res.json();
 
-  return {
-    props: {
-      products: data.message.ProductData,
-      start: data.message.starting,
-      end: data.message.ending,
-      total: data.message.TotalProducts,
-      page: data?.message?.page,
-    },
-  };
-}
+//   return {
+//     props: {
+//       products: data.message.ProductData,
+//       start: data.message.starting,
+//       end: data.message.ending,
+//       total: data.message.TotalProducts,
+//       page: data?.message?.page,
+//     },
+//   };
+// }
