@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
   fullname: {
     type: String,
     trim: true,
-    required: [true, "enter fullname name"],
+    required: [true, "Enter Fullname Name"],
   },
   username: {
     type: String,
@@ -31,8 +31,6 @@ const UserSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
-    trim: true,
-    required: false,
   },
   role: {
     type: String,
@@ -53,6 +51,10 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "orders",
+  },
 });
 
 export default mongoose.models?.User || mongoose.model("User", UserSchema);

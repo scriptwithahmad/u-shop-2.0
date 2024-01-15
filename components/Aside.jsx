@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // ASIDE LINKS ADDED
 var navLinks = [
@@ -27,13 +27,35 @@ const Aside = () => {
   const router = useRouter();
   const [toggle, setToggle] = useState(true);
 
+  // set the Toggle Value False if window width should be md, or sm -------
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setToggle(false);
+      } else {
+        setToggle(true);
+      }
+    };
+
+    // Set initial toggle state based on the window width
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <aside
       style={{
-        width: toggle ? "200px" : "48px",
         transition: ".6s",
+        width: toggle ? "200px" : "48px",
       }}
-      className={`lg:w-[200px] md:w-12 mt-4 overflow-hidden flex flex-col justify-between ${
+      className={`mt-4 overflow-hidden flex flex-col justify-between ${
         toggle ? "pr-4" : "pr-0"
       }`}
     >
@@ -46,7 +68,7 @@ const Aside = () => {
                   <ul key={i}>
                     <Link
                       href={v.href}
-                      className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full lg:hover:bg-[#3e1e970b] hover:bg-[#3e1e970b] group cursor-pointer ${
+                      className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full hover:bg-[#3e1e9707] group cursor-pointer ${
                         router.pathname === v.href
                           ? "group cursor-pointer lg:bg-[#F6F5FD] md:bg-transparent"
                           : ""
@@ -80,6 +102,7 @@ const Aside = () => {
           </ul>
         </div>
       </div>
+
       <div className="pl-2 mb-3">
         <span onClick={() => setToggle(!toggle)}>
           <i

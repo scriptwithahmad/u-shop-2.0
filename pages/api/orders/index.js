@@ -8,24 +8,17 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       try {
-        
         var match = {};
 
         if (req.query.id) {
           match._id = req.query.id;
         }
 
-        var foundOrders = await OrdersModal.find(match)
-          .populate({
-            path: "items.productID",
-            modal: Products,
-            select: ["name", "images", "stock"],
-          })
-          // .populate({
-          //   path: "hasLoginUserData.user_id",
-          //   modal: User,
-          //   select: ["fullname", "phone", "email"],
-          // });
+        var foundOrders = await OrdersModal.find(match).populate({
+          path: "items.productID",
+          modal: Products,
+          select: ["name", "images", "stock"],
+        });
 
         foundOrders = foundOrders.map((order) => {
           var total = 0;

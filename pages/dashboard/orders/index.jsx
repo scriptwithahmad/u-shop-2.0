@@ -36,7 +36,6 @@ const index = () => {
     try {
       const queryString = queryStr.stringify(filterByName);
       const res = await axios.get(`/api/orders?${queryString}`);
-      console.log(res.data);
       return res.data.message;
     } catch (error) {
       throw new Error(error.message);
@@ -80,8 +79,9 @@ const index = () => {
   }, [filterByName]);
 
   // delete Order by ID ------------------------------------------------------/
+
+  // Delete particular Order ------------------------------------------------------/
   const delPost = async (id) => {
-    console.log(id);
     try {
       if (window.confirm("Do you want to Delete this Product") === true) {
         const res = await fetch(`/api/orders/${id}`, {
@@ -119,7 +119,7 @@ const index = () => {
         <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row w-full">
             <h2 className="text-xl font-semibold">
-              All <span className="text-indigo-600">Products</span>
+              All <span className="text-indigo-600">Orders</span>
             </h2>
             <div className="flex items-center gap-4">
               <div className="relative">
@@ -201,7 +201,9 @@ const index = () => {
                       {v.items[0].productID.name.slice(0, 18) + "..."}
                     </td>
                     {/* Costomer Details ---------------------------- */}
-                    <td className="px-6 py-2">{v.customerDetail.fullname}</td>
+                    <td className="px-6 py-2">
+                      {v.customerDetail.fullname || v.isLoginUserName}
+                    </td>
                     <td className="px-6 py-2">
                       {" "}
                       {v.customerDetail.address || v.isLoginUserAddress}{" "}
@@ -344,7 +346,7 @@ const index = () => {
                   </span>
                   <span className="text-[#444] text-sm font-semibold">
                     {modeladata?.customerDetail?.fullname ||
-                      modeladata.isLoginUserAddress}
+                      modeladata.isLoginUserName}
                   </span>
                 </div>
                 {/* Email ---------------------- */}
@@ -398,6 +400,9 @@ const index = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
       </div>
     </>
   );

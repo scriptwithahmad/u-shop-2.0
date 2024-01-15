@@ -30,6 +30,9 @@ const schema = new mongoose.Schema(
     isLoginUserAddress: {
       type: String,
     },
+    isLoginUserName: {
+      type: String,
+    },
     status: {
       type: String,
       default: "Pending",

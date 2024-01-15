@@ -83,6 +83,25 @@ const index = () => {
   // place order funciton api --------------
   var placeOrder = async (e) => {
     e.preventDefault();
+
+    // Check if the user is logged in
+    if (user) {
+      // Check if the user has selected an address
+      if (!selectedAddress) {
+        toast.error("Please select a shipping address.");
+        return;
+      }
+    } else {
+      // Check if the required form fields are filled
+      const requiredFields = ["fullname", "phone", "city", "address"];
+      for (const field of requiredFields) {
+        if (!formData[field]) {
+          toast.error(`Please enter your ${field}.`);
+          return;
+        }
+      }
+    }
+
     try {
       setLoading(true);
 
@@ -98,12 +117,12 @@ const index = () => {
       if (user) {
         orderData.isLoginUserDetail = user._id;
         orderData.isLoginUserAddress = selectedAddress;
+        orderData.isLoginUserName = user.fullname;
       } else {
         orderData.customerDetail = formData;
       }
 
       var res = await axios.post("/api/orders", orderData);
-      console.log(res.data.message);
 
       if (res.data.success) {
         toast.success("Order Placed Successfully!");
@@ -133,8 +152,6 @@ const index = () => {
           addresses: addressFormData.addresses,
         }
       );
-
-      console.log(res);
 
       if (res.data.success) {
         toast.success("Address added successfully!");
