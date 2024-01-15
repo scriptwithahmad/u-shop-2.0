@@ -33,7 +33,7 @@ export default function Home({ products, start, end, total, page }) {
 export async function getServerSideProps(props) {
   const queryString = queryStr.stringify(props.query);
   const res = await fetch(
-    `https://you-shop-kappa.vercel.app/api/get-all-product?${queryString}`
+    `https://u-shop-phi.vercel.app/api/get-all-product?${queryString}`
     // `http://localhost:3000/api/get-all-product?${queryString}`
   );
   const data = await res.json();
