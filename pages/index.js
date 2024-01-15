@@ -1,11 +1,10 @@
 import Head from "next/head";
 
-// import Header from "@/components/Header";
-// import Steps from "@/components/Steps";
-// import ProductList from "@/components/ProductList";
-// import Features from "@/components/Features";
-// import queryStr from "query-string";
-
+import Header from "@/components/Header";
+import Steps from "@/components/Steps";
+import ProductList from "@/components/ProductList";
+import Features from "@/components/Features";
+import queryStr from "query-string";
 
 export default function Home({ products, start, end, total, page }) {
   return (
@@ -17,34 +16,34 @@ export default function Home({ products, start, end, total, page }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Hello</h1>
-      {/* <Header />
-      <Features /> */}
-      {/* <ProductList
+      <Header />
+      <Features />
+      <ProductList
         props={products}
         start={start}
         end={end}
         total={total}
         page={page}
-      /> */}
-      {/* <Steps /> */}
+      />
+      <Steps />
     </>
   );
 }
-// export async function getServerSideProps(props) {
-//   const queryString = queryStr.stringify(props.query);
-//   const res = await fetch(
-//     `https://u-shop-phi.vercel.app/api/get-all-product?${queryString}`
-//     // `http://localhost:3000/api/get-all-product?${queryString}`
-//   );
-//   const data = await res.json();
+export async function getServerSideProps(props) {
+  const queryString = queryStr.stringify(props.query);
+  const res = await fetch(
+    `https://u-shop-liart.vercel.app/api/get-all-product?${queryString}`
+    // `http://localhost:3000/api/get-all-product?${queryString}`
+  );
+  const data = await res.json();
 
-//   return {
-//     props: {
-//       products: data.message.ProductData,
-//       start: data.message.starting,
-//       end: data.message.ending,
-//       total: data.message.TotalProducts,
-//       page: data?.message?.page,
-//     },
-//   };
-// }
+  return {
+    props: {
+      products: data.message.ProductData,
+      start: data.message.starting,
+      end: data.message.ending,
+      total: data.message.TotalProducts,
+      page: data?.message?.page,
+    },
+  };
+}
