@@ -6,7 +6,6 @@ export async function middleware(req, res) {
   var pathname = req.nextUrl.pathname;
   var token = req.cookies.get("AccessToken")?.value;
   var userID = token && (await JWTVerify(token));
-  // console.log(userID)
 
   const publicRoutes = ["/", "/login", "/register"];
 
