@@ -26,7 +26,7 @@ export default function Home({ products, start, end, total, page }) {
         total={total}
         page={page}
       /> */}
-      <Steps />
+      {/* <Steps /> */}
     </>
   );
 }
