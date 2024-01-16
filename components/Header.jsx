@@ -69,7 +69,7 @@ const Header = () => {
 
   return (
     <>
-      <div className=" overflow-hidden min-h-[90vh] relative">
+      <div className="overflow-hidden min-h-[90vh] relative">
         <Slider className="Slider" {...settings}>
           <div className="headerImageDiv2 px-2 md:px-12 2xl:px-0">
             <div className="flex flex-col justify-center max-w-[1200px] m-auto h-full">

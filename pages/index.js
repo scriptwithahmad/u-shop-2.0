@@ -15,9 +15,8 @@ export default function Home({ products, start, end, total, page }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hello</h1>
       <Header />
-      {/* <Features />
+      <Features />
       <ProductList
         props={products}
         start={start}
@@ -25,25 +24,25 @@ export default function Home({ products, start, end, total, page }) {
         total={total}
         page={page}
       />
-      <Steps /> */}
+      <Steps />
     </>
   );
 }
-// export async function getServerSideProps(props) {
-//   const queryString = queryStr.stringify(props.query);
-//   const res = await fetch(
-//     `https://u-shop-liart.vercel.app/api/get-all-product?${queryString}`
-//     // `http://localhost:3000/api/get-all-product?${queryString}`
-//   );
-//   const data = await res.json();
+export async function getServerSideProps(props) {
+  const queryString = queryStr.stringify(props.query);
+  const res = await fetch(
+    // `https://u-shop-liart.vercel.app/api/get-all-product?${queryString}`
+    `http://localhost:3000/api/get-all-product?${queryString}`
+  );
+  const data = await res.json();
 
-//   return {
-//     props: {
-//       products: data.message.ProductData,
-//       start: data.message.starting,
-//       end: data.message.ending,
-//       total: data.message.TotalProducts,
-//       page: data?.message?.page,
-//     },
-//   };
-// }
+  return {
+    props: {
+      products: data.message.ProductData,
+      start: data.message.starting,
+      end: data.message.ending,
+      total: data.message.TotalProducts,
+      page: data?.message?.page,
+    },
+  };
+}

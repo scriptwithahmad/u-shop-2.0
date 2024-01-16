@@ -46,7 +46,7 @@ const Nav = () => {
   return (
     <>
       {/* ===================== Navbar For Desktop ==========================================  */}
-      <div className="bg-white z-50 drop-shadow-lg py-3 sticky top-0 backdrop-blur-3xl mb-2">
+      <div className="bg-white z-50 drop-shadow-lg py-3 sticky top-0 backdrop-blur-3xl">
         <nav className="flex items-center justify-between max-w-[1200px] m-auto px-4 lg:px-0">
           {/* ===================== Navbar Image Here ==========================================  */}
           <div className=" w-24 h-auto">
