@@ -123,7 +123,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="name">Product Name </label>
               <input
-                value={formData.name}
+                value={formData?.name}
                 onChange={formDataChangeHandler}
                 type="text"
                 id="name"
@@ -135,7 +135,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="brand">Product Sale </label>
               <input
-                value={formData.sale}
+                value={formData?.sale}
                 onChange={formDataChangeHandler}
                 type="text"
                 name="sale"
@@ -147,7 +147,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="price">Product Price </label>
               <input
-                value={formData.price}
+                value={formData?.price}
                 onChange={formDataChangeHandler}
                 type="number"
                 name="price"
@@ -159,7 +159,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="cate">Product Category</label>
               <select
-                value={formData.category}
+                value={formData?.category}
                 onChange={formDataChangeHandler}
                 className="remainDiv"
                 id="cate"
@@ -178,7 +178,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="seller">Product Seller</label>
               <input
-                value={formData.seller}
+                value={formData?.seller}
                 onChange={formDataChangeHandler}
                 id="seller"
                 name="seller"
@@ -190,7 +190,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="stock">Product Stock</label>
               <input
-                value={formData.stock}
+                value={formData?.stock}
                 onChange={formDataChangeHandler}
                 name="stock"
                 type="text"
@@ -203,7 +203,7 @@ const EditProduct = () => {
             <div className="createProductInner">
               <label htmlFor="desc">Product Description</label>
               <textarea
-                value={formData.description}
+                value={formData?.description}
                 onChange={formDataChangeHandler}
                 name="description"
                 className="remainDiv diffInput"
@@ -224,7 +224,6 @@ const EditProduct = () => {
                 id="arryOfImages"
                 className="remainDiv"
                 style={{ color: "#7d879c" }}
-                // onChange={(e) => setTempImage(e.target.files)}
                 onChange={handleImageChange}
               />
               {imagePreviews.length == 0 ? null : (

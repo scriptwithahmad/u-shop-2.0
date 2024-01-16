@@ -5,6 +5,7 @@ import { Toaster, toast } from "react-hot-toast";
 const index = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: "",
   });
@@ -38,9 +39,12 @@ const index = () => {
 
     try {
       setLoading(true);
-      await axios.post(`/api/products/category`, { ...formData });
-      setFormData("");
-      toast.success("Catgory Added Successfully!");
+      const res = await axios.post(`/api/products/category`, { ...formData });
+      if (res.data.success) {
+        setFormData("");
+        toast.success("Catgory Added Successfully!");
+        window.location.reload();
+      }
     } catch (error) {
       console.log(error);
       setError(error.response?.data?.message);
@@ -54,9 +58,11 @@ const index = () => {
 
   const deleteCategory = async (id) => {
     try {
-      alert("hey");
-      // await axios.delete(`/api/instructor/${id}`);
-      // toast.success("Instructor Deleted Successfully!");
+      const res = await axios.delete(`/api/products/category/${id}`);
+      if (res.data.success) {
+        toast.success("Catgory Deleted Successfully!");
+        window.location.reload();
+      }
     } catch (error) {
       toast.error("Something Went Wrong!");
     }
@@ -82,8 +88,8 @@ const index = () => {
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset hover:ring-orange-400 focus:ring-orange-400 sm:text-sm sm:leading-6"
             />
             <button className=" w-fit whitespace-nowrap px-4 py-1.5 rounded-lg text-white bg-orange-400 hover:bg-orange-500">
-              Add
-              <i class="fa-solid fa-location-arrow ml-2"></i>
+              {loading ? "Processing..." : "Add Category"}
+              <i className="fa-solid fa-location-arrow ml-2"></i>
             </button>
           </div>
           <p className="errorPara">{error}</p>
@@ -92,7 +98,10 @@ const index = () => {
         <div className=" mt-6 px-2">
           {categories?.map((v, i) => {
             return (
-              <div key={i} className="flex items-center gap-4 border-b py-2">
+              <div
+                key={i}
+                className="flex items-center justify-between gap-4 border-b py-2"
+              >
                 <h3 className=" text-slate-600">{v.name} </h3>
                 <div>
                   <i

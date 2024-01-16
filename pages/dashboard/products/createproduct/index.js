@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 
 const CreateProduct = () => {
@@ -110,6 +110,22 @@ const CreateProduct = () => {
     );
   };
 
+  // Map the Categories --------------------------------/
+  const [categories, setCategories] = useState([]);
+
+  const fetchCatgories = async () => {
+    try {
+      const { data } = await axios.get("/api/products/category");
+      setCategories(data.getcat);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCatgories();
+  }, []);
+
   return (
     <div>
       <Toaster />
@@ -166,10 +182,12 @@ const CreateProduct = () => {
                 <option selected value="select Category">
                   Select Category
                 </option>
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
+                {categories?.map((v, i) => {
+                  return <option value={v.name}> {v.name} </option>;
+                })}
+                {/* <option value="Women">Women</option>
                 <option value="Kids">Kids</option>
-                <option value="Sports">Sports</option>
+                <option value="Sports">Sports</option> */}
               </select>
             </div>
             {/* 5. Seller ------------*/}

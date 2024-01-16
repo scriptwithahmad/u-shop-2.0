@@ -184,7 +184,7 @@ const index = () => {
                               <img
                                 key={index}
                                 alt={`Image ${index + 1}`}
-                                src={item.productID.images[0] || null}
+                                src={item?.productID?.images[0] || null}
                                 className="w-8 h-8 border-2 border-white rounded-full bg-gray-200 hover:-translate-x-2 transition-all"
                               />
                             )
@@ -198,7 +198,7 @@ const index = () => {
                           </a>
                         )}
                       </div>
-                      {v.items[0].productID.name.slice(0, 18) + "..."}
+                      {v.items[0]?.productID?.name.slice(0, 18) + "..."}
                     </td>
                     {/* Costomer Details ---------------------------- */}
                     <td className="px-6 py-2">
@@ -402,8 +402,7 @@ const index = () => {
         </div>
       </div>
 
-      <div>
-      </div>
+      <div></div>
     </>
   );
 };

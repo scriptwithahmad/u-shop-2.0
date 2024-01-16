@@ -12,7 +12,7 @@ const index = () => {
   const { user, refetch } = useContext(AuthContext);
   // console.log(user?.email)
   const [loading, setLoading] = useState(false);
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
   const [showFormForAddress, setShowFormForAddress] = useState(false);
 
@@ -126,6 +126,8 @@ const index = () => {
 
       if (res.data.success) {
         toast.success("Order Placed Successfully!");
+        // Remove items from the cart after a successful order
+        clearCart();
       }
     } catch (error) {
       console.log(error);

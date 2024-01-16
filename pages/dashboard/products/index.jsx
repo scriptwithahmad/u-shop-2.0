@@ -56,8 +56,8 @@ const index = () => {
             duration: 1000,
           })
         ) {
-          // router.push("/dashboard/products");
           refetch();
+          window.location.reload();
         } else {
           toast.error("Something went Wrong");
         }
@@ -92,7 +92,7 @@ const index = () => {
       <div className="w-full">
         <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row w-full">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-2xl font-semibold">
               All <span className="text-indigo-600">Products</span>
             </h2>
             <div className="flex items-center gap-4">
@@ -154,7 +154,7 @@ const index = () => {
                       <div className="w-10 h-10 mr-3 border border-gray-100 rounded-full overflow-hidden">
                         <img
                           className="w-full h-full object-contain"
-                          src={v.avatar || v.images[0]}
+                          src={v.images[0]}
                           alt="Image Here"
                         />
                       </div>
@@ -202,7 +202,6 @@ const index = () => {
           {/* Pagination start  ----------- */}
           <div className=" flex items-center justify-end pr-10 gap-5 w-full py-5 border-b border-gray-100 bg-gray-50">
             <span className=" whitespace-nowrap flex items-center justify-center text-sm text-slate-500">
-              {/* {pageCount} to {end} of {total} */}
               {productData?.page} of {productData?.ending} to{" "}
               {productData?.TotalProducts}
             </span>
@@ -223,9 +222,7 @@ const index = () => {
               <i
                 onClick={() => {
                   if (productData?.end < productData?.TotalProducts) {
-                    router.push(
-                      `/dashboard/products?page=${productData?.page + 1}`
-                    );
+                    router.push(`/dashboard/products?page=${pageCount + 1}`);
                   }
                 }}
                 className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${

@@ -4,23 +4,27 @@ import { useEffect, useState } from "react";
 
 // ASIDE LINKS ADDED
 var navLinks = [
-  { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-simple" },
-  { href: "/dashboard/products", lable: "Product", icon: "fa-solid fa-box" },
-  { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-box" },
+  { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-line" },
+  { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-list" },
+  {
+    href: "/dashboard/products",
+    lable: "Product",
+    icon: "fa-solid fa-headphones-simple",
+  },
   {
     href: "/dashboard/customer",
     lable: "Customer",
-    icon: "fa-solid fa-circle-user",
+    icon: "fa-regular fa-address-book",
   },
   {
     href: "/dashboard/users",
     lable: "Users",
-    icon: "fa-solid fa-user-group",
+    icon: "fa-regular fa-user",
   },
   {
     href: "/dashboard/orders",
     lable: "Orders",
-    icon: "fa-solid fa-box-open",
+    icon: "fa-regular fa-calendar",
   },
 ];
 

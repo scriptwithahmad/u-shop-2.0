@@ -30,10 +30,6 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, "please enter product category"],
-    enum: {
-      values: ["Men", "Women", "Kids", "Sports"],
-      message: "Category Not Found",
-    },
   },
   seller: {
     type: String,
