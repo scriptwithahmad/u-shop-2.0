@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 var navLinks = [
   { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-simple" },
   { href: "/dashboard/products", lable: "Product", icon: "fa-solid fa-box" },
+  { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-box" },
   {
     href: "/dashboard/customer",
     lable: "Customer",
