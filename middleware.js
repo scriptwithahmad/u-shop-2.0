@@ -18,7 +18,7 @@ export async function middleware(req, res) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
-  var user = await fetch(`http://localhost:3000/api/auth/profile?id=${userID}`);
+  var user = await fetch(`/api/auth/profile?id=${userID}`);
   user = await user.json();
   user = user.message;
   // add Admin User Access Routes Here
