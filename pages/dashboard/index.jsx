@@ -81,7 +81,7 @@ const Dashboard = ({ products, start, end, total, page }) => {
   const [statsData, setStatsData] = useState([]);
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:3000/api/stats");
+    const res = await fetch("https://u-shop-liart.vercel.app/api/stats");
     const statData = await res.json();
     setStatsData(statData);
   };
@@ -256,7 +256,7 @@ export default Dashboard;
 export async function getServerSideProps(props) {
   const queryString = queryStr.stringify(props.query);
   const res = await fetch(
-    `http://localhost:3000/api/get-all-product?${queryString}`
+    `https://u-shop-liart.vercel.app/api/get-all-product?${queryString}`
   );
   const data = await res.json();
 

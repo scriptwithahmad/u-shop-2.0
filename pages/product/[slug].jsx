@@ -480,7 +480,7 @@ export default SingleProduct;
 
 export async function getServerSideProps({ params }) {
   const slug = params.slug;
-  const res = await fetch(`http://localhost:3000/api/products/${slug}`);
+  const res = await fetch(`https://u-shop-liart.vercel.app/api/products/${slug}`);
   const data = await res.json();
 
   return { props: { data } };
