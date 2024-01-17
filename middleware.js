@@ -31,6 +31,6 @@ export const config = {
     "/register",
     "/dashboard",
     "/dashboard/:path*",
-    "/((?!api|_next/static|favicon.ico).*)",
+    // "/((?!api|_next/static|favicon.ico).*)",
   ],
 };

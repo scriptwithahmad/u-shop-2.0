@@ -6,6 +6,7 @@ import { Toaster, toast } from "react-hot-toast";
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/context/CartProvider";
 import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
 
 const index = () => {
   const router = useRouter();
@@ -254,9 +255,8 @@ const index = () => {
           {user ? (
             <>
               <div className="p-2 col-span-3">
-                <div className=" flex items-center justify-between mb-4">
+                {/* <div className=" flex items-center justify-between mb-4">
                   <h2 className="font-semibold text-2xl">Quick Action</h2>
-                  {/* Add New Address Here -------------- */}
                   <div
                     onClick={() => setShowForm(true)}
                     className=" flex items-center gap-2 p-2 rounded-lg bg-blue-100 cursor-pointer hover:bg-blue-200 transition"
@@ -266,15 +266,6 @@ const index = () => {
                   </div>
                 </div>
                 <div className="py-2 rounded-lg flex items-center gap-3">
-                  <div>
-                    <span
-                      className="px-2 py-1 rounded-lg border border-gray-200 text-gray-500 cursor-pointer hover:bg-gray-100 transition-all duration-200"
-                      onClick={() => setShowFormForAddress(!showFormForAddress)}
-                    >
-                      Manually Added Address
-                    </span>
-                  </div>
-                  {/* Select Existing Address ---------- */}
                   <div>
                     <select
                       value={selectedAddress}
@@ -294,70 +285,64 @@ const index = () => {
                       ))}
                     </select>
                   </div>
-                </div>
-                <div
-                  style={{
-                    transition: ".2s",
-                    opacity: showFormForAddress ? "1" : "0",
-                    height: showFormForAddress ? "100%" : "0",
-                    visibility: showFormForAddress ? "visible" : "hidden",
-                  }}
-                  className="p-2 overflow-hidden"
-                >
-                  <div className="grid grid-cols-2 gap-6 col-span-5 lg:col-span-3">
-                    <h2 className="col-span-2 font-semibold text-2xl">
-                      Shipping Details
+                </div> */}
+
+                <article>
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-semibold mb-5">
+                      Shipping information
                     </h2>
-
-                    {/* full Name ----------------- */}
-                    <div className="">
-                      <label className="block" htmlFor="fullname">
-                        Full Name <span className="text-red-600">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="fullname"
-                        name="fullname"
-                        placeholder="Full Name"
-                        onChange={changeHandler}
-                        value={formData.fullname}
-                        className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-
-                    {/* Phone Number ----------------- */}
-                    <div className="">
-                      <label className="block" htmlFor="phone">
-                        Phone Number <span className="text-red-600">*</span>
-                      </label>
-                      <InputMask
-                        id="phone"
-                        name="phone"
-                        mask="03999999999"
-                        value={formData.phone}
-                        onChange={changeHandler}
-                        placeholder="Phone Number"
-                        className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-
-                    {/* Email ----------------- */}
-                    <div className="">
-                      <label className="block" htmlFor="email">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={changeHandler}
-                        className="mt-2 border-0 w-full py-2 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-                      />
+                    <div
+                      onClick={() => setShowForm(true)}
+                      className=" flex items-center gap-2 p-2 rounded-lg bg-blue-100 cursor-pointer hover:bg-blue-200 transition"
+                    >
+                      <i className="fa-solid fa-plus rounded-full h-6 w-6 flex items-center justify-center bg-blue-500 text-white transition-all duration-150 cursor-pointer text-sm"></i>
+                      <span className=" text-blue-500">Add New Address</span>
                     </div>
                   </div>
-                </div>
+                  {/* SELECT NEW ADDRESS ----------------- */}
+                  <div className="mb-6">
+                    <select
+                      value={selectedAddress}
+                      onChange={handleAddressSelection}
+                      className=" rounded-lg border border-gray-200 text-gray-500 focus:text-gray-600 focus:border-blue-300 cursor-pointer focus:bg-gray-50 hover:bg-gray-100 transition-all duration-200"
+                    >
+                      <option disabled value="">
+                        Select Existed Address
+                      </option>
+                      {user.addressDetails.map((data, index) => (
+                        <option
+                          key={index}
+                          value={data.city + " " + data.addresses}
+                        >
+                          {data.addresses + " " + data.city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {/* ADDRESS HERE ----------------------- */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <label className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer">
+                      <span>
+                        <input
+                          name="shipping"
+                          type="radio"
+                          className="h-4 w-4 mt-1"
+                        />
+                      </span>
+                      <p className="ml-2">
+                        <span>1295 street</span>
+                        <small className="block text-sm text-gray-400">
+                          Orlando, FL, 84753
+                          <br />
+                          US
+                          <br />
+                          9871234576
+                        </small>
+                      </p>
+                    </label>
+                  </div>
+                </article>
               </div>
             </>
           ) : (
