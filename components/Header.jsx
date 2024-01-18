@@ -114,7 +114,7 @@ const Header = () => {
             </div>
           </div>
         </Slider>
-        <div className="absolute -bottom-1/2 -translate-x-1/2 bg-gradient-to-tr from-blue-300 to-green-300 blur-3xl opacity-20 h-[700px] w-[700px] rounded-full"></div>
+        <div className="absolute -bottom-1/2 -translate-x-1/2 bg-gradient-to-tr from-blue-300 to-green-300 blur-3xl opacity-20 h-[700px] w-[700px] rounded-full hidden"></div>
       </div>
     </>
   );

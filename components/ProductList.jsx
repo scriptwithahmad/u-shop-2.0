@@ -1,4 +1,5 @@
 import { CartContext } from "@/context/CartProvider";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
@@ -48,7 +49,10 @@ const ProductList = ({ props, start, end, total, page }) => {
                 </div>
                 <div className="h-[270px] px-4 pt-4 bg-transparent w-full overflow-hidden rounded-md bg-gray-200">
                   <Link href={`/product/${v.slug}`}>
-                    <img
+                    <Image
+                      height={400}
+                      width={400}
+                      priority="true"
                       alt="image here"
                       src={v.images[i] || v.images[0] || v.avatar}
                       className="h-full w-full group-hover:rotate-3 group-hover:scale-105 transition-all duration-300 rounded-lg object-contain object-center"

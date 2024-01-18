@@ -44,26 +44,6 @@ const index = () => {
   });
 
   // address router handler here ----------
-  // const routehandler = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-
-  //   if (name === "addressDetails.city") {
-  //     setUserFormData({
-  //       ...userFormData,
-  //       addressDetails: [{ ...userFormData.addressDetails[0], city: value }],
-  //     });
-  //   } else if (name === "addressDetails.addresses") {
-  //     setUserFormData({
-  //       ...userFormData,
-  //       addressDetails: [
-  //         { ...userFormData.addressDetails[0], addresses: value },
-  //       ],
-  //     });
-  //   } else {
-  //     setUserFormData({ ...userFormData, [name]: value });
-  //   }
-  // };
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
 
@@ -173,6 +153,8 @@ const index = () => {
     }
   };
 
+  
+
   return (
     <>
       <Toaster />
@@ -255,38 +237,6 @@ const index = () => {
           {user ? (
             <>
               <div className="p-2 col-span-3">
-                {/* <div className=" flex items-center justify-between mb-4">
-                  <h2 className="font-semibold text-2xl">Quick Action</h2>
-                  <div
-                    onClick={() => setShowForm(true)}
-                    className=" flex items-center gap-2 p-2 rounded-lg bg-blue-100 cursor-pointer hover:bg-blue-200 transition"
-                  >
-                    <i className="fa-solid fa-plus rounded-full h-6 w-6 flex items-center justify-center bg-blue-500 text-white transition-all duration-150 cursor-pointer text-sm"></i>
-                    <span className=" text-blue-500">Add New Address</span>
-                  </div>
-                </div>
-                <div className="py-2 rounded-lg flex items-center gap-3">
-                  <div>
-                    <select
-                      value={selectedAddress}
-                      onChange={handleAddressSelection}
-                      className=" rounded-lg border border-gray-200 text-gray-500 focus:text-gray-600 focus:border-blue-300 cursor-pointer focus:bg-gray-50 hover:bg-gray-100 transition-all duration-200"
-                    >
-                      <option disabled value="">
-                        Select Existed Address
-                      </option>
-                      {user.addressDetails.map((data, index) => (
-                        <option
-                          key={index}
-                          value={data.city + " " + data.addresses}
-                        >
-                          {data.addresses + " " + data.city}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div> */}
-
                 <article>
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold mb-5">
@@ -301,7 +251,7 @@ const index = () => {
                     </div>
                   </div>
                   {/* SELECT NEW ADDRESS ----------------- */}
-                  <div className="mb-6">
+                  {/* <div className="mb-6">
                     <select
                       value={selectedAddress}
                       onChange={handleAddressSelection}
@@ -319,28 +269,66 @@ const index = () => {
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
                   {/* ADDRESS HERE ----------------------- */}
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <label className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer">
-                      <span>
-                        <input
-                          name="shipping"
-                          type="radio"
-                          className="h-4 w-4 mt-1"
-                        />
-                      </span>
-                      <p className="ml-2">
-                        <span>1295 street</span>
-                        <small className="block text-sm text-gray-400">
-                          Orlando, FL, 84753
-                          <br />
-                          US
-                          <br />
-                          9871234576
-                        </small>
-                      </p>
-                    </label>
+                    {/* {user.addressDetails.map((item, index) => {
+                      return (
+                        <label
+                          key={index}
+                          class="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-red-500"
+                        >
+                          <span>
+                            <input
+                              name="shipping"
+                              type="radio"
+                              class="h-4 w-4 mt-1"
+                            />
+                          </span>
+                          <p className="ml-2">
+                            <span>{item?.city}</span>
+                            <small class="block text-sm text-gray-400">
+                              {item?.addresses}
+                              <br />
+                              US
+                              <br />
+                              9871234576
+                            </small>
+                          </p>
+                        </label>
+                        
+                      );
+                    })} */}
+                    {user.addressDetails.map((item, index) => (
+                      <label
+                        key={index}
+                        className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-red-500"
+                      >
+                        <span>
+                          <input
+                            name="shipping"
+                            type="radio"
+                            className="h-4 w-4 mt-1"
+                            value={item.city + " " + item.addresses}
+                            checked={
+                              selectedAddress ===
+                              item.city + " " + item.addresses
+                            }
+                            onChange={handleAddressSelection}
+                          />
+                        </span>
+                        <p className="ml-2">
+                          <span>{item?.city}</span>
+                          <small className="block text-sm text-gray-400">
+                            {item?.addresses}
+                            <br />
+                            US
+                            <br />
+                            9871234576
+                          </small>
+                        </p>
+                      </label>
+                    ))}
                   </div>
                 </article>
               </div>

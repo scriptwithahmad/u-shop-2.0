@@ -1,7 +1,6 @@
 import Head from "next/head";
 
 import Header from "@/components/Header";
-import Steps from "@/components/Steps";
 import ProductList from "@/components/ProductList";
 import Features from "@/components/Features";
 import queryStr from "query-string";
@@ -24,7 +23,6 @@ export default function Home({ products, start, end, total, page }) {
         total={total}
         page={page}
       />
-      <Steps />
     </>
   );
 }

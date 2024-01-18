@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -49,7 +50,10 @@ const Features = () => {
                   Shop Now
                 </Link>
               </div>
-              <img
+              <Image
+                height={300}
+                width={300}
+                priority="true"
                 src="/fp2.png"
                 alt="image here"
                 className="h-[230px] w-[200px]"
@@ -72,7 +76,10 @@ const Features = () => {
                   Shop Now
                 </Link>
               </div>
-              <img
+              <Image
+                height={300}
+                width={300}
+                priority="true"
                 src="/fp3.png"
                 alt="image here"
                 className="h-[230px] w-[200px]"
@@ -137,7 +144,14 @@ const Features = () => {
           </div>
           <div className="col-span-1 md:col-span-2 row-span-1 bg-gray-200 rounded-lg shadow-xl">
             <div className=" flex items-center gap-2 md:gap-8 lg:gap-8 justify-center">
-              <img src="/fp4.png" alt="image here" className=" w-[180px]" />
+              <Image
+                height={300}
+                width={300}
+                priority="true"
+                src="/fp4.png"
+                alt="image here"
+                className=" w-[180px]"
+              />
               <div>
                 <h2 className="text-sm md:text-lg text-gray-800 mb-2">
                   Seek Out Your Ideal Attire!
