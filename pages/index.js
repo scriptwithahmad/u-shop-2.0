@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import ProductList from "@/components/ProductList";
 import Features from "@/components/Features";
 import queryStr from "query-string";
+import Testimonials from "@/components/Testimonials";
 
 export default function Home({ products, start, end, total, page }) {
   return (
@@ -16,6 +17,7 @@ export default function Home({ products, start, end, total, page }) {
       </Head>
       <Header />
       <Features />
+      <Testimonials />
       <ProductList
         props={products}
         start={start}

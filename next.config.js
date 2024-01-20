@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com", "img.freepik.com"],
+    domains: ["res.cloudinary.com", "img.freepik.com", "cdn.pixabay.com"],
   },
   env: {
     MONGO_URI:
