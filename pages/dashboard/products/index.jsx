@@ -116,7 +116,7 @@ const index = () => {
                   className="absolute top-1/2 -translate-y-1/2 right-3 border-l pl-2 cursor-pointer text-gray-400 hover:text-gray-500 bx bx-search-alt-2"
                 ></i>
               </div>
-              <div>
+              <div className="flex items-center gap-2">
                 <i
                   onClick={() => setShowForm(true)}
                   className="fa-solid fa-plus rounded-full h-8 w-8 flex items-center justify-center bg-blue-500 text-white transition-all duration-150 cursor-pointer text-sm"
@@ -238,6 +238,7 @@ const index = () => {
           </div>
         </div>
       </div>
+
       {/* NEW MODEL DESING ---------------------------------------------------------------------------  */}
       <div
         style={{

@@ -42,6 +42,14 @@ const schema = new mongoose.Schema(
       required: true,
       enum: ["Pending", "Confirmed"],
     },
+    hasLoginUserData: [
+      {
+        user_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+      },
+    ],
     remarks: String,
   },
   { timestamps: true }
