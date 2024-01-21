@@ -17,9 +17,21 @@ const productSchema = new mongoose.Schema({
     required: [true, "Enter Product Price"],
   },
   sale: {
-    type: String,
-    required: [true, "Enter Sale Avalibilty!"],
-    default: 0,
+    name: {
+      type: String,
+    },
+    value: {
+      type: String,
+    },
+    bannerImg: {
+      type: String,
+    },
+    startTime: {
+      type: Date,
+    },
+    endTime: {
+      type: Date,
+    },
   },
   avatar: {
     type: String,

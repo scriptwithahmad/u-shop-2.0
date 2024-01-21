@@ -5,9 +5,9 @@ import { Toaster, toast } from "react-hot-toast";
 const CreateProduct = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
-    sale: "",
     description: "",
     price: "",
     category: "",
@@ -15,11 +15,43 @@ const CreateProduct = () => {
     stock: "",
     avatar: "",
     images: [],
+    sale: {
+      name: "",
+      value: "",
+      bannerImg: "",
+      startTime: "",
+      endTime: "",
+    },
   });
 
+  // for sales logic start here ----------------------------------------------------/
+
   const formDataChangeHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Check if the field belongs to the sale object
+    if (name.startsWith("sale.")) {
+      const saleFieldName = name.substring(5);
+      setFormData((prevData) => ({
+        ...prevData,
+        sale: {
+          ...prevData.sale,
+          [saleFieldName]: value,
+        },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+
+  // for sales logic Ends here ----------------------------------------------------/
+
+  // const formDataChangeHandler = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
 
   // Cloudinary States Fucnton -------------------------/
   const [tempImage, setTempImage] = useState("");
@@ -145,18 +177,67 @@ const CreateProduct = () => {
                 placeholder="Product Name"
               />
             </div>
-            {/* 2. Sale ------------*/}
+
+            {/* 2. Sale name ------------*/}
             <div className="createProductInner">
-              <label htmlFor="brand">Product Sale </label>
+              <label htmlFor="saleName">Sale Name:</label>
               <input
-                value={formData.sale}
-                onChange={formDataChangeHandler}
                 type="text"
-                name="sale"
-                id="sale"
-                placeholder="Product Sale"
+                id="saleName"
+                name="sale.name"
+                value={formData.sale.name}
+                onChange={formDataChangeHandler}
               />
             </div>
+
+            {/* 2. Sale Value  ------------*/}
+            <div className="createProductInner">
+              <label htmlFor="saleValue">Sale Value:</label>
+              <input
+                type="text"
+                id="saleValue"
+                name="sale.value"
+                value={formData.sale.value}
+                onChange={formDataChangeHandler}
+              />
+            </div>
+
+            {/* 2. Sale file  ------------*/}
+            <div className="createProductInner">
+              <label htmlFor="saleBannerImg">Sale Banner Image:</label>
+              <input
+                type="file"
+                id="saleBannerImg"
+                name="sale.bannerImg"
+                value={formData.sale.bannerImg}
+                onChange={formDataChangeHandler}
+              />
+            </div>
+
+            {/* 2. Sale start time  ------------*/}
+            <div className="createProductInner">
+              <label htmlFor="saleStartTime">Sale Start Time:</label>
+              <input
+                type="date"
+                id="saleStartTime"
+                name="sale.startTime"
+                value={formData.sale.startTime}
+                onChange={formDataChangeHandler}
+              />
+            </div>
+
+            {/* 2. Sale end time  ------------*/}
+            <div className="createProductInner">
+              <label htmlFor="saleEndTime">Sale End Time:</label>
+              <input
+                type="date"
+                id="saleEndTime"
+                name="sale.endTime"
+                value={formData.sale.endTime}
+                onChange={formDataChangeHandler}
+              />
+            </div>
+
             {/* 3. Price ------------*/}
             <div className="createProductInner">
               <label htmlFor="price">Product Price </label>

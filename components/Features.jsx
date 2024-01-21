@@ -32,7 +32,7 @@ const Features = () => {
 
   return (
     <>
-      <div className="max-w-[1200px] m-auto my-4 lg:my-16 px-6 lg:px-6 2xl:px-0">
+      <div className="max-w-[1250px] m-auto my-4 lg:my-16 px-6 lg:px-6 2xl:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-3 gap-5">
           <div className="col-span-1 row-span-1 bg-gray-200 h-full overflow-hidden rounded-lg shadow-xl">
             <div className="flex items-center h-full relative font-medium tracking-wide">
