@@ -23,9 +23,6 @@ const productSchema = new mongoose.Schema({
     value: {
       type: String,
     },
-    bannerImg: {
-      type: String,
-    },
     startTime: {
       type: Date,
     },

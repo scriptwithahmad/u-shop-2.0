@@ -18,7 +18,6 @@ const CreateProduct = () => {
     sale: {
       name: "",
       value: "",
-      bannerImg: "",
       startTime: "",
       endTime: "",
     },
@@ -48,10 +47,6 @@ const CreateProduct = () => {
   };
 
   // for sales logic Ends here ----------------------------------------------------/
-
-  // const formDataChangeHandler = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
 
   // Cloudinary States Fucnton -------------------------/
   const [tempImage, setTempImage] = useState("");
@@ -96,13 +91,21 @@ const CreateProduct = () => {
       toast.success("Product Added Successfully!");
       setFormData({
         name: "",
-        sale: "",
         description: "",
         price: "",
         category: "",
         seller: "",
         stock: "",
+        avatar: "",
+        images: [],
+        sale: {
+          name: "",
+          value: "",
+          startTime: "",
+          endTime: "",
+        },
       });
+
       setImagePreviews([]);
     } catch (error) {
       toast.error(error.response?.data?.message);
@@ -185,6 +188,7 @@ const CreateProduct = () => {
                 type="text"
                 id="saleName"
                 name="sale.name"
+                placeholder="Sale Name"
                 value={formData.sale.name}
                 onChange={formDataChangeHandler}
               />
@@ -197,19 +201,8 @@ const CreateProduct = () => {
                 type="text"
                 id="saleValue"
                 name="sale.value"
+                placeholder="Sale Value"
                 value={formData.sale.value}
-                onChange={formDataChangeHandler}
-              />
-            </div>
-
-            {/* 2. Sale file  ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="saleBannerImg">Sale Banner Image:</label>
-              <input
-                type="file"
-                id="saleBannerImg"
-                name="sale.bannerImg"
-                value={formData.sale.bannerImg}
                 onChange={formDataChangeHandler}
               />
             </div>

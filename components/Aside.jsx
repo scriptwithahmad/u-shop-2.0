@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 
 // ASIDE LINKS ADDED
 var navLinks = [
-  { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-line" },
+  { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-simple" },
   { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-list" },
+  {
+    href: "/dashboard/sales-banner",
+    lable: "Sale",
+    icon: "fa-solid fa-chart-line",
+  },
   {
     href: "/dashboard/products",
     lable: "Product",

@@ -191,7 +191,7 @@ const SingleProduct = () => {
                 id="avatarInput"
                 type="file"
                 onChange={(e) =>
-                  setFormData({ ...formData, avatar: e.target.files[0] })
+                  setFormData({ ...formData, bannerImg: e.target.files[0] })
                 }
               />
             </div>

@@ -32,7 +32,6 @@ const EditProfile = () => {
       data.append("file", tempImage);
       data.append("upload_preset", "blog-image");
 
-      console.log(tempImage);
 
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/dmyrswz0r/image/upload",

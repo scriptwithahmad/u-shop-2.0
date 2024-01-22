@@ -31,7 +31,7 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
   // delete User by ID ------------------------------------------------------/
   const deleteUser = async (id) => {
     try {
-      if (window.confirm("Do you wnat to Delete this Productssss") === true) {
+      if (window.confirm("Do you wnat to Delete this User") === true) {
         const res = await fetch(`/api/users/${id}`, {
           method: "DELETE",
         });
