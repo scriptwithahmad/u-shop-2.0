@@ -54,7 +54,7 @@ const ProductList = ({ props, start, end, total, page }) => {
                       width={400}
                       priority="true"
                       alt="image here"
-                      src={v.images[i] || v.images[0] || v.avatar}
+                      src={v.images[i] || v.images[0]}
                       className="h-full w-full group-hover:rotate-3 group-hover:scale-105 transition-all duration-300 rounded-lg object-contain object-center"
                     />
                   </Link>
