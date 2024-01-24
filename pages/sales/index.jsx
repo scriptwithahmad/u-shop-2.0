@@ -94,7 +94,7 @@ const index = ({ data }) => {
 export default index;
 
 export async function getServerSideProps(props) {
-  const res = await fetch("http://localhost:3000/api/sales");
+  const res = await fetch("https://u-shop-liart.vercel.app/api/sales");
   const data = await res.json();
 
   return {
