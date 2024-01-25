@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
@@ -336,8 +337,12 @@ const CreateProduct = () => {
               )}
             </div>
 
-            <button className="createBtn">
-              {loading ? "Loading..." : "Submit"}
+            <button
+              type="submit"
+              className=" w-fit bg-indigo-500 text-white font-light hover:bg-indigo-600 flex items-center gap-2 px-5 py-2 rounded-lg transition duration-300 cursor-pointer"
+            >
+              <i className="fa fa-plus"></i>
+              {loading ? <Loader /> : "Add Product"}
             </button>
           </div>
         </form>

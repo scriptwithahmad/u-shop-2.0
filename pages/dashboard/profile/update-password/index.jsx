@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import { AuthContext } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -104,7 +105,7 @@ const Page = () => {
           className="mt-6 bg-indigo-500 text-white font-light hover:bg-indigo-600 flex items-center gap-2 px-5 py-2 rounded-lg transition duration-300 cursor-pointer"
         >
           <i className="fa fa-save"></i>
-          {loading ? "Processing..." : "Save Password"}
+          {loading ? <Loader /> : "Save Password"}
         </button>
       </form>
     </>

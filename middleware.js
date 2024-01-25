@@ -20,19 +20,24 @@ export async function middleware(req, res) {
 
   var user = await fetch(
     `https://u-shop-liart.vercel.app/api/auth/profile?id=${userID}`
+    // `http://localhost:3000/api/auth/profile?id=${userID}`
   );
   user = await user.json();
   user = user.message;
+  // const adminUser = user.role;
+  
   // add Admin User Access Routes Here
+  // if (userID && user.role == "admin" && !loginNotAllowedPaths.includes(pathname)) {
+  //   return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  // }
+
+
+
+
 }
 
+
+
 export const config = {
-  matcher: [
-    "/",
-    "/login",
-    "/register",
-    "/dashboard",
-    "/dashboard/:path*",
-    // "/((?!api|_next/static|favicon.ico).*)",
-  ],
+  matcher: ["/", "/login", "/register", "/dashboard", "/dashboard/:path*"],
 };

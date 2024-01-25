@@ -5,7 +5,6 @@ import { CartContext } from "@/context/CartProvider";
 import { useContext, useEffect, useState } from "react";
 
 export default function Categories(props) {
-
   const { addToCart } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
   const [productData, setProductData] = useState(
@@ -60,12 +59,28 @@ export default function Categories(props) {
       )
     : productData;
 
+  // Fetch Categories
+  const [categories, setCategories] = useState([]);
+
+  const fetchCatgories = async () => {
+    try {
+      const { data } = await axios.get("/api/products/category");
+      setCategories(data.getcat);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCatgories();
+  }, []);
+
   return (
     <>
       <Toaster />
       <div className="bg-[#ffffff]">
         <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
-          <div className="border-b border-gray-200 pb-6 my-8 flex items-center justify-between">
+          <div className="border-b border-gray-200 pb-6 my-8 flex items-center justify-between md:flex-row flex-col">
             <h1 className="text-4xl font-bold tracking-wide text-gray-700">
               All Products
             </h1>
@@ -95,66 +110,24 @@ export default function Categories(props) {
               <h2 className="px-2 text-xl my-2 font-medium tracking-wider text-orange-500">
                 Filter Products
               </h2>
-              <div className="flex gap-4 px-4 py-2">
-                <input
-                  id="Men"
-                  name="Men"
-                  type="checkbox"
-                  className="cursor-pointer"
-                  onChange={handleCategoryChange}
-                />
-                <label
-                  className="cursor-pointer text-gray-600 text-sm"
-                  htmlFor="Men"
-                >
-                  Men
-                </label>
-              </div>
-              <div className="flex gap-4 px-4 py-2">
-                <input
-                  id="Women"
-                  name="Women"
-                  type="checkbox"
-                  className="cursor-pointer"
-                  onChange={handleCategoryChange}
-                />
-                <label
-                  className="cursor-pointer text-gray-600 text-sm"
-                  htmlFor="Women"
-                >
-                  Women
-                </label>
-              </div>
-              <div className="flex gap-4 px-4 py-2">
-                <input
-                  id="Kids"
-                  name="Kids"
-                  type="checkbox"
-                  className="cursor-pointer"
-                  onChange={handleCategoryChange}
-                />
-                <label
-                  className="cursor-pointer text-gray-600 text-sm"
-                  htmlFor="Kids"
-                >
-                  Kids
-                </label>
-              </div>
-              <div className="flex gap-4 px-4 py-2">
-                <input
-                  id="Sports"
-                  name="Sports"
-                  type="checkbox"
-                  className="cursor-pointer"
-                  onChange={handleCategoryChange}
-                />
-                <label
-                  className="cursor-pointer text-gray-600 text-sm"
-                  htmlFor="Sports"
-                >
-                  Sports
-                </label>
-              </div>
+
+              {categories.map((category) => (
+                <div key={category.id} className="flex gap-4 px-4 py-2">
+                  <input
+                    id={category.name}
+                    name={category.name}
+                    type="checkbox"
+                    className="cursor-pointer"
+                    onChange={handleCategoryChange}
+                  />
+                  <label
+                    className="cursor-pointer text-gray-600 text-sm"
+                    htmlFor={category.name}
+                  >
+                    {category.name}
+                  </label>
+                </div>
+              ))}
             </div>
             <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 2xl:grid-cols-4 gap-2 h-full border-[1px] rounded-lg p-4">
               {filteredProducts.length == 0 ? (
@@ -217,7 +190,9 @@ export default function Categories(props) {
 
 // Fetch All Product Data Api ------------------------------------------------------/
 export async function getServerSideProps() {
-  const response = await fetch("https://u-shop-liart.vercel.app/api/get-all-product");
+  const response = await fetch(
+    "https://u-shop-liart.vercel.app/api/get-all-product"
+  );
   const data = await response.json();
 
   return { props: { data } };

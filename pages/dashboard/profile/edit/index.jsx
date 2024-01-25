@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import { AuthContext } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -31,7 +32,6 @@ const EditProfile = () => {
       const data = new FormData();
       data.append("file", tempImage);
       data.append("upload_preset", "blog-image");
-
 
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/dmyrswz0r/image/upload",
@@ -269,16 +269,14 @@ const EditProfile = () => {
             </div>
           </div>
         </div>
+
         {/* BUTTON HERE  */}
-        <button className="mt-5 border border-blue-600 text-blue-600 hover:bg-blue-100 flex items-center gap-2 px-6 py-2 rounded-full transition duration-300 cursor-pointer">
-          <i className="fa-regular fa-floppy-disk"></i>
-          {loading ? (
-            <span className="border-l-[3px] border-dotted border-l-blue-600 animate-spin rounded-full h-6 w-6"></span>
-          ) : (
-            <>
-              <span>Save</span>
-            </>
-          )}
+        <button
+          type="submit"
+          className=" mt-4 w-fit bg-indigo-500 text-white font-light hover:bg-indigo-600 flex items-center gap-2 px-5 py-2 rounded-full transition duration-300 cursor-pointer"
+        >
+          <i className="fa fa-plus"></i>
+          {loading ? <Loader /> : "Save"}
         </button>
       </form>
     </>
