@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { format, render, cancel, register } from "timeago.js";
 
 const tableHeader = [
-  { lable: "Date", align: "left" },
   { lable: "Name", align: "left" },
   { lable: "Category", align: "left" },
   { lable: "Price", align: "left" },
@@ -116,11 +115,25 @@ const index = () => {
                   className="absolute top-1/2 -translate-y-1/2 right-3 border-l pl-2 cursor-pointer text-gray-400 hover:text-gray-500 bx bx-search-alt-2"
                 ></i>
               </div>
-              <div className="flex items-center gap-2">
-                <i
-                  onClick={() => setShowForm(true)}
-                  className="fa-solid fa-plus rounded-full h-8 w-8 flex items-center justify-center bg-blue-500 text-white transition-all duration-150 cursor-pointer text-sm"
-                ></i>
+              <div className="wrapper">
+                <input className="popupInput" type="checkbox" />
+                <div className="fab"></div>
+                <div className="fac py-8">
+                  <Link
+                    title="Add Product"
+                    className="popupBtn my-2 text-gray-500 hover:text-indigo-500"
+                    href="/dashboard/products/createproduct"
+                  >
+                    <i className="fa-solid fa-pen"></i>
+                  </Link>
+                  <button
+                    title="Add Blog"
+                    className="popupBtn text-gray-500 hover:text-indigo-500"
+                    onClick={() => setShowForm(true)}
+                  >
+                    <i className="fa-solid fa-layer-group"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -144,21 +157,29 @@ const index = () => {
               {productData?.ProductData?.map((v, i) => {
                 return (
                   <tr key={i} className="bg-white border-b border-gray-100">
-                    <td className="px-6 py-2 text-xs">
+                    {/* <td className="px-6 py-2 text-xs">
                       {format(new Date(v.createdAt), "en_US")}
-                    </td>
+                    </td> */}
                     <td
                       scope="row"
                       className="px-6 flex border-0 items-center py-2 font-medium text-gray-600 whitespace-nowrap"
                     >
-                      <div className="w-10 h-10 mr-3 border border-gray-100 rounded-full overflow-hidden">
-                        <img
-                          className="w-full h-full object-contain"
-                          src={v.images[0]}
-                          alt="Image Here"
-                        />
+                      <div className=" flex items-center">
+                        <div className="w-12 h-12 mr-3 border border-gray-100 rounded-full overflow-hidden">
+                          <img
+                            className="w-full h-full object-contain"
+                            src={v.images[0]}
+                            alt="Image Here"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-0.5">
+                          <h2>{v.name}</h2>
+                          <span className=" text-xs text-gray-500 font-light">
+                            {format(new Date(v.createdAt), "en_US")}
+                          </span>
+                        </div>
                       </div>
-                      {v.name}
                     </td>
                     <td className="px-6 py-2"> {v.category} </td>
                     <td className="px-6 py-2"> {v.price} </td>

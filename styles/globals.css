@@ -890,20 +890,181 @@ body {
   }
 }
 
-
 /* Global Shadow Here ==== */
-.boxShadowCostom{
+.boxShadowCostom {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-/* Navbar Sales Animation ================================ */
-.pulseAnim{
-  box-shadow: 0 0 0 0 rgba(71,75,255,0.5);
+/* ========================== Navbar Sales Animation ========================================================== */
+.pulseAnim {
+  box-shadow: 0 0 0 0 rgba(71, 75, 255, 0.5);
   animation: pulseAnim 1s infinite;
 }
 
 @keyframes pulseAnim {
   100% {
-     box-shadow: 0 0 0 8px #0000;
+    box-shadow: 0 0 0 8px #0000;
+  }
+}
+
+/* ========================== Global Loader for Loading State ==================================================== */
+
+.loader {
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+  0% {
+    box-shadow: 20px 0 #ffffff, -20px 0 rgba(255, 255, 255, 0.133);
+    background: #fff;
+  }
+  33% {
+    box-shadow: 20px 0 #ffffff, -20px 0 #ffffff22;
+    background: #ffffff22;
+  }
+  66% {
+    box-shadow: 20px 0 #ffffff22, -20px 0 #ffffff;
+    background: #ffffff22;
+  }
+  100% {
+    box-shadow: 20px 0 rgba(255, 255, #ffffff 0.133), -20px 0 #ffffff;
+    background: #ffffff;
+  }
+}
+
+/* ========================== Popup Menu Button Here ==================================================== */
+
+.wrapper {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fac {
+  top: 10px;
+  opacity: 0;
+  z-index: 2;
+  display: flex;
+  padding: 10px;
+  position: absolute;
+  background: #fff;
+  align-items: center;
+  border-radius: 8px;
+  flex-direction: column;
+  justify-content: space-around;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.2s ease-in, top 0.2s ease-in, width 0.1s ease-in;
+}
+
+.popupBtn {
+  opacity: 0.8;
+  /* color: #344955; */
+}
+
+.popupBtn:hover {
+  opacity: 1;
+  transition: 0.2s;
+  color: darken(#344955, 2%);
+}
+
+.fab {
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  position: relative;
+  background: #4285f4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  animation: fab-animation-reverse 0.4s ease-out forwards;
+}
+
+.fab::after,
+.fab::before {
+  font-family: FontAwesome;
+  content: "\2b";
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 25%;
+  left: 50%;
+  border-radius: 4px;
+  transform: translateX(-50%);
+}
+
+.popupInput {
+  opacity: 0;
+  z-index: 5;
+  cursor: pointer;
+  position: absolute;
+
+  &:checked {
+    ~ .fab {
+      animation: fab-animation 0.4s ease-out forwards;
+    }
+
+    ~ .fac {
+      width: 50%;
+      height: 150%;
+      padding: 20px;
+      animation: fac-animation 0.4s ease-out forwards 0.1s;
+      top: 45px;
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes fab-animation {
+  0% {
+    transform: rotate(0) scale(1);
+  }
+  20% {
+    transform: rotate(60deg) scale(0.93);
+  }
+  55% {
+    transform: rotate(35deg) scale(0.97);
+  }
+  80% {
+    transform: rotate(48deg) scale(0.94);
+  }
+  100% {
+    transform: rotate(45deg) scale(0.95);
+  }
+}
+
+@keyframes fab-animation-reverse {
+  0% {
+    transform: rotate(45deg) scale(0.95);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  55% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes fac-animation {
+  0% {
+    transform: scale(1, 1);
+  }
+  33% {
+    transform: scale(0.95, 1.05);
+  }
+  66% {
+    transform: scale(1.05, 0.95);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
