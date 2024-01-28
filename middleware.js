@@ -20,23 +20,20 @@ export async function middleware(req, res) {
 
   var user = await fetch(
     `https://u-shop-liart.vercel.app/api/auth/profile?id=${userID}`
-    // `http://localhost:3000/api/auth/profile?id=${userID}`
   );
   user = await user.json();
   user = user.message;
-  // const adminUser = user.role;
-  
-  // add Admin User Access Routes Here
-  // if (userID && user.role == "admin" && !loginNotAllowedPaths.includes(pathname)) {
-  //   return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-  // }
 
+  if (user) {
+    const userRole = user.role;
 
-
-
+    // Check if the user has the role "user" and is trying to access the dashboard
+    if (userID && userRole === "user" && pathname.startsWith("/dashboard")) {
+      console.log("Access to user dashboard is not allowed. Redirecting...");
+      return NextResponse.redirect(new URL("/", req.nextUrl));
+    }
+  }
 }
-
-
 
 export const config = {
   matcher: ["/", "/login", "/register", "/dashboard", "/dashboard/:path*"],
