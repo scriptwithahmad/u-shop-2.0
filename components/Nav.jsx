@@ -123,7 +123,7 @@ const Nav = () => {
                 </div>
               </div>
             </OutsideClickHandler>
-            {/* ===================== Navbar Toggle Button ==========================================  */}
+            {/* ===================== Navbar Toggle Button Ends ==========================================  */}
           </div>
 
           {/* ===================== Navbar Icons and User Auth ==========================================  */}
@@ -161,12 +161,21 @@ const Nav = () => {
                 >
                   <ul className="px-4 py-5">
                     <li className="flex flex-col gap-2">
-                      <Link
-                        className="text-xs text-gray-600 hover:text-orange-600 flex items-center gap-2"
-                        href="/dashboard"
-                      >
-                        <i className="fa-solid fa-chart-simple"></i> Dashboard
-                      </Link>
+                      {user?.role == "admin" ? (
+                        <Link
+                          className="text-xs text-gray-600 hover:text-orange-600 flex items-center gap-2"
+                          href="/dashboard"
+                        >
+                          <i className="fa-solid fa-chart-simple"></i> Dashboard
+                        </Link>
+                      ) : (
+                        <Link
+                          className="text-xs text-gray-600 hover:text-orange-600 flex items-center gap-2"
+                          href="/dashboard/user-portal"
+                        >
+                          <i className="fa-solid fa-chart-simple"></i> Dashboard
+                        </Link>
+                      )}
                       <button
                         onClick={handleLogout}
                         className="text-xs text-gray-600 hover:text-red-600 flex items-center gap-2"

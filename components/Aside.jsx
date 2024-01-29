@@ -36,14 +36,18 @@ var adminNavLinks = [
 
 var userNavLinks = [
   {
-    href: "/dashboard/user-portal",
     lable: "Dashboard",
+    href: "/dashboard/user-portal",
     icon: "fa-solid fa-chart-simple",
   },
-  { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-list" },
   {
-    href: "/dashboard/orders",
+    lable: "Account",
+    href: "/dashboard/user-portal/account",
+    icon: "fa-solid fa-list",
+  },
+  {
     lable: "Orders",
+    href: "/dashboard/user-portal/order",
     icon: "fa-regular fa-calendar",
   },
 ];
