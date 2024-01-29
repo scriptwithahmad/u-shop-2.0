@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
 // ASIDE LINKS ADDED
-var navLinks = [
+var adminNavLinks = [
   { href: "/dashboard", lable: "Dashboard", icon: "fa-solid fa-chart-simple" },
   { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-list" },
   {
@@ -33,9 +34,25 @@ var navLinks = [
   },
 ];
 
+var userNavLinks = [
+  {
+    href: "/dashboard/user-portal",
+    lable: "Dashboard",
+    icon: "fa-solid fa-chart-simple",
+  },
+  { href: "/dashboard/category", lable: "Category", icon: "fa-solid fa-list" },
+  {
+    href: "/dashboard/orders",
+    lable: "Orders",
+    icon: "fa-regular fa-calendar",
+  },
+];
+
 const Aside = () => {
   const router = useRouter();
   const [toggle, setToggle] = useState(true);
+
+  const { user } = useContext(AuthContext);
 
   // set the Toggle Value False if window width should be md, or sm -------
   useEffect(() => {
@@ -71,8 +88,85 @@ const Aside = () => {
     >
       <div className="flex flex-col relative">
         <div className="flex flex-1 flex-col justify-between h-full my-4">
-          <ul className="text-sm">
-            {navLinks.map((v, i) => {
+          {user?.role == "admin" ? (
+            <ul className="text-sm">
+              {adminNavLinks.map((v, i) => {
+                return (
+                  <ul key={i}>
+                    <Link
+                      href={v.href}
+                      className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full hover:bg-[#3e1e9707] group cursor-pointer ${
+                        router.pathname === v.href
+                          ? "group cursor-pointer lg:bg-[#F6F5FD] md:bg-transparent"
+                          : ""
+                      }`}
+                    >
+                      <i
+                        className={`${v.icon} text-base ${
+                          router.pathname === v.href
+                            ? "text-[#3E1E97]"
+                            : "text-gray-500"
+                        }`}
+                      ></i>
+                      <div
+                        style={{
+                          opacity: toggle ? "1" : "0",
+                          transition: ".5s",
+                        }}
+                        className={`ml-3 ${
+                          router.pathname === v.href
+                            ? "text-[#3E1E97] font-medium"
+                            : "text-gray-600"
+                        }`}
+                      >
+                        {v.lable}
+                      </div>
+                    </Link>
+                  </ul>
+                );
+              })}
+            </ul>
+          ) : (
+            <ul className="text-sm">
+              {userNavLinks.map((v, i) => {
+                return (
+                  <ul key={i}>
+                    <Link
+                      href={v.href}
+                      className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full hover:bg-[#3e1e9707] group cursor-pointer ${
+                        router.pathname === v.href
+                          ? "group cursor-pointer lg:bg-[#F6F5FD] md:bg-transparent"
+                          : ""
+                      }`}
+                    >
+                      <i
+                        className={`${v.icon} text-base ${
+                          router.pathname === v.href
+                            ? "text-[#3E1E97]"
+                            : "text-gray-500"
+                        }`}
+                      ></i>
+                      <div
+                        style={{
+                          opacity: toggle ? "1" : "0",
+                          transition: ".5s",
+                        }}
+                        className={`ml-3 ${
+                          router.pathname === v.href
+                            ? "text-[#3E1E97] font-medium"
+                            : "text-gray-600"
+                        }`}
+                      >
+                        {v.lable}
+                      </div>
+                    </Link>
+                  </ul>
+                );
+              })}
+            </ul>
+          )}
+          {/* <ul className="text-sm">
+            {adminNavLinks.map((v, i) => {
               return (
                 <>
                   <ul key={i}>
@@ -109,7 +203,7 @@ const Aside = () => {
                 </>
               );
             })}
-          </ul>
+          </ul> */}
         </div>
       </div>
 

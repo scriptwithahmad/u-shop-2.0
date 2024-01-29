@@ -21,7 +21,7 @@ const index = () => {
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [filterByName, setFilterByName] = useState({ name: "" });
+  const [filterByName, setFilterByName] = useState({ name: "", page: 1 });
 
   const {
     data: productData,
@@ -157,12 +157,9 @@ const index = () => {
               {productData?.ProductData?.map((v, i) => {
                 return (
                   <tr key={i} className="bg-white border-b border-gray-100">
-                    {/* <td className="px-6 py-2 text-xs">
-                      {format(new Date(v.createdAt), "en_US")}
-                    </td> */}
                     <td
                       scope="row"
-                      className="px-6 flex border-0 items-center py-2 font-medium text-gray-600 whitespace-nowrap"
+                      className="px-6 flex items-center py-2 font-medium text-gray-600"
                     >
                       <div className=" flex items-center">
                         <div className="w-12 h-12 mr-3 border border-gray-100 rounded-full overflow-hidden">
@@ -174,7 +171,9 @@ const index = () => {
                         </div>
 
                         <div className="flex flex-col gap-0.5">
-                          <h2>{v.name}</h2>
+                          <h2 className=" text-gray-600 leading-[1.5]">
+                            {v.name.slice(0, 60) + "..."}
+                          </h2>
                           <span className=" text-xs text-gray-500 font-light">
                             {format(new Date(v.createdAt), "en_US")}
                           </span>
@@ -184,7 +183,7 @@ const index = () => {
                     <td className="px-6 py-2"> {v.category} </td>
                     <td className="px-6 py-2"> {v.price} </td>
                     <td className="px-6 py-2"> {v.stock} </td>
-                    <td className={`px-6 py-2`}>
+                    <td className={`px-6 py-2 whitespace-nowrap`}>
                       <span
                         className={`${
                           v.sale
@@ -195,7 +194,10 @@ const index = () => {
                         {v.sale ? "Sale" : "Not Sale"}
                       </span>
                     </td>
-                    <td className="px-6 py-2"> {v.seller} </td>
+                    <td className="px-6 py-2 whitespace-nowrap">
+                      {" "}
+                      {v.seller}{" "}
+                    </td>
                     <td className="px-6 py-2 text-lg text-center">
                       <Link href={`/product/${v.slug}`}>
                         <i
@@ -227,31 +229,39 @@ const index = () => {
               {productData?.TotalProducts}
             </span>
             <div className="flex border gap-4 px-4 py-1 rounded-full">
-              <i
-                onClick={() =>
-                  router.push(
-                    `/dashboard/products?page=${productData?.page - 1}`
-                  )
-                }
-                className={`fa-solid fa-angle-left p-1 text-orange-600 text-xs border-r pr-4 ${
-                  productData?.starting == 1
-                    ? "cursor-not-allowed text-slate-300"
-                    : "cursor-pointer hover:text-orange-500"
-                }`}
-              ></i>
+              <button disabled={productData?.starting == 1}>
+                <i
+                  onClick={() => {
+                    setFilterByName({
+                      ...filterByName,
+                      page: filterByName.page - 1,
+                    });
+                  }}
+                  className={`fa-solid fa-angle-left p-1 text-orange-600 text-xs border-r pr-4 ${
+                    productData?.starting == 1
+                      ? "cursor-not-allowed text-slate-300"
+                      : "cursor-pointer hover:text-orange-500"
+                  }`}
+                ></i>
+              </button>
 
-              <i
-                onClick={() => {
-                  if (productData?.end < productData?.TotalProducts) {
-                    router.push(`/dashboard/products?page=${pageCount + 1}`);
-                  }
-                }}
-                className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${
-                  productData?.end >= productData?.TotalProducts
-                    ? "cursor-not-allowed text-slate-300"
-                    : "cursor-pointer hover:text-orange-500"
-                }`}
-              ></i>
+              <button
+                disabled={productData?.ending >= productData?.TotalProducts}
+              >
+                <i
+                  onClick={() => {
+                    setFilterByName({
+                      ...filterByName,
+                      page: filterByName.page + 1,
+                    });
+                  }}
+                  className={`fa-solid fa-angle-right text-orange-600 text-xs p-1 ${
+                    productData?.ending >= productData?.TotalProducts
+                      ? "cursor-not-allowed text-slate-300"
+                      : "cursor-pointer hover:text-orange-500"
+                  }`}
+                ></i>
+              </button>
             </div>
           </div>
         </div>

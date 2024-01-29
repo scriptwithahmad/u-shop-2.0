@@ -381,7 +381,7 @@ const SingleProduct = ({ data }) => {
                     placeholder="Your Name"
                     onChange={inputHandler}
                     value={reviewData.costomerName}
-                    className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                 </div>
 
@@ -391,7 +391,7 @@ const SingleProduct = ({ data }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="NoOfReviews"
-                      className="text-gray-700 font-medium text-sm mb-2"
+                      className="text-gray-600 font-medium text-sm mb-2"
                     >
                       Your Ratings
                     </label>
@@ -423,13 +423,13 @@ const SingleProduct = ({ data }) => {
                             }
                             onMouseEnter={() => setHover(currentRating)}
                             onMouseLeave={() => setHover(null)}
-                            onClick={() => onStarClick(currentRating)} // Call onStarClick when a star is clicked
+                            onClick={() => onStarClick(currentRating)}
                           />
                           <input
                             type="radio"
                             className="hidden"
                             name="NoOfreviews"
-                            value={currentRating} // Pass the current rating value
+                            value={currentRating}
                           />
                         </label>
                       );
@@ -438,21 +438,21 @@ const SingleProduct = ({ data }) => {
                 </div>
                 {/* Comment -------------*/}
                 <div className="reviewtextarea reviewsInput">
-                  <label
+                  {/* <label
                     className="text-gray-700 font-medium text-sm mb-2"
                     htmlFor="comment"
                   >
                     Your Comment
-                  </label>
+                  </label> */}
                   <textarea
                     rows="3"
                     cols="30"
                     id="comment"
                     name="comment"
-                    placeholder="Comment"
+                    placeholder="Write Comment"
                     onChange={inputHandler}
                     value={reviewData.comment}
-                    className="text-sm font-light border w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   ></textarea>
                 </div>
 
@@ -480,7 +480,9 @@ export default SingleProduct;
 
 export async function getServerSideProps({ params }) {
   const slug = params.slug;
-  const res = await fetch(`https://u-shop-liart.vercel.app/api/products/${slug}`);
+  const res = await fetch(
+    `https://u-shop-liart.vercel.app/api/products/${slug}`
+  );
   const data = await res.json();
 
   return { props: { data } };

@@ -23,16 +23,6 @@ export async function middleware(req, res) {
   );
   user = await user.json();
   user = user.message;
-
-  if (user) {
-    const userRole = user.role;
-
-    // Check if the user has the role "user" and is trying to access the dashboard
-    if (userID && userRole === "user" && pathname.startsWith("/dashboard")) {
-      console.log("Access to user dashboard is not allowed. Redirecting...");
-      return NextResponse.redirect(new URL("/", req.nextUrl));
-    }
-  }
 }
 
 export const config = {
