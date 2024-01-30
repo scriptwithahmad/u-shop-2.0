@@ -43,9 +43,10 @@ export async function middleware(req, res) {
 
       // Check if the user has the role "user"
       if (userRole === "user") {
-        if (pathname.includes("/user-portal")) {
-          console.log("true");
-          // return NextResponse.redirect(new URL("/", req.nextUrl));
+        if (!pathname.includes("/user-portal")) {
+          return NextResponse.redirect(
+            new URL("/dashboard/user-portal", req.nextUrl)
+          );
         }
       }
     }
