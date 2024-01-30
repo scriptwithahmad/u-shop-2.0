@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import index from "..";
 
 const EditProduct = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -17,6 +18,11 @@ const EditProduct = () => {
     avatar: "",
     images: [],
   });
+
+  const [images, setImages] = useState([]);
+  const [tempImgs, setTempImgs] = useState([]);
+  const [alreadyExistedImages, setAlreadyExistedImages] = useState([]);
+
   const router = useRouter();
   const slug = router.query.slug;
 
@@ -24,33 +30,31 @@ const EditProduct = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Cloudinary States Fucnton ----------------------------/
-  const [tempImage, setTempImage] = useState("");
   const uploadImagesToCloudinary = async () => {
+    const tempImages = [];
     try {
-      const imageUrls = [];
-
-      for (const file of tempImage) {
+      setLoading(true);
+      for (let i = 0; i < images.length; i++) {
         const data = new FormData();
-        data.append("file", file);
+        data.append("file", images[i]);
         data.append("upload_preset", "blog-image");
-
         const res = await fetch(
           "https://api.cloudinary.com/v1_1/dmyrswz0r/image/upload",
           {
-            body: data,
             method: "POST",
+            body: data,
           }
         );
 
         const jsonRes = await res.json();
-        imageUrls.push(jsonRes.secure_url);
+        tempImages.push(jsonRes.secure_url);
       }
 
-      return imageUrls;
+      setLoading(false);
     } catch (error) {
-      alert("Something went wrong while uploading images");
-      return [];
+      alert(error);
+    } finally {
+      return [...alreadyExistedImages, ...tempImages];
     }
   };
 
@@ -59,9 +63,10 @@ const EditProduct = () => {
       const res = await fetch(`/api/products/${slug}`);
       const data = await res.json();
 
-      // console.log(data.singleProduct)
       setFormData(data?.singleProduct);
-      setImagePreviews(data?.singleProduct?.images || []);
+
+      setTempImgs(data?.singleProduct?.images);
+      setAlreadyExistedImages(data?.singleProduct?.images);
     };
     fetchData();
   }, []);
@@ -87,29 +92,27 @@ const EditProduct = () => {
   };
 
   // Show Image on Clinet Side -----------------------------/
-  const handleImageChange = (e) => {
-    setTempImage(e.target.files);
-
-    const files = e.target.files;
-    const previews = [];
-
-    for (let i = 0; i < files.length; i++) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        previews.push(event.target.result);
-        if (previews.length === files.length) {
-          setImagePreviews(previews);
-        }
-      };
-      reader.readAsDataURL(files[i]);
-    }
+  const handleFileInputChange = async (e) => {
+    setImages(e.target.files);
+    var newImagesObjUrls = Object.keys(e.target.files).map((key, i) => {
+      return URL.createObjectURL(e.target.files[key]);
+    });
+    setTempImgs([...tempImgs, ...newImagesObjUrls]);
   };
 
   // Remove Specific Image from Client Side ----------------/
   const removeImagePreview = (indexToRemove) => {
-    setImagePreviews((prevPreviews) =>
-      prevPreviews.filter((_, index) => index !== indexToRemove)
-    );
+    var substateResImgs = [...tempImgs];
+    substateResImgs.splice(indexToRemove, 1);
+    setTempImgs([...substateResImgs]);
+
+    const updatedImages = [...images];
+    updatedImages.splice(indexToRemove, 1);
+    setImages(updatedImages);
+
+    const updateImg = [...alreadyExistedImages];
+    updateImg.splice(indexToRemove, 1);
+    setAlreadyExistedImages(updateImg);
   };
 
   return (
@@ -224,26 +227,25 @@ const EditProduct = () => {
                 id="arryOfImages"
                 className="remainDiv"
                 style={{ color: "#7d879c" }}
-                onChange={handleImageChange}
+                onChange={handleFileInputChange}
               />
-              {imagePreviews.length == 0 ? null : (
-                <div className="border grid grid-cols-4 gap-4 items-center p-6 mt-2 rounded-lg">
-                  {imagePreviews.map((preview, index) => (
-                    <div className="border rounded-lg w-[270px] h-[320px] overflow-hidden relative">
-                      <img
-                        key={index}
-                        src={preview}
-                        alt={`Preview ${index}`}
-                        className="w-full h-full object-contain rounded-lg"
-                      />
-                      <i
-                        onClick={() => removeImagePreview(index)}
-                        className="fa-solid fa-xmark absolute top-2 right-2 bg-gray-100 text-gray-500 h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition-all cursor-pointer"
-                      ></i>
-                    </div>
-                  ))}
-                </div>
-              )}
+
+              <div className="border grid grid-cols-4 gap-4 items-center p-6 mt-2 rounded-lg">
+                {tempImgs?.map((preview, index) => (
+                  <div className="border rounded-lg w-[270px] h-[320px] overflow-hidden relative">
+                    <img
+                      key={index}
+                      src={preview}
+                      alt={`Preview ${index}`}
+                      className="w-full h-full object-contain rounded-lg"
+                    />
+                    <i
+                      onClick={() => removeImagePreview(index)}
+                      className="fa-solid fa-xmark absolute top-2 right-2 bg-gray-100 text-gray-500 h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition-all cursor-pointer"
+                    ></i>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <button className="createBtn">
