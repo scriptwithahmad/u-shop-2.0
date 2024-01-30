@@ -82,8 +82,8 @@ const Dashboard = ({ products, start, end, total, page }) => {
 
   const fetchData = async () => {
     const res = await fetch("https://u-shop-liart.vercel.app/api/stats");
-    const statData = await res.json();
-    setStatsData(statData);
+    const statDataFetch = await res.json();
+    setStatsData(statDataFetch);
   };
 
   useEffect(() => {

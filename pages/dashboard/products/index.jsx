@@ -171,7 +171,7 @@ const index = () => {
                         </div>
 
                         <div className="flex flex-col gap-0.5">
-                          <h2 className=" text-gray-600 leading-[1.5]">
+                          <h2 className=" text-gray-600 leading-[1.5] line-clamp-1">
                             {v.name.slice(0, 60) + "..."}
                           </h2>
                           <span className=" text-xs text-gray-500 font-light">
