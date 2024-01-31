@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
@@ -7,13 +8,11 @@ const Footer = () => {
         <div className="mx-auto max-w-[1200px] space-y-8 px-4 py-16 sm:px-4 lg:space-y-16 lg:px-0">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div>
-              <div>
-                <img
-                  src="/ulogo.png"
-                  alt="footer image here"
-                  className="w-32 mix-blend-multiply"
-                />
-              </div>
+              <img
+                src="/ulogo.png"
+                alt="footer image here"
+                className="w-32 mix-blend-multiply"
+              />
 
               <p className="mt-4 text-sm max-w-xs text-gray-500">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse
@@ -22,10 +21,9 @@ const Footer = () => {
 
               <ul className="mt-8 flex gap-6">
                 <li>
-                  <a
+                  <Link
                     href="/"
                     rel="noreferrer"
-                    target="_blank"
                     className="text-gray-700 transition hover:text-orange-500"
                   >
                     <span className="sr-only">Facebook</span>
@@ -42,14 +40,13 @@ const Footer = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
                   <a
                     href="/"
                     rel="noreferrer"
-                    target="_blank"
                     className="text-gray-700 transition hover:text-orange-500"
                   >
                     <span className="sr-only">Instagram</span>
@@ -73,7 +70,6 @@ const Footer = () => {
                   <a
                     href="/"
                     rel="noreferrer"
-                    target="_blank"
                     className="text-gray-700 transition hover:text-orange-500"
                   >
                     <span className="sr-only">Twitter</span>
@@ -93,7 +89,6 @@ const Footer = () => {
                   <a
                     href="/"
                     rel="noreferrer"
-                    target="_blank"
                     className="text-gray-700 transition hover:text-orange-500"
                   >
                     <span className="sr-only">GitHub</span>
@@ -117,7 +112,6 @@ const Footer = () => {
                   <a
                     href="/"
                     rel="noreferrer"
-                    target="_blank"
                     className="text-gray-700 transition hover:text-orange-500"
                   >
                     <span className="sr-only">Dribbble</span>
@@ -139,95 +133,46 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
-              <div>
-                <p className="font-medium text-gray-900">Services</p>
-
-                <ul className="mt-6 space-y-4 text-sm">
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:text-orange-500"
-                    >
-                      {" "}
-                      1on1 Coaching{" "}
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:text-orange-500"
-                    >
-                      {" "}
-                      Company Review{" "}
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:text-orange-500"
-                    >
-                      {" "}
-                      Accounts Review{" "}
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:text-orange-500"
-                    >
-                      {" "}
-                      HR Consulting{" "}
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:text-orange-500"
-                    >
-                      {" "}
-                      SEO Optimisation{" "}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
+            {/* Second Section Here ===========================/ */}
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-3">
               <div>
                 <p className="font-medium text-gray-900">Company</p>
 
                 <ul className="mt-6 space-y-4 text-sm">
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      href="/about"
                       className="text-gray-700 transition hover:text-orange-500"
                     >
-                      {" "}
                       About{" "}
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      href="#featuresLink"
                       className="text-gray-700 transition hover:text-orange-500"
                     >
-                      {" "}
-                      Meet the Team{" "}
-                    </a>
+                      Features
+                    </Link>
                   </li>
 
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      href="#review"
                       className="text-gray-700 transition hover:text-orange-500"
                     >
-                      {" "}
-                      Accounts Review{" "}
-                    </a>
+                      Our Reviews
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      href="#recentProducts"
+                      className="text-gray-700 transition hover:text-orange-500"
+                    >
+                      Recent Products
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -237,33 +182,38 @@ const Footer = () => {
 
                 <ul className="mt-6 space-y-4 text-sm">
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      href="/cart"
                       className="text-gray-700 transition hover:text-orange-500"
                     >
-                      {" "}
-                      Contact{" "}
-                    </a>
+                      Cart
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/about"
+                      className="text-gray-700 transition hover:text-orange-500"
+                    >
+                      About
+                    </Link>
                   </li>
 
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      href="/store"
                       className="text-gray-700 transition hover:text-orange-500"
                     >
-                      {" "}
-                      FAQs{" "}
-                    </a>
+                      Our Store
+                    </Link>
                   </li>
 
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      href="/sales"
                       className="text-gray-700 transition hover:text-orange-500"
                     >
-                      {" "}
-                      Live Chat{" "}
-                    </a>
+                      Our Sales
+                    </Link>
                   </li>
                 </ul>
               </div>

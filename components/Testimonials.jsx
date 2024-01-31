@@ -81,7 +81,7 @@ const Testimonials = () => {
 
   return (
     <>
-      <div className="max-w-[1250px] m-auto">
+      <div id="review" className="max-w-[1250px] m-auto">
         <Slider {...settings}>
           {Data.map((v, i) => {
             return (
