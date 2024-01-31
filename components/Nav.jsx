@@ -13,7 +13,7 @@ const navLinks = [
   { text: "Home", route: "/" },
   { text: "About", route: "/about" },
   { text: "Sales", route: "/sales" },
-  { text: "Category", route: "/categories" },
+  { text: "Store", route: "/categories" },
   { text: "Register", route: "/register" },
   { text: "Login", route: "/login" },
 ];
@@ -28,6 +28,7 @@ const Nav = () => {
 
   const { user, refetch } = useContext(AuthContext);
 
+  // Logout Function ------------------------/
   const handleLogout = async () => {
     try {
       const confirmLogout = window.confirm("Are you sure you want to logout?");
@@ -54,10 +55,10 @@ const Nav = () => {
               <picture>
                 <Image
                   priority
-                  width={200}
-                  height={200}
+                  width={500}
+                  height={500}
                   alt="Logo Here"
-                  src="/logo2.png"
+                  src="/ulogo.png"
                   className="w-full h-full object-contain"
                 />
               </picture>
@@ -67,29 +68,35 @@ const Nav = () => {
           {/* ===================== Navbar Links Here ==========================================  */}
           <div>
             <ul className="flex gap-5 items-center">
-              {navLinks.map((links, i) => (
-                <li
-                  key={links.route}
-                  className="text-[#777] relative z-20 font-light hover:text-slate-700 transition duration-200 hidden lg:block"
-                >
-                  {links.route === "/sales" ? (
-                    <span className="h-2 w-2 bg-indigo-200 rounded-full absolute top-0.5 -left-1 -z-10 pulseAnim">
-                      {" "}
-                    </span>
-                  ) : null}
+              {navLinks.map(
+                (links, i) =>
+                  !(
+                    user &&
+                    (links.route === "/register" || links.route === "/login")
+                  ) && (
+                    <li
+                      key={links.route}
+                      className="text-[#777] relative z-20 font-light hover:text-slate-700 transition duration-200 hidden lg:block"
+                    >
+                      {links.route === "/sales" ? (
+                        <span className="h-2 w-2 bg-indigo-200 rounded-full absolute top-0.5 -left-1 -z-10 pulseAnim">
+                          {" "}
+                        </span>
+                      ) : null}
 
-                  <Link
-                    href={links.route}
-                    className={
-                      router === links.route
-                        ? "relative before:absolute before:-bottom-1 font-medium text-orange-500"
-                        : ""
-                    }
-                  >
-                    {links.text}
-                  </Link>
-                </li>
-              ))}
+                      <Link
+                        href={links.route}
+                        className={
+                          router === links.route
+                            ? "relative before:absolute before:-bottom-1 font-medium text-orange-500"
+                            : ""
+                        }
+                      >
+                        {links.text}
+                      </Link>
+                    </li>
+                  )
+              )}
             </ul>
 
             {/* ===================== Navbar Toggle Button ==========================================  */}
@@ -106,8 +113,8 @@ const Nav = () => {
                   <span
                     className="w-6 border border-gray-400 absolute mt-0 transition-all duration-300 ease-in-out"
                     style={{
-                      rotate: `${mobNavPosstion === false ? 0 : 40}deg`,
-                      top: `${mobNavPosstion === false ? 3 : 10}px`,
+                      rotate: `${mobNavPosstion === false ? 0 : 44}deg`,
+                      top: `${mobNavPosstion === false ? 3 : 12}px`,
                     }}
                   ></span>
                   <span
@@ -117,7 +124,7 @@ const Nav = () => {
                   <span
                     className="w-6 border border-gray-400 mt-0 absolute top-3 transition-all duration-300 ease-in-out"
                     style={{
-                      rotate: `${mobNavPosstion === false ? 0 : -40}deg`,
+                      rotate: `${mobNavPosstion === false ? 0 : -44}deg`,
                     }}
                   ></span>
                 </div>
@@ -224,9 +231,9 @@ const Nav = () => {
                   width={700}
                   height={700}
                   alt="Logo Here"
-                  src="/logo2.png"
+                  src="/ulogo.png"
                   data-src="images/logo1.webp"
-                  className="w-full h-full object-cover mix-blend-multiply"
+                  className="w-full h-full object-cover"
                 />
               </Link>
             </div>
@@ -236,11 +243,17 @@ const Nav = () => {
             ></i>
           </div>
           <ul className="grid gap-4 mt-10">
-            {navLinks.map((v, i) => (
-              <li key={i} className="text-slate-500 hover:text-slate-600">
-                <Link href={v.route}>{v.text}</Link>
-              </li>
-            ))}
+            {navLinks.map(
+              (v, i) =>
+                !(
+                  user &&
+                  (v.route === "/register" || v.route === "/login")
+                ) && (
+                  <li key={i} className="text-slate-500 hover:text-slate-600">
+                    <Link href={v.route}>{v.text}</Link>
+                  </li>
+                )
+            )}
 
             <li className="text-slate-500 mt-2 hover:text-slate-600">
               <Link

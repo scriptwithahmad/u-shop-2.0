@@ -18,6 +18,16 @@ export default async function handler(req, res) {
       match.category = new RegExp(req.query.category, "i");
     } else if (req.query.seller) {
       match.seller = new RegExp(req.query.seller, "i");
+    } else if (req.query.limitLess) {
+      var items = await productModel.find().sort({ createdAt: -1 });
+      const total = await productModel.find().count();
+      return res.status(200).json({
+        success: true,
+        message: {
+          data: items,
+          count: total,
+        },
+      });
     }
 
     ProductData = await productModel

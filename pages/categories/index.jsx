@@ -38,10 +38,10 @@ export default function Categories(props) {
   // Fetch Data Basis Filter by Name Function ------------------------------------/
   const fetchProductData = async () => {
     try {
-      const { data } = await axios.get("/api/get-all-product", {
+      const { data } = await axios.get("/api/get-all-product?limitLess=true", {
         params: { name: filterByName.name },
       });
-      setProductData(data.message.ProductData);
+      setProductData(data?.message?.data);
     } catch (error) {
       toast.error(error?.message);
     }

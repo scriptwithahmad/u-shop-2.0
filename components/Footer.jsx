@@ -9,7 +9,7 @@ const Footer = () => {
             <div>
               <div>
                 <img
-                  src="/navlogo.png"
+                  src="/ulogo.png"
                   alt="footer image here"
                   className="w-32 mix-blend-multiply"
                 />
