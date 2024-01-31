@@ -9,9 +9,9 @@ const Testimonials = () => {
   var settings = {
     infinite: true,
     arrows: false,
-    autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 2000,
+    // autoplay: true,
+    // speed: 3000,
+    // autoplaySpeed: 2000,
     slidesToShow: 2,
     slidesToScroll: 1,
     pauseOnHover: true,
@@ -81,24 +81,22 @@ const Testimonials = () => {
 
   return (
     <>
-      <div className="max-w-[1200px] m-auto">
+      <div className="max-w-[1250px] m-auto">
         <Slider {...settings}>
           {Data.map((v, i) => {
             return (
-              <div key={i} className="px-2 py-12">
-                <div className="flex">
-                  <div className="w-full relative z-50 flex flex-col justify-center bg-white px-4 pr-12 rounded-lg globalShadow hover:shadow-2xl transition-all">
-                    <Image
-                      height={200}
-                      width={200}
-                      src="/quote.png"
-                      priority="true"
-                      className=" absolute bottom-0 left-0 -z-10 opacity-10"
-                    ></Image>
+              <div key={i} className="py-12 px-5 md:px-0">
+                <div className="flex md:flex-row flex-col bg-white globalShadow md:shadow-none px-2 md:px-4 py-4 md:py-8 md:p-0 rounded-lg md:rounded-none overflow-hidden">
+                  <div className=" w-full relative z-50 flex flex-col justify-center bg-white px-2 md:px-4 pr-2 md:pr-12 rounded-lg shadow-none md:shadow-lg hover:shadow-2xl transition-all">
+                    <img
+                      src="/qoute.png"
+                      placeholder="Qoute Image Here"
+                      className=" absolute -bottom-8 md:bottom-1/3 left-1/4 md:left-0 -z-10 opacity-5 w-full"
+                    />
                     <h2 className=" font-semibold text-xl text-slate-800 mb-1">
                       {v.name}
                     </h2>
-                    <span className=" text-xs text-gray-500 border-b py-2 w-fit mb-3">
+                    <span className="text-xs text-gray-500 border-b py-2 w-fit">
                       Web Developer
                     </span>
                     <div>
@@ -106,17 +104,17 @@ const Testimonials = () => {
                         disabled
                         value={v.rating}
                         cancel={false}
-                        className="text-orange-600 mt-4"
+                        className="text-orange-400 mt-2"
                       />
                     </div>
                   </div>
-                  <div className=" relative top-0 -left-12 flex items-center z-50">
+                  <div className=" relative top-0 left-0 md:-left-12 flex items-center flex-row z-50 mt-4 md:mt-0 px-2 md:px-0 gap-3 md:gap-0">
                     <img
                       alt="image here"
-                      className=" h-[70%] object-cover rounded-lg"
+                      className=" h-[50px] w-[15%] md:w-full md:h-[70%] object-cover md:rounded-lg rounded-full"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq2lidOY4xtl4mU06Cqqd0QF1zgFBQ98HJ8w&usqp=CAU"
                     />
-                    <span className=" text-gray-500 text-xs pl-3">
+                    <span className=" w-[90%] md:w-full text-gray-500 text-xs pl-0 md:pl-3 md:line-clamp-4 line-clamp-2">
                       {v.revs}
                     </span>
                   </div>
