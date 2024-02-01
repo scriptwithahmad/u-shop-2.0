@@ -10,9 +10,29 @@
   font-family: "Poppins";
   scroll-behavior: smooth;
 }
+
 body {
   background: #fcfdff;
+  --sb-track-color: #e3e3e3;
+  --sb-thumb-color: #cc7f3d;
+  --sb-size: 10px;
 }
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 6px;
+  border: 2px solid var(--sb-track-color);
+}
+
 /* HEADER START */
 
 .NavHeader {

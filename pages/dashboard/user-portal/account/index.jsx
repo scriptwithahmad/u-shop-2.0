@@ -1,11 +1,17 @@
-import React from 'react'
+import Link from "next/link";
+import React, { useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { AuthContext } from "@/context/AuthContext";
 
 const index = () => {
+  const { user } = useContext(AuthContext);
   return (
-    <div>
+    <>
+      <div>
         <h1>Account Page</h1>
-    </div>
-  )
-}
+      </div>
+    </>
+  );
+};
 
-export default index
+export default index;

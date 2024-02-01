@@ -23,14 +23,24 @@ export async function middleware(req, res) {
   );
   user = await user.json();
   user = user.message;
-  
 
   if (user) {
     const userRole = user.role;
 
+    // restricted routes for user ----------------
+    const restrictedRoutesForUser = [
+      "/dashboard",
+      "/dashboard/users",
+      "/dashboard/category",
+      "/dashboard/products",
+      "/dashboard/sales-banner",
+      "/dashboard/products/createproduct",
+      "/dashboard/products/edit-product",
+    ];
+
     // Check if the user has the role "user" then redirect the user dashboard only
     if (userRole === "user") {
-      if (!pathname.includes("/user-portal") && !pathname.includes("/")) {
+      if (restrictedRoutesForUser.includes(pathname)) {
         return NextResponse.redirect(
           new URL("/dashboard/user-portal", req.nextUrl)
         );

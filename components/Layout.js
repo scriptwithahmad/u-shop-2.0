@@ -4,6 +4,7 @@ import Aside from "./Aside";
 import Footer from "./Footer";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Layout({ children }) {
   const { pathname, back } = useRouter();
@@ -13,6 +14,12 @@ export default function Layout({ children }) {
 
   return (
     <>
+      <Head>
+        <link
+          rel="icon"
+          href="https://res.cloudinary.com/dmyrswz0r/image/upload/v1706707781/ulogo_hclp4i.png"
+        />
+      </Head>
       <div>
         {privateRoutes ? (
           <div className="max-h-screen flex flex-col h-screen bg-[#ffffff] overflow-hidden">
@@ -38,7 +45,10 @@ export default function Layout({ children }) {
                       className=" text-gray-500 hover:text-indigo-500 flex items-center gap-2"
                     >
                       <i className="fa-solid fa-house text-indigo-500"></i>
-                      <span className=" text-gray-500 hover:text-indigo-500"> Home {" > "} </span>
+                      <span className=" text-gray-500 hover:text-indigo-500">
+                        {" "}
+                        Home {" > "}{" "}
+                      </span>
                     </Link>
                   )}
 

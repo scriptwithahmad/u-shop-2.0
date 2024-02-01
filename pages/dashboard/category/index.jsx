@@ -75,7 +75,7 @@ const index = () => {
       <div className="bg-white max-w-7xl m-auto p-5 rounded-lg">
         <form onSubmit={addNewCategory}>
           <div className=" mb-4 text-2xl font-semibold">
-            Add Product {" "}
+            Add Product{" "}
             <span className=" text-indigo-600 font-semibold">Category</span>
           </div>
           <div className=" flex items-center flex-wrap gap-4 mt-10">

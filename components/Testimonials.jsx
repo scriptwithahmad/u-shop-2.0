@@ -90,7 +90,7 @@ const Testimonials = () => {
                   <div className=" w-full relative z-50 flex flex-row md:flex-col justify-between md:justify-center bg-white px-2 md:px-4 pr-2 md:pr-12 rounded-lg shadow-none md:shadow-lg hover:shadow-2xl transition-all">
                     <img
                       src="/qoute.png"
-                      placeholder="Qoute Image Here"
+                      alt="Qoute Image Here"
                       className=" absolute -bottom-12 md:bottom-[40%] left-1/4 md:left-1 -z-10 opacity-[0.025] w-full"
                     />
                     <div className=" md:mb-3 mb-2">

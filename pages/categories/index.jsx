@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Toaster, toast } from "react-hot-toast";
 import { CartContext } from "@/context/CartProvider";
 import { useContext, useEffect, useState } from "react";
+import Head from "next/head";
 
 export default function Categories(props) {
   const { addToCart } = useContext(CartContext);
@@ -77,6 +78,15 @@ export default function Categories(props) {
 
   return (
     <>
+      <Head>
+        <title>Shop Now at U-Shop: Explore Exclusive Deals & Products</title>
+        <meta
+          name="description"
+          content="U-Shop is your one-stop destination for great finds. Browse our vast collection, find exclusive deals, and shop for quality products."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
       <Toaster />
       <div className="bg-[#ffffff]">
         <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
