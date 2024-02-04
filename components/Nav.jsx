@@ -194,15 +194,7 @@ const Nav = () => {
                   </ul>
                 </div>
               </div>
-            ) : (
-              <>
-                <div>
-                  <Link href={"/login"}>
-                    <i className=" fa-solid fa-arrow-right-to-bracket cursor-pointer text-gray-600 hover:text-orange-500"></i>
-                  </Link>
-                </div>
-              </>
-            )}
+            ) : null}
           </div>
         </nav>
       </div>
