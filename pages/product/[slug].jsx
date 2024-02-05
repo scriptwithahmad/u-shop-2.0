@@ -367,7 +367,7 @@ const SingleProduct = ({ data }) => {
               {/* REVIEW FORM HERE  */}
               <form
                 onSubmit={submitReview}
-                className="border bg-white rounded-lg m-auto globalShadow p-4 min-w-[400px] my-8"
+                className="border bg-white rounded-lg m-auto globalShadow p-4 md:min-w-[400px] my-8"
               >
                 <h1 className="text-sky-700 font-semibold mb-4 text-lg">
                   Submit Your Review
