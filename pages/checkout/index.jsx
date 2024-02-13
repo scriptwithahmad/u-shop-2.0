@@ -107,6 +107,7 @@ const index = () => {
 
       if (res.data.success) {
         toast.success("Order Placed Successfully!");
+        router.push("/categories")
         // Remove items from the cart after a successful order
         clearCart();
       }

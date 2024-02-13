@@ -12,7 +12,6 @@ import { toast } from "react-hot-toast";
 const navLinks = [
   { text: "Home", route: "/" },
   { text: "About", route: "/about" },
-  { text: "Sales", route: "/sales" },
   { text: "Store", route: "/categories" },
   { text: "Register", route: "/register" },
   { text: "Login", route: "/login" },
@@ -78,12 +77,6 @@ const Nav = () => {
                       key={links.route}
                       className="text-[#777] relative z-20 font-light hover:text-slate-700 transition duration-200 hidden lg:block"
                     >
-                      {links.route === "/sales" ? (
-                        <span className="h-2 w-2 bg-indigo-200 rounded-full absolute top-0.5 -left-1 -z-10 pulseAnim">
-                          {" "}
-                        </span>
-                      ) : null}
-
                       <Link
                         href={links.route}
                         className={
