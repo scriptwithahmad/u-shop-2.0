@@ -47,7 +47,7 @@ const Dnav = () => {
             {user ? (
               <div className="flex py-2 group relative items-center gap-2 pr-4">
                 <img
-                  src={user.photo}
+                  src={user.photo || "/user.jpeg"}
                   alt="image here"
                   className="rounded-full h-9 w-9 object-cover cursor-pointer border border-gray-300"
                 />

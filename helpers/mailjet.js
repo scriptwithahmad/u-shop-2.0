@@ -1,12 +1,12 @@
-const axios = require('axios');
+const axios = require("axios");
 
-async function mailjet(receiverEmail, receiverName, subject, message) { 
-  const apiKey = 'ec2c0f0c4e608b4054d545136371ec3d';
-  const secretKey = '41eaaefc72f7bb15ca1dbb85ea6c4b70';
-  const senderEmail = 'scriptwithahmad@gmail.com';
-  const senderName = 'Muhammad Ahmad';
+async function mailjet(receiverEmail, receiverName, subject, message) {
+  const apiKey = "042e7596d4a3f1df53eb6b01adadde85";
+  const secretKey = "6e4e7e54a549b485053a65f4abdded23";
+  const senderEmail = "scriptwithahmad@gmail.com";
+  const senderName = "Muhammad Ahmad ushop";
 
-  const apiEndpoint = 'https://api.mailjet.com/v3.1/send';
+  const apiEndpoint = "https://api.mailjet.com/v3.1/send";
 
   const auth = {
     username: apiKey,
@@ -34,18 +34,23 @@ async function mailjet(receiverEmail, receiverName, subject, message) {
   };
 
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
 
   // Making the API request using axios
   try {
-    var {data} = await axios.post(apiEndpoint, emailPayload, { auth, headers })
-    return data
+    var { data } = await axios.post(apiEndpoint, emailPayload, {
+      auth,
+      headers,
+    });
+    return data;
   } catch (error) {
-      console.error('Failed to send email:', error.response ? error.response.data : error.message);
-    return false
+    console.error(
+      "Failed to send email:",
+      error.response ? error.response.data : error.message
+    );
+    return false;
   }
- 
 }
 
-export default mailjet
+export default mailjet;

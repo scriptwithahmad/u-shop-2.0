@@ -32,7 +32,7 @@ const index = () => {
                 <div className="h-fit w-fit border-[10px] border-[#eeeeee9c] rounded-full max-w-full m-auto">
                   <img
                     alt="image here"
-                    src={user.photo}
+                    src={user.photo || "/user.jpeg"}
                     className="h-60 w-60 border-[10px] object-cover border-[#c9c9c9cc] rounded-full"
                   />
                 </div>
