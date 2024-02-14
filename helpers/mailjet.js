@@ -45,6 +45,7 @@ async function mailjet(receiverEmail, receiverName, subject, message) {
     });
     return data;
   } catch (error) {
+    console.log(error)
     console.error(
       "Failed to send email:",
       error.response ? error.response.data : error.message
