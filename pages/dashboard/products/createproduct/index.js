@@ -1,6 +1,7 @@
-import Loader from "@/components/Loader";
 import axios from "axios";
+import Loader from "@/components/Loader";
 import { useEffect, useState } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 import { Toaster, toast } from "react-hot-toast";
 
 const CreateProduct = () => {
@@ -144,7 +145,7 @@ const CreateProduct = () => {
         <h1>Create Product</h1>
         <form onSubmit={submitHandler}>
           <div className="createProductMain">
-            {/* 1. Name ------------*/}
+            {/* 1. Name ------------------------ */}
             <div className="createProductInner">
               <label htmlFor="name">Product Name </label>
               <input
@@ -157,7 +158,7 @@ const CreateProduct = () => {
               />
             </div>
 
-            {/* 3. Price ------------*/}
+            {/* 3. Price ------------------------ */}
             <div className="createProductInner">
               <label htmlFor="price">Product Price </label>
               <input
@@ -190,7 +191,7 @@ const CreateProduct = () => {
                 <option value="Sports">Sports</option> */}
               </select>
             </div>
-            {/* 5. Seller ------------*/}
+            {/* 5. Seller ------------------------ */}
             <div className="createProductInner">
               <label htmlFor="seller">Product Seller</label>
               <input
@@ -202,7 +203,7 @@ const CreateProduct = () => {
                 placeholder="Product Saller Name"
               />
             </div>
-            {/* 6. Stock ------------*/}
+            {/* 6. Stock ------------------------------------------------ */}
             <div className="createProductInner">
               <label htmlFor="stock">Product Stock</label>
               <input
@@ -215,23 +216,55 @@ const CreateProduct = () => {
             </div>
           </div>
           <div className="myFlex">
-            {/* 7. Description ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="desc">Product Description</label>
-              <textarea
+            {/* 7. Description --------------------------------------- */}
+            {/* Editor for Desription --------------------------------- */}
+            <div className=" mb-6">
+              <label htmlFor="description" className=" text-gray-400 text-sm my-10">
+                Product Description
+              </label>
+              <Editor
+                apiKey="z5f7ugf635wz96udas9dzbjlugsi9xxx6oxnnb6aw83hdkdk"
                 value={formData.description}
-                onChange={formDataChangeHandler}
-                name="description"
-                className="remainDiv diffInput"
-                id="desc"
-                cols="50"
-                rows="5"
-                placeholder="Please provide any details"
-              ></textarea>
+                onEditorChange={(content) =>
+                  setFormData({ ...formData, description: content })
+                }
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist",
+                    "autolink",
+                    "lists",
+                    "link",
+                    "image",
+                    "charmap",
+                    "preview",
+                    "anchor",
+                    "searchreplace",
+                    "visualblocks",
+                    "code",
+                    "fullscreen",
+                    "insertdatetime",
+                    "media",
+                    "table",
+                    "code",
+                    "help",
+                    "wordcount",
+                  ],
+                  toolbar:
+                    "undo redo blocks " +
+                    "bullist numlist " +
+                    "table image removeformat code fullscreen",
+                  content_style:
+                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+                placeholder="helkafsd"
+              />
             </div>
-            {/* Product Hero Image ------------*/}
 
-            {/* Arry of Images to Show */}
+            {/* Product Hero Image ------------------------------------ */}
+
+            {/* Arry of Images to Show ---------------------------------- */}
             <div className="createProductInner">
               <label htmlFor="arryOfImages">Select Multiple Images</label>
               <input

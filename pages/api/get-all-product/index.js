@@ -81,7 +81,7 @@ export default async function handler(req, res) {
 
     // Check if minPrice and maxPrice query parameters are provided
     if (req.query.minPrice || req.query.maxPrice) {
-      match.price = {}; // Initialize price filter object
+      match.price = {};
 
       // Add minimum price filter if provided
       if (req.query.minPrice) {
@@ -92,13 +92,6 @@ export default async function handler(req, res) {
       if (req.query.maxPrice) {
         match.price.$lte = req.query.maxPrice;
       }
-    }
-
-    // Check if sort query parameter is provided
-    if (req.query.sort === "minPrice") {
-      sort.price = 1;
-    } else if (req.query.sort === "maxPrice") {
-      sort.price = -1;
     }
 
     // Add other filters (name, category, seller)

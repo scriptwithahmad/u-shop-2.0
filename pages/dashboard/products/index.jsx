@@ -102,7 +102,7 @@ const index = () => {
                     value={filterByName.name}
                     onChange={searchInputHanler}
                     placeholder="Search here..."
-                    className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] lg:w-[12vw] w-[25vw] rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
+                    className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] lg:w-[12vw] w-[45vw] rounded-full focus:ring-2 transition-colors focus:outline-none focus:text-gray-400 placeholder:text-gray-400"
                   />
                   <span>
                     {loading ? (

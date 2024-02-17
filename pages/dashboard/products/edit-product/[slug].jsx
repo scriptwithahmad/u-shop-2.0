@@ -2,14 +2,13 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
-import index from "..";
+import { Editor } from "@tinymce/tinymce-react";
 
 const EditProduct = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    sale: "",
     description: "",
     price: "",
     category: "",
@@ -134,19 +133,7 @@ const EditProduct = () => {
                 placeholder="Product Name"
               />
             </div>
-            {/* 2. Sale ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="brand">Product Sale </label>
-              <input
-                value={formData?.sale}
-                onChange={formDataChangeHandler}
-                type="text"
-                name="sale"
-                id="sale"
-                placeholder="Product Sale"
-              />
-            </div>
-            {/* 3. Price ------------*/}
+            {/* 2. Price ------------*/}
             <div className="createProductInner">
               <label htmlFor="price">Product Price </label>
               <input
@@ -158,7 +145,7 @@ const EditProduct = () => {
                 id="Product Price"
               />
             </div>
-            {/* 4.  Categories ------------*/}
+            {/* 3.  Categories ------------*/}
             <div className="createProductInner">
               <label htmlFor="cate">Product Category</label>
               <select
@@ -177,7 +164,7 @@ const EditProduct = () => {
                 <option value="Sports">Sports</option>
               </select>
             </div>
-            {/* 5. Seller ------------*/}
+            {/* 4. Seller ------------*/}
             <div className="createProductInner">
               <label htmlFor="seller">Product Seller</label>
               <input
@@ -189,7 +176,7 @@ const EditProduct = () => {
                 placeholder="Product Saller Name"
               />
             </div>
-            {/* 6. Stock ------------*/}
+            {/* 5. Stock ------------*/}
             <div className="createProductInner">
               <label htmlFor="stock">Product Stock</label>
               <input
@@ -202,19 +189,52 @@ const EditProduct = () => {
             </div>
           </div>
           <div className="myFlex">
-            {/* 7. Description ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="desc">Product Description</label>
-              <textarea
-                value={formData?.description}
-                onChange={formDataChangeHandler}
-                name="description"
-                className="remainDiv diffInput"
-                id="desc"
-                cols="50"
-                rows="5"
-                placeholder="Please provide any details"
-              ></textarea>
+            {/* 6. Description ------------*/}
+            <div className=" mb-6">
+              <label
+                htmlFor="description"
+                className=" text-gray-400 text-sm my-10"
+              >
+                Product Description
+              </label>
+              <Editor
+                apiKey="z5f7ugf635wz96udas9dzbjlugsi9xxx6oxnnb6aw83hdkdk"
+                value={formData.description}
+                onEditorChange={(content) =>
+                  setFormData({ ...formData, description: content })
+                }
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist",
+                    "autolink",
+                    "lists",
+                    "link",
+                    "image",
+                    "charmap",
+                    "preview",
+                    "anchor",
+                    "searchreplace",
+                    "visualblocks",
+                    "code",
+                    "fullscreen",
+                    "insertdatetime",
+                    "media",
+                    "table",
+                    "code",
+                    "help",
+                    "wordcount",
+                  ],
+                  toolbar:
+                    "undo redo blocks " +
+                    "bullist numlist " +
+                    "table image removeformat code fullscreen",
+                  content_style:
+                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+                placeholder="helkafsd"
+              />
             </div>
             {/* Product Hero Image ------------*/}
 
@@ -230,9 +250,9 @@ const EditProduct = () => {
                 onChange={handleFileInputChange}
               />
 
-              <div className="border grid grid-cols-4 gap-4 items-center p-6 mt-2 rounded-lg">
+              <div className="border grid grid-cols-1 gap-4 items-center p-6 mt-2 rounded-lg lg:grid-cols-4 2xl:grid-cols-4">
                 {tempImgs?.map((preview, index) => (
-                  <div className="border rounded-lg w-[270px] h-[320px] overflow-hidden relative">
+                  <div className="border rounded-lg w-full h-[150px] lg:h-[200px] overflow-hidden relative lg:w-[250]">
                     <img
                       key={index}
                       src={preview}

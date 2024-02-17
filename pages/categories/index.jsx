@@ -14,6 +14,7 @@ export default function Categories(props) {
   const [minPrice, setMinPrice] = useState("");
   // Maximum price range --------------------------------------------------------/
   const [maxPrice, setMaxPrice] = useState("");
+
   const [productData, setProductData] = useState(
     props.data.message.ProductData
   );
@@ -88,6 +89,7 @@ export default function Categories(props) {
 
   return (
     <>
+      <Toaster />
       <Head>
         <title>Shop Now at U-Shop: Explore Exclusive Deals & Products</title>
         <meta
@@ -96,8 +98,6 @@ export default function Categories(props) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <Toaster />
       <div className="bg-[#ffffff]">
         <main className="mx-auto max-w-[1200px] m-auto px-4 sm:px-6">
           <div className="border-b border-gray-200 pb-6 my-8 flex items-center justify-between md:flex-row flex-col">
@@ -140,13 +140,16 @@ export default function Categories(props) {
 
                 <div className=" my-2">
                   {categories.map((category) => (
-                    <div key={category.id} className="flex gap-4 px-4 py-1.5">
+                    <div
+                      key={category.id}
+                      className="flex items-center gap-4 px-4 py-1.5"
+                    >
                       <input
                         type="checkbox"
                         id={category.name}
                         name={category.name}
-                        className="cursor-pointer"
                         onChange={handleCategoryChange}
+                        className="cursor-pointer border border-gray-400"
                       />
                       <label
                         htmlFor={category.name}
@@ -220,10 +223,10 @@ export default function Categories(props) {
                           </h2>
                         </Link>
                         <div className="flex justify-between items-center">
-                          <h2 className="text-xs border border-orange-100 w-fit p-[4px] px-3 rounded-md text-orange-400 font-normal">
+                          <h2 className="text-xs border border-orange-200 w-fit p-[4px] px-3 rounded-md text-orange-400 font-light">
                             {v.category}
                           </h2>
-                          <h2 className="text-sm w-fit p-[4px] px-3 rounded-md text-slate-500">
+                          <h2 className="text-sm w-fit p-1 px-3 rounded-md text-slate-500">
                             Pkr/- {v.price}
                           </h2>
                         </div>
