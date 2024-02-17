@@ -21,17 +21,19 @@ export default async function handler(req, res) {
       email,
       fullname,
       "Verify Your Email - Edifycit",
-    //   OtpTemplate(otp.value)
-    "hey message"
+      //   OtpTemplate(otp.value)
+      "hey message"
     );
 
-    console.log(mailData?.Messages[0].To);
+    // console.log(mailData?.Messages[0].To);
 
     var r = await userModal.findByIdAndUpdate(
       _id,
       { $set: { otp } },
       { new: true }
     );
+
+    console.log(r);
 
     res.json({
       success: true,

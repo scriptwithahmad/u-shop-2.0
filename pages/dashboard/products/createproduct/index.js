@@ -16,12 +16,6 @@ const CreateProduct = () => {
     stock: "",
     avatar: "",
     images: [],
-    sale: {
-      name: "",
-      value: "",
-      startTime: "",
-      endTime: "",
-    },
   });
 
   // for sales logic start here ----------------------------------------------------/
@@ -29,26 +23,13 @@ const CreateProduct = () => {
   const formDataChangeHandler = (e) => {
     const { name, value } = e.target;
 
-    // Check if the field belongs to the sale object
-    if (name.startsWith("sale.")) {
-      const saleFieldName = name.substring(5);
-      setFormData((prevData) => ({
-        ...prevData,
-        sale: {
-          ...prevData.sale,
-          [saleFieldName]: value,
-        },
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   // for sales logic Ends here ----------------------------------------------------/
-
   // Cloudinary States Fucnton -------------------------/
   const [tempImage, setTempImage] = useState("");
   const uploadImagesToCloudinary = async () => {
@@ -99,12 +80,6 @@ const CreateProduct = () => {
         stock: "",
         avatar: "",
         images: [],
-        sale: {
-          name: "",
-          value: "",
-          startTime: "",
-          endTime: "",
-        },
       });
 
       setImagePreviews([]);
@@ -179,56 +154,6 @@ const CreateProduct = () => {
                 id="name"
                 name="name"
                 placeholder="Product Name"
-              />
-            </div>
-
-            {/* 2. Sale name ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="saleName">Sale Name:</label>
-              <input
-                type="text"
-                id="saleName"
-                name="sale.name"
-                placeholder="Sale Name"
-                value={formData.sale.name}
-                onChange={formDataChangeHandler}
-              />
-            </div>
-
-            {/* 2. Sale Value  ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="saleValue">Sale Value:</label>
-              <input
-                type="text"
-                id="saleValue"
-                name="sale.value"
-                placeholder="Sale Value"
-                value={formData.sale.value}
-                onChange={formDataChangeHandler}
-              />
-            </div>
-
-            {/* 2. Sale start time  ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="saleStartTime">Sale Start Time:</label>
-              <input
-                type="date"
-                id="saleStartTime"
-                name="sale.startTime"
-                value={formData.sale.startTime}
-                onChange={formDataChangeHandler}
-              />
-            </div>
-
-            {/* 2. Sale end time  ------------*/}
-            <div className="createProductInner">
-              <label htmlFor="saleEndTime">Sale End Time:</label>
-              <input
-                type="date"
-                id="saleEndTime"
-                name="sale.endTime"
-                value={formData.sale.endTime}
-                onChange={formDataChangeHandler}
               />
             </div>
 

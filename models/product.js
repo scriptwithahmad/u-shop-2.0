@@ -16,20 +16,6 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Enter Product Price"],
   },
-  sale: {
-    name: {
-      type: String,
-    },
-    value: {
-      type: String,
-    },
-    startTime: {
-      type: Date,
-    },
-    endTime: {
-      type: Date,
-    },
-  },
   avatar: {
     type: String,
   },

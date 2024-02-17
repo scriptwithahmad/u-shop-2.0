@@ -4,7 +4,6 @@ export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  // console.log(cartItems);
 
   const addToCart = (newItem) => {
     var cartCopy = [...cartItems];
