@@ -126,23 +126,25 @@ const ShoppingCart = () => {
                 })}
               </>
             )}
-            <div className="flex items-center mt-5 gap-3 my-2">
-              <Link
-                href={"/checkout"}
-                className="disabled:hidden border px-5 py-2 rounded-full text-white font-light bg-orange-400 hover:bg-orange-500 transition-all"
-              >
-                Procced to Checkout
-              </Link>
-              <button
-                onClick={() => {
-                  clearCart();
-                }}
-                disabled={cartLength == 0}
-                className="disabled:hidden border px-5 py-2 rounded-full text-slate-500 font-light hover:text-orange-600 transition-all"
-              >
-                Clear Cart
-              </button>
-            </div>
+            {cartLength <= 0 ? null : (
+              <div className="flex items-center mt-5 gap-3 my-2">
+                <Link
+                  href={"/checkout"}
+                  className="disabled:hidden border px-5 py-2 rounded-full text-white font-light bg-orange-400 hover:bg-orange-500 transition-all"
+                >
+                  Procced to Checkout
+                </Link>
+                <button
+                  onClick={() => {
+                    clearCart();
+                  }}
+                  disabled={cartLength == 0}
+                  className="disabled:hidden border px-5 py-2 rounded-full text-slate-500 font-light hover:text-orange-600 transition-all"
+                >
+                  Clear Cart
+                </button>
+              </div>
+            )}
           </div>
           <div className="md:w-full lg:w-[30%] w-full">
             <div className="OrderDivMain bg-[#eeeeee4c] border">

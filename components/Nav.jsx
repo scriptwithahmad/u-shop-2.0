@@ -134,9 +134,11 @@ const Nav = () => {
             ></i>
             <Link href={"/cart"}>
               <i className=" fa-solid fa-cart-shopping relative cursor-pointer text-gray-600 hover:text-orange-500">
-                <span className="bg-sky-300 text-slate-950 absolute -top-2 left-2 text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                  {NoOfCartItems}
-                </span>
+                {NoOfCartItems <= 0 ? null : (
+                  <span className="bg-sky-300 text-[#344352] absolute -top-2 left-2 text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    {NoOfCartItems}
+                  </span>
+                )}
               </i>
             </Link>
             {user ? (

@@ -208,7 +208,7 @@ const SingleProduct = ({ data }) => {
 
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster />
       {/* Single PAGE HERE ---------------------------------- */}
       <div className="product-main">
         <div className="product-col-left">

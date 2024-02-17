@@ -94,6 +94,24 @@ export default async function handler(req, res) {
       }
     }
 
+    if (req.query.sort) {
+      var sorted = await productModel.find().sort({ createdAt: 1 });
+      return res.status(200).json({
+        success: true,
+        message: {
+          data: sorted,
+        },
+      });
+    } else if (req.query.unsort) {
+      var unSorted = await productModel.find().sort({ createdAt: -1 });
+      return res.status(200).json({
+        success: true,
+        message: {
+          data: unSorted,
+        },
+      });
+    }
+
     // Add other filters (name, category, seller)
     if (req.query.name) {
       match.name = new RegExp(req.query.name, "i");

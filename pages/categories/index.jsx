@@ -1,9 +1,9 @@
 import axios from "axios";
 import Link from "next/link";
+import Head from "next/head";
 import { Toaster, toast } from "react-hot-toast";
 import { CartContext } from "@/context/CartProvider";
 import { useContext, useEffect, useState } from "react";
-import Head from "next/head";
 
 export default function Categories(props) {
   const { addToCart } = useContext(CartContext);
@@ -134,7 +134,7 @@ export default function Categories(props) {
                   Filter Products
                 </h2>
 
-                <span className="text-base font-semibold px-2 text-slate-600">
+                <span className="text-base font-medium px-2 text-slate-600">
                   Category
                 </span>
 
@@ -142,18 +142,18 @@ export default function Categories(props) {
                   {categories.map((category) => (
                     <div
                       key={category.id}
-                      className="flex items-center gap-4 px-4 py-1.5"
+                      className="flex items-center gap-3 px-4 py-1.5"
                     >
                       <input
                         type="checkbox"
                         id={category.name}
                         name={category.name}
                         onChange={handleCategoryChange}
-                        className="cursor-pointer border border-gray-400"
+                        className="cursor-pointer border border-gray-300 rounded"
                       />
                       <label
                         htmlFor={category.name}
-                        className="cursor-pointer text-gray-600 text-sm"
+                        className="cursor-pointer text-gray-500 text-sm"
                       >
                         {category.name}
                       </label>
@@ -163,7 +163,7 @@ export default function Categories(props) {
               </div>
               {/* ------------ Pricing filtetion ----------------------------------- */}
               <div className="border-b mb-3 pb-3">
-                <span className="mb-3 text-base font-semibold px-2 text-slate-600 my-4">
+                <span className="mb-3 text-base font-medium px-2 text-slate-600 my-4">
                   Pricing
                 </span>
 
@@ -237,7 +237,10 @@ export default function Categories(props) {
                         <i className="fa-solid fa-eye hover:text-orange-500 bg-white rounded-md p-1 transition duration-200 cursor-pointer"></i>
                       </Link>
                       <i
-                        onClick={() => addToCart(v)}
+                        onClick={() => {
+                          addToCart(v),
+                            toast.success("Added to Cart Successfully!");
+                        }}
                         className="fa-solid fa-cart-plus hover:text-orange-500 bg-white rounded-md p-1 transition duration-200 cursor-pointer"
                       ></i>
                     </div>

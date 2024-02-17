@@ -30,7 +30,7 @@ const ProductList = ({ props, start, end, total, page }) => {
                   <i
                     onClick={() => {
                       addToCart(v);
-                      toast.success("Add To Cart Successfully!");
+                      toast.success("Added to Cart Successfully!");
                     }}
                     className="fa-solid fa-cart-plus text-slate-600 bg-gray-200 p-2 rounded cursor-pointer hover:bg-gray-300"
                   ></i>
