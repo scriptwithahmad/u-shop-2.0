@@ -28,7 +28,7 @@ export default function Layout({ children }) {
             </div>
             <div className="flex flex-1">
               <Aside />
-              <div className="overflow-y-auto max-h-[90vh] max-w-[100vw] overflow-x-auto flex-1 bg-[#eee] rounded-2xl shadow-[inset_0px_0px_10px_rgba(56,56,56,0.2)] p-4">
+              <div className="overflow-y-auto max-h-[90vh] max-w-[100vw] overflow-x-auto flex-1 bg-[#eee] rounded-2xl shadow-[inset_0px_0px_10px_rgba(56,56,56,0.2)]">
                 {/* // portal breadcrumb code ------------------ */}
                 <div className="boxShadowCostom my-1 mx-16 whitespace-nowrap mb-4 py-4 px-8 flex items-center gap-3 text-sm bg-[#ffffffa2] rounded-full fixed bottom-6 left-1/2 -translate-x-1/2">
                   {isDashboard ? (

@@ -15,13 +15,13 @@ export default async function handler(req, res) {
       expirationTime: new Date().getTime() + 60000,
     };
 
-    // console.log(otp);
+    console.log(otp);
 
     var mailData = await mailjet(
       email,
       fullname,
       "Verify Your Email - Edifycit",
-      //   OtpTemplate(otp.value)
+      // OtpTemplate(otp.value)
       "hey message"
     );
 

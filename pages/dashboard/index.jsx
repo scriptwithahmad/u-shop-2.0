@@ -153,7 +153,7 @@ const Dashboard = ({ products, start, end, total, page }) => {
         </div>
       </div>
 
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2 gap-4 px-4 py-2">
+      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2 gap-4 px-4 py-0">
         <div className="bg-white rounded-lg py-4 px-0 flex globalShadow">
           <div className="overflow-x-auto w-full">
             <div className="p-4">

@@ -1,9 +1,9 @@
+import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
-// import { SessionData } from "@/context/AuthContext";
 import { AuthContext } from "@/context/AuthContext";
-import axios from "axios";
 
 const Dnav = () => {
   const router = useRouter();
@@ -34,8 +34,9 @@ const Dnav = () => {
             ></i>
             <div className="flex items-center">
               <Link href="/" className="flex-none">
-                <img
-                  width={20}
+                <Image
+                  width={600}
+                  height={600}
                   src="/ulogo.png"
                   className="mx-auto w-[100px] mt-2"
                 />

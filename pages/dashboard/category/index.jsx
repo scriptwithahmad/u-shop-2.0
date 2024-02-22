@@ -72,7 +72,7 @@ const index = () => {
   return (
     <>
       <Toaster />
-      <div className="bg-white max-w-7xl m-auto p-5 rounded-lg">
+      <div className="bg-white max-w-7xl m-auto p-5 rounded-lg my-4">
         <form onSubmit={addNewCategory}>
           <div className=" mb-4 text-2xl font-semibold">
             Add Product{" "}

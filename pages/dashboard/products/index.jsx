@@ -88,7 +88,7 @@ const index = () => {
     <>
       <Toaster />
       {/* TABLE STARTED ---------------------------------------------------------------------------  */}
-      <div className="w-full">
+      <div className="w-full p-3">
         <div className="overflow-x-auto w-full border rounded-2xl">
           <div className="bg-white p-4 flex justify-between items-center flex-col gap-3 lg:flex-row w-full">
             <h2 className="text-2xl font-semibold">
