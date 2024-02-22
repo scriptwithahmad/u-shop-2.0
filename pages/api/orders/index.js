@@ -12,7 +12,11 @@ export default async function handler(req, res) {
 
         if (req.query.id) {
           match._id = req.query.id;
+        } else if(req.query.isLoginUserName) {
+          match.isLoginUserName = req.query.isLoginUserName;
+
         }
+          
 
         var foundOrders = await OrdersModal.find(match).populate({
           path: "items.productID",

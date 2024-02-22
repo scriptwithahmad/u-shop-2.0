@@ -6,6 +6,8 @@ const index = () => {
   const { user } = useContext(AuthContext);
   const userId = user?._id;
 
+  console.log(userId);
+
   const fetchOrderHistory = async () => {
     try {
       const { data } = await axios.get(`/api/orders/?${userId}`);
