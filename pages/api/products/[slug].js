@@ -61,7 +61,7 @@ export default async function handler(req, res) {
       } else {
         const updatedProduct = await productModel.findOneAndUpdate(
           { slug: req.query.slug },
-          req.body, // Assuming your request body contains the updated product data
+          req.body,
           { new: true }
         );
 

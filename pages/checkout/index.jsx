@@ -140,6 +140,7 @@ const index = () => {
       if (res.data.success) {
         toast.success("Address added successfully!");
         setAddressFormData({ city: "", addresses: "" });
+        window.location.reload();
         setShowForm(false);
       }
     } catch (error) {
@@ -249,55 +250,9 @@ const index = () => {
                       <span className=" text-blue-500">Add New Address</span>
                     </div>
                   </div>
-                  {/* SELECT NEW ADDRESS ----------------- */}
-                  {/* <div className="mb-6">
-                    <select
-                      value={selectedAddress}
-                      onChange={handleAddressSelection}
-                      className=" rounded-lg border border-gray-200 text-gray-500 focus:text-gray-600 focus:border-blue-300 cursor-pointer focus:bg-gray-50 hover:bg-gray-100 transition-all duration-200"
-                    >
-                      <option disabled value="">
-                        Select Existed Address
-                      </option>
-                      {user.addressDetails.map((data, index) => (
-                        <option
-                          key={index}
-                          value={data.city + " " + data.addresses}
-                        >
-                          {data.addresses + " " + data.city}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
+
                   {/* ADDRESS HERE ----------------------- */}
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {/* {user.addressDetails.map((item, index) => {
-                      return (
-                        <label
-                          key={index}
-                          class="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-red-500"
-                        >
-                          <span>
-                            <input
-                              name="shipping"
-                              type="radio"
-                              class="h-4 w-4 mt-1"
-                            />
-                          </span>
-                          <p className="ml-2">
-                            <span>{item?.city}</span>
-                            <small class="block text-sm text-gray-400">
-                              {item?.addresses}
-                              <br />
-                              US
-                              <br />
-                              9871234576
-                            </small>
-                          </p>
-                        </label>
-                        
-                      );
-                    })} */}
                     {user.addressDetails.map((item, index) => (
                       <label
                         key={index}

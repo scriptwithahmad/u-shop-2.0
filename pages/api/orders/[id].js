@@ -4,34 +4,71 @@ import OrdersModal from "@/models/orders";
 export default async function handler(req, res) {
   dbConnect();
 
-  try {
-    const fetchOrder = await OrdersModal.findById(req.query.id);
+  switch (req.method) {
+    case "DELETE":
+      try {
+        const fetchOrder = await OrdersModal.findById(req.query.id);
+        if (!fetchOrder) {
+          return res.status(404).json({
+            success: false,
+            message: "Order Not Found!",
+          });
+        }
 
-    if (!fetchOrder) {
-      return res.status(404).json({
-        success: false,
-        message: "User Not Found!",
-      });
-    }
+        const deleteOrder = await OrdersModal.findByIdAndDelete(req.query.id);
 
-    const deleteOrder = await OrdersModal.findByIdAndDelete(req.query.id);
+        if (!deleteOrder) {
+          return res.status(400).json({
+            success: false,
+            message: "Unable to delete the Order!",
+          });
+        }
 
-    if (!deleteOrder) {
-      return res.status(400).json({
-        success: false,
-        message: "Unable to delete the User!",
-      });
-    }
+        res.status(200).json({
+          success: true,
+          message: "Order Deleted Successfully!",
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Server Error!",
+          error: error.message,
+        });
+      }
+      break;
+    case "PUT":
+      try {
+        const fetchOrder = await OrdersModal.findById(req.query.id);
+        if (!fetchOrder) {
+          return res.status(404).json({
+            success: false,
+            message: "Order Not Found!",
+          });
+        }
 
-    res.status(200).json({
-      success: true,
-      message: "User Deleted Successfully!",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Server Error!",
-      error: error.message,
-    });
+        const updateOrder = await OrdersModal.findByIdAndUpdate(
+          req.query.id,
+          req.body,
+          { new: true }
+        );
+
+        res.status(200).json({
+          success: true,
+          message: "Order Status Updated Successfully!",
+          updateOrder,
+        });
+          
+       
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Server Error!",
+          error: error.message,
+        });
+      }
+      break;
+
+    default:
+      break;
   }
 }

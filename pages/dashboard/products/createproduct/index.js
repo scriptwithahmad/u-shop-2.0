@@ -186,9 +186,6 @@ const CreateProduct = () => {
                 {categories?.map((v, i) => {
                   return <option value={v.name}> {v.name} </option>;
                 })}
-                {/* <option value="Women">Women</option>
-                <option value="Kids">Kids</option>
-                <option value="Sports">Sports</option> */}
               </select>
             </div>
             {/* 5. Seller ------------------------ */}
@@ -219,7 +216,10 @@ const CreateProduct = () => {
             {/* 7. Description --------------------------------------- */}
             {/* Editor for Desription --------------------------------- */}
             <div className=" mb-6">
-              <label htmlFor="description" className=" text-gray-400 text-sm my-10">
+              <label
+                htmlFor="description"
+                className=" text-gray-400 text-sm my-10"
+              >
                 Product Description
               </label>
               <Editor

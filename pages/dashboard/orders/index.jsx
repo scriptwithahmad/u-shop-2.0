@@ -18,6 +18,15 @@ const tableHeader = [
   { lable: "Actions", align: "center" },
 ];
 
+const productStatus = [
+  { name: "Pending" },
+  { name: "Confirmed" },
+  { name: "Shipped" },
+  { name: "Delivered" },
+  { name: "Cancelled" },
+];
+const paymentStatus = [{ name: "Pending" }, { name: "Confirmed" }];
+
 const index = () => {
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);
@@ -112,8 +121,57 @@ const index = () => {
     setShowModal(true);
   };
 
+  const [updateShowModal, setUpdateShowModal] = useState(false);
+  const [updateModeladata, setUpdateModeladata] = useState("");
+  // Update status
+  const openUpdateModal = (v) => {
+    setUpdateModeladata(v);
+    setUpdateShowModal(true);
+  };
+
+  // Form all fucntion ------------------------------------------/
+
+  const [formData, setFormData] = useState({
+    status: "",
+    message: "",
+  });
+
+  // Update status remarks change handler ---------------------------------/
+  const changeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      const Id = updateModeladata._id;
+      var res = await axios.put(`/api/orders/${Id}`, {
+        ...formData,
+      });
+
+      setUpdateModeladata(false);
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
+      <Toaster />
       {/* TABLE STARTED ---------------------------------------------------------------------------  */}
       <div className="w-full p-3">
         <div className="overflow-x-auto w-full border rounded-2xl">
@@ -202,7 +260,8 @@ const index = () => {
                     </td>
                     {/* Costomer Details ---------------------------- */}
                     <td className="px-6 py-2">
-                      {v.customerDetail.fullname || v.hasLoginUserData?.fullname}
+                      {v.customerDetail.fullname ||
+                        v.hasLoginUserData?.fullname}
                     </td>
                     <td className="px-6 py-2">
                       {" "}
@@ -236,12 +295,15 @@ const index = () => {
                           className="fa fa-solid fa-eye px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
                         ></i>
                       </button>
-                      <Link href={`products/edit-product/${v.slug}`}>
+                      <button onClick={() => openUpdateModal(v)}>
+                        <i className="fa-solid fa-pen-to-square px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"></i>
+                      </button>
+                      {/* <Link href={`products/edit-product/${v.slug}`}>
                         <i
                           title="Edit"
                           className="fa-solid fa-pen-to-square px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-gray-400 text-sm"
                         ></i>
-                      </Link>
+                      </Link> */}
                       <i
                         title="Delete"
                         onClick={() => delPost(v._id)}
@@ -402,7 +464,84 @@ const index = () => {
         </div>
       </div>
 
-      <div></div>
+      {/* order Update Status Modal */}
+      <div
+        style={{
+          visibility: updateModeladata ? "visible" : "hidden",
+          opacity: updateModeladata ? "1" : "0",
+          transition: ".4s",
+        }}
+        className="fixed z-10 top-0 left-0 w-full h-screen border-red-600 backdrop-blur-[2px] bg-[#00000094] overflow-auto"
+      >
+        <div
+          className={`${
+            updateModeladata ? "scale-100 opacity-100" : "scale-0 opacity-0"
+          } bg-transparent duration-500 mx-auto my-8 relative p-4 max-w-[70%] rounded-lg`}
+        >
+          <span
+            onClick={() => setUpdateModeladata(false)}
+            className="cursor-pointer h-8 w-8"
+          >
+            <i className="bxShadow h-8 w-8 flex items-center justify-center absolute top-[12px] p-1 text-white hover:text-gray-900 -right-[0px] bg-gray-400 z-20 hover:bg-gray-100 rounded-full cursor-pointer fa-solid fa-xmark"></i>
+          </span>
+          <div className="mt-3 rounded-lg bg-white backdrop-blur-sm p-4">
+            <span className=" text-xl text-slate-800 font-semibold mb-4">
+              Update Status of Product
+            </span>
+            <form onSubmit={submitForm}>
+              <div className="my-5 flex flex-col">
+                <label className="text-gray-500 mb-1" htmlFor="paymentStatus">
+                  Payment Status
+                </label>
+                <select
+                  id="paymentStatus"
+                  name="paymentStatus"
+                  onChange={changeHandler}
+                  value={formData.paymentStatus}
+                  className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] rounded-lg focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
+                >
+                  <option selected value="select paymentStatus">
+                    Select Product Payment Status
+                  </option>
+                  {paymentStatus?.map((v, i) => {
+                    return (
+                      <option key={i} value={v.name}>
+                        {v.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="my-5 flex flex-col">
+                <label className="text-gray-500 mb-1" htmlFor="status">
+                  Status
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  value={formData.status}
+                  onChange={changeHandler}
+                  className="relative border border-gray-200 text-gray-400 text-sm pl-3 px-2 py-[6px] rounded-lg focus:ring-2 transition-colors focus:outline-none focus:text-gray-400"
+                >
+                  <option selected value="select status">
+                    Select Product Status
+                  </option>
+                  {productStatus?.map((v, i) => {
+                    return (
+                      <option key={i} value={v.name}>
+                        {v.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <button className="bg-indigo-500 text-white px-4 py-1.5 rounded-md">
+                {loading ? "Processing..." : "Submit"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
