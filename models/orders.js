@@ -23,16 +23,6 @@ const schema = new mongoose.Schema(
       city: String,
       address: String,
     },
-    isLoginUserDetail: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-    },
-    isLoginUserAddress: {
-      type: String,
-    },
-    isLoginUserName: {
-      type: String,
-    },
     status: {
       type: String,
       default: "Pending",
@@ -45,14 +35,13 @@ const schema = new mongoose.Schema(
       required: true,
       enum: ["Pending", "Confirmed"],
     },
-    hasLoginUserData: [
-      {
-        user_id: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "user",
-        },
-      },
-    ],
+    isLoginUserAddress: {
+      type: String,
+    },
+    hasLoginUserData: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
     remarks: String,
   },
   { timestamps: true }

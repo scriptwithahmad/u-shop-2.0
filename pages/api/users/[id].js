@@ -1,5 +1,5 @@
 import dbConnect from "@/config/dbConnect";
-import userModal from "@/models/user";
+import userModal from "@/models/users";
 
 export default async function handler(req, res) {
   dbConnect();

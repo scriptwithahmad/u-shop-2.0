@@ -1,5 +1,5 @@
 import { OtpTemplate } from "@/data";
-import userModal from "@/models/user";
+import userModal from "@/models/users";
 import mailjet from "@/helpers/mailjet";
 import dbConnect from "@/config/dbConnect";
 

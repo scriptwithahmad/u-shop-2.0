@@ -202,11 +202,11 @@ const index = () => {
                     </td>
                     {/* Costomer Details ---------------------------- */}
                     <td className="px-6 py-2">
-                      {v.customerDetail.fullname || v.isLoginUserName}
+                      {v.customerDetail.fullname || v.hasLoginUserData?.fullname}
                     </td>
                     <td className="px-6 py-2">
                       {" "}
-                      {v.customerDetail.address || v.isLoginUserAddress}{" "}
+                      {v.customerDetail.address || v.isLoginUserAddress}
                     </td>
                     <td className="px-6 py-2"> {v.total} </td>
                     <td className="px-6 py-2">

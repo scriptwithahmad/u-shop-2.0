@@ -11,7 +11,7 @@ import Link from "next/link";
 const index = () => {
   const router = useRouter();
   const { user, refetch } = useContext(AuthContext);
-  // console.log(user?.email)
+  // console.log(user?._id)
   const [loading, setLoading] = useState(false);
   const { cartItems, clearCart } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
@@ -31,6 +31,7 @@ const index = () => {
     email: "",
     city: "",
     address: "",
+    hasLoginUserData: "",
   });
 
   const changeHandler = (e) => {
@@ -96,9 +97,8 @@ const index = () => {
 
       // Check if user is logged in
       if (user) {
-        orderData.isLoginUserDetail = user._id;
+        orderData.hasLoginUserData = user?._id;
         orderData.isLoginUserAddress = selectedAddress;
-        orderData.isLoginUserName = user.fullname;
       } else {
         orderData.customerDetail = formData;
       }
@@ -107,7 +107,7 @@ const index = () => {
 
       if (res.data.success) {
         toast.success("Order Placed Successfully!");
-        router.push("/categories")
+        router.push("/categories");
         // Remove items from the cart after a successful order
         clearCart();
       }
@@ -153,8 +153,6 @@ const index = () => {
       setLoading(false);
     }
   };
-
-  
 
   return (
     <>

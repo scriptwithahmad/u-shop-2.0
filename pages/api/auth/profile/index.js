@@ -1,5 +1,5 @@
 import dbConnect from "@/config/dbConnect";
-import userModel from "@/models/user";
+import userModel from "@/models/users";
 import { JWTVerify } from "@/helpers/jwt";
 
 export default async function handler(req, res) {

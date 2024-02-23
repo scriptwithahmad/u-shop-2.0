@@ -4,15 +4,16 @@ import React, { useContext, useEffect } from "react";
 
 const index = () => {
   const { user } = useContext(AuthContext);
-  const userId = user?._id;
+  const userId = user?.fullname;
 
-  console.log(userId);
+  // console.log(userId);
 
   const fetchOrderHistory = async () => {
     try {
-      const { data } = await axios.get(`/api/orders/?${userId}`);
+      const { data } = await axios.get(`/api/orders/?fullname=${userId}`);
 
       console.log(data?.message);
+
     } catch (error) {
       toast.error(error?.message);
     }

@@ -1,6 +1,6 @@
 import dbConnect from "@/config/dbConnect";
 import productModel from "../../../models/product";
-import userModal from "@/models/user";
+import userModal from "@/models/users";
 import ordersModal from "@/models/orders";
 
 export default async function handler(req, res) {

@@ -1,5 +1,5 @@
 import dbConnect from "@/config/dbConnect";
-import usersModel from "@/models/user";
+import usersModel from "@/models/users";
 
 export default async function handleAddressAddition(req, res) {
   dbConnect();

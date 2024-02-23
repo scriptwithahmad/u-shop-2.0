@@ -1,5 +1,5 @@
 import dbConnect from "@/config/dbConnect";
-import usersModel from "@/models/user";
+import usersModel from "@/models/users";
 import bcrypt from "bcrypt";
 import { serialize } from "cookie";
 import { GenAccessToken } from "@/helpers/jwt";
