@@ -32,7 +32,7 @@ var userNavLinks = [
   },
   {
     lable: "Account",
-    href: "/dashboard/user-portal/account",
+    href: "/dashboard/profile",
     icon: "fa-solid fa-list",
   },
   {
@@ -159,45 +159,6 @@ const Aside = () => {
               })}
             </ul>
           )}
-          {/* <ul className="text-sm">
-            {adminNavLinks.map((v, i) => {
-              return (
-                <>
-                  <ul key={i}>
-                    <Link
-                      href={v.href}
-                      className={`relative py-1 px-4 flex items-center rounded-none lg:rounded-r-full hover:bg-[#3e1e9707] group cursor-pointer ${
-                        router.pathname === v.href
-                          ? "group cursor-pointer lg:bg-[#F6F5FD] md:bg-transparent"
-                          : ""
-                      }`}
-                    >
-                      <i
-                        className={`${v.icon} text-base ${
-                          router.pathname === v.href
-                            ? "text-[#3E1E97]"
-                            : "text-gray-500"
-                        }`}
-                      ></i>
-                      <div
-                        style={{
-                          opacity: toggle ? "1" : "0",
-                          transition: ".5s",
-                        }}
-                        className={`ml-3 ${
-                          router.pathname === v.href
-                            ? "text-[#3E1E97] font-medium"
-                            : "text-gray-600"
-                        }`}
-                      >
-                        {v.lable}
-                      </div>
-                    </Link>
-                  </ul>
-                </>
-              );
-            })}
-          </ul> */}
         </div>
       </div>
 

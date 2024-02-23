@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { Toaster, toast } from "react-hot-toast";
 import React, { useContext, useEffect, useState } from "react";
-import { format, render, cancel, register } from "timeago.js";
 import { AuthContext } from "@/context/AuthContext";
+import { format, render, cancel, register } from "timeago.js";
 
 const tableHeader = [
   { lable: "Date", align: "left" },
@@ -154,10 +154,11 @@ const index = () => {
         ...formData,
       });
 
-      setUpdateModeladata(false);
-
+      toast.success(res.data.message);
+      
       if (res.data.success) {
-        toast.success(res.data.message);
+        setUpdateModeladata(false);
+        window.location.reload()
       }
     } catch (error) {
       console.log(error);
@@ -208,7 +209,7 @@ const index = () => {
               </div>
             </div>
           </div>
-          <table className="text-sm min-w-[1000px] w-full text-left text-gray-500">
+          <table className="text-sm min-w-[1100px] w-full text-left text-gray-500">
             <thead className="text-xs text-gray-700 bg-gray-50">
               <tr>
                 {tableHeader.map((value, index) => {
@@ -227,7 +228,7 @@ const index = () => {
             <tbody>
               {productData?.map((v, i) => {
                 return (
-                  <tr key={i} className="bg-white border-b border-gray-100">
+                  <tr key={i} className="hover:bg-slate-100 border-b border-gray-100 bg-white">
                     <td className="px-6 py-2 text-[10px]">
                       {format(new Date(v.createdAt), "en_US")}
                     </td>
@@ -476,7 +477,7 @@ const index = () => {
         <div
           className={`${
             updateModeladata ? "scale-100 opacity-100" : "scale-0 opacity-0"
-          } bg-transparent duration-500 mx-auto my-8 relative p-4 max-w-[70%] rounded-lg`}
+          } bg-transparent duration-500 mx-auto my-8 relative p-4 md:max-w-[70%] max-w-[90%] lg:max-w-[50%] rounded-lg`}
         >
           <span
             onClick={() => setUpdateModeladata(false)}

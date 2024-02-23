@@ -11,7 +11,7 @@ import Link from "next/link";
 const index = () => {
   const router = useRouter();
   const { user, refetch } = useContext(AuthContext);
-  // console.log(user?._id)
+  const userId = user?._id;
   const [loading, setLoading] = useState(false);
   const { cartItems, clearCart } = useContext(CartContext);
   const [showForm, setShowForm] = useState(false);
@@ -155,6 +155,17 @@ const index = () => {
     }
   };
 
+  // Delete addres one Object
+  const deleteAddress = async (addressId) => {
+    try {
+      await axios.delete(`/api/delete-user/${userId}/addresses/${addressId}`);
+      toast.success("Address deleted successfully");
+      // Optionally, fetch updated user data after deletion
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Toaster />
@@ -254,34 +265,36 @@ const index = () => {
                   {/* ADDRESS HERE ----------------------- */}
                   <div className="grid sm:grid-cols-2 gap-4">
                     {user.addressDetails.map((item, index) => (
-                      <label
-                        key={index}
-                        className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-red-500"
-                      >
-                        <span>
-                          <input
-                            name="shipping"
-                            type="radio"
-                            className="h-4 w-4 mt-1"
-                            value={item.city + " " + item.addresses}
-                            checked={
-                              selectedAddress ===
-                              item.city + " " + item.addresses
-                            }
-                            onChange={handleAddressSelection}
-                          />
-                        </span>
-                        <p className="ml-2">
-                          <span>{item?.city}</span>
-                          <small className="block text-sm text-gray-400">
-                            {item?.addresses}
-                            <br />
-                            US
-                            <br />
-                            9871234576
-                          </small>
-                        </p>
-                      </label>
+                      <div key={index}>
+                        <label className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-red-500">
+                          <span>
+                            <input
+                              name="shipping"
+                              type="radio"
+                              className="h-4 w-4 mt-1"
+                              value={item.city + " " + item.addresses}
+                              checked={
+                                selectedAddress ===
+                                item.city + " " + item.addresses
+                              }
+                              onChange={handleAddressSelection}
+                            />
+                          </span>
+                          <p className="ml-2">
+                            <span>{item?.city}</span>
+                            <small className="block text-sm text-gray-400">
+                              {item?.addresses}
+                              <br />
+                              US
+                              <br />
+                              9871234576
+                            </small>
+                          </p>
+                        </label>
+                        <button onClick={() => deleteAddress(item?._id)}>
+                          Delete Address
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </article>
