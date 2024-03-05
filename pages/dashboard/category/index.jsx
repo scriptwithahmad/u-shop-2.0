@@ -113,7 +113,7 @@ const index = () => {
                       window.confirm("Are you sure to delete this Category?") &&
                         deleteCategory(v._id);
                     }}
-                    className="fa-solid fa-trash-can text-sm text-red-400 hover:text-red-500 cursor-pointer transition"
+                    className="fa-solid fa-trash-can text-sm text-orange-400 hover:text-orange-500 cursor-pointer transition"
                   ></i>
                 </div>
               </div>

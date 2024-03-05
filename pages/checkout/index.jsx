@@ -266,7 +266,7 @@ const index = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     {user.addressDetails.map((item, index) => (
                       <div key={index}>
-                        <label className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-red-500">
+                        <label className="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer has-[:checked]:bg-indigo-50 has-[:checked]:bg-orange-500">
                           <span>
                             <input
                               name="shipping"
@@ -309,7 +309,7 @@ const index = () => {
               {/* full Name ----------------- */}
               <div className=" h-fit">
                 <label htmlFor="fullname">
-                  Full Name <span className="text-red-600">*</span>
+                  Full Name <span className="text-orange-600">*</span>
                 </label>
                 <input
                   required
@@ -326,7 +326,7 @@ const index = () => {
               {/* Phone Number ----------------- */}
               <div className=" h-fit">
                 <label className="block" htmlFor="phone">
-                  Phone Number <span className="text-red-600">*</span>
+                  Phone Number <span className="text-orange-600">*</span>
                 </label>
                 <InputMask
                   required
@@ -360,7 +360,7 @@ const index = () => {
               {/* Town / City ----------------- */}
               <div className=" h-fit">
                 <label className="block" htmlFor="city">
-                  Town / City <span className="text-red-600">*</span>
+                  Town / City <span className="text-orange-600">*</span>
                 </label>
                 <input
                   required
@@ -376,7 +376,7 @@ const index = () => {
               {/* Street Address ----------------- */}
               <div className="col-span-2 h-fit">
                 <label className="block" htmlFor="address">
-                  Street Address <span className="text-red-600">*</span>
+                  Street Address <span className="text-orange-600">*</span>
                 </label>
                 <input
                   required

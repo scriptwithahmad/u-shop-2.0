@@ -188,7 +188,7 @@ const index = () => {
                         className={`${
                           v.sale
                             ? "text-green-500 border-green-200"
-                            : "text-red-500 border-red-100"
+                            : "text-orange-500 border-red-100"
                         } border px-2 rounded-md font-light `}
                       >
                         {v.sale ? "Sale" : "Not Sale"}
@@ -214,7 +214,7 @@ const index = () => {
                       <i
                         title="Delete"
                         onClick={() => delPost(v.slug)}
-                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-red-400 text-sm"
+                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-orange-400 text-sm"
                       ></i>
                     </td>
                   </tr>

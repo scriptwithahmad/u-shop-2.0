@@ -95,7 +95,7 @@ const ShoppingCart = () => {
                       <div className="col-span-1 grid lg:items-end md:mt-4 my-4">
                         <div className="px-4 py-1 rounded-full border w-fit">
                           <button
-                            className=" text-slate-500 text-sm disabled:border-red-300 disabled:bg-red-100 disabled:cursor-not-allowed"
+                            className=" text-slate-500 text-sm disabled:border-red-300 disabled:bg-orange-100 disabled:cursor-not-allowed"
                             onClick={() => {
                               decreaseItemQuantity(cartItems[i]);
                             }}
@@ -106,7 +106,7 @@ const ShoppingCart = () => {
                             {cartItems[i].quantity}
                           </span>
                           <button
-                            className="text-slate-500 text-sm disabled:border-red-300 disabled:bg-red-100 disabled:cursor-not-allowed"
+                            className="text-slate-500 text-sm disabled:border-red-300 disabled:bg-orange-100 disabled:cursor-not-allowed"
                             onClick={() => addToCart(v)}
                           >
                             +

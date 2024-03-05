@@ -45,11 +45,21 @@ export default function Login() {
     <>
       <Toaster />
       <div className="flex flex-col items-center px-6 py-12 lg:px-8">
-        <h2 className="my-4 text-slate-700 text-center text-xl font-bold leading-9 tracking-tight">
-          Sign in to your account
-        </h2>
+        <div className="globalShadow rounded-lg px-6 py-8 mt-2 md:w-[600px] w-[350px]">
+          <div className="mb-2">
+            <div className=" flex items-center gap-2">
+              <img
+                alt="Logo Here"
+                className=" w-8 animate-pulse"
+                src="https://res.cloudinary.com/dmyrswz0r/image/upload/v1706707781/ulogo_hclp4i.png"
+              />
+              <h2 className="text-slate-700 text-xl font-bold">SHOP</h2>
+            </div>
+            <p className="my-4 text-slate-700 text-lg font-medium leading-9 tracking-tight">
+              Sign in to your account
+            </p>
+          </div>
 
-        <div className="shadow-2xl border-y-4 border-y-orange-200 rounded-lg px-8 py-8 mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={submitForm}>
             {/* Username ----------------------- */}
             <div>
@@ -66,7 +76,7 @@ export default function Login() {
                   onChange={routehandler}
                   autocomplete="username"
                   value={formData.username}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -85,7 +95,7 @@ export default function Login() {
                   type="password"
                   onChange={routehandler}
                   value={formData.password}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -93,7 +103,7 @@ export default function Login() {
             <div>
               <button
                 type="submit"
-                className="rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+                className="rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
               >
                 {loading ? "Processing..." : "Log In"}
               </button>

@@ -308,7 +308,7 @@ const index = () => {
                       <i
                         title="Delete"
                         onClick={() => delPost(v._id)}
-                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-red-400 text-sm"
+                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-orange-400 text-sm"
                       ></i>
                     </td>
                   </tr>

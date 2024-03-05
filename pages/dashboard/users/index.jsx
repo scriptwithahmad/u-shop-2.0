@@ -232,7 +232,7 @@ const index = ({ users: initialProducts, start, end, total, page }) => {
                       <i
                         title="Delete"
                         onClick={() => deleteUser(v._id)}
-                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-red-400 text-sm"
+                        className="fa fa-solid fa-trash px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-full text-orange-400 text-sm"
                       ></i>
                     </td>
                   </tr>

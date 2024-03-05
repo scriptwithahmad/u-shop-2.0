@@ -152,7 +152,7 @@ const Nav = () => {
                   <p className="text-[14px] capitalize font-medium">
                     {user.fullname}
                   </p>
-                  <span className="text-[11px] cursor-pointer text-red-500 hover:text-red-600">
+                  <span className="text-[11px] cursor-pointer text-orange-500 hover:text-orange-600">
                     {user.role}
                   </span>
                 </div>
@@ -180,7 +180,7 @@ const Nav = () => {
                       )}
                       <button
                         onClick={handleLogout}
-                        className="text-xs text-gray-600 hover:text-red-600 flex items-center gap-2"
+                        className="text-xs text-gray-600 hover:text-orange-600 flex items-center gap-2"
                       >
                         <i className="fa-solid fa-right-from-bracket"></i>
                         Logout

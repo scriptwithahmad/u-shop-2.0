@@ -56,7 +56,7 @@ const Dnav = () => {
                   <p className="text-[14px] capitalize font-medium">
                     {user.fullname}
                   </p>
-                  <span className="text-[11px] cursor-pointer text-red-500 hover:text-red-600">
+                  <span className="text-[11px] cursor-pointer text-orange-500 hover:text-orange-600">
                     {user.role}
                   </span>
                 </div>
@@ -101,7 +101,7 @@ const Dnav = () => {
                   <p className="text-[14px] capitalize font-medium">
                     Not Found
                   </p>
-                  <span className="text-[11px] cursor-pointer text-red-500 hover:text-red-600">
+                  <span className="text-[11px] cursor-pointer text-orange-500 hover:text-orange-600">
                     User
                   </span>
                 </div>
